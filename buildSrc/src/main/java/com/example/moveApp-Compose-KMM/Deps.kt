@@ -74,4 +74,9 @@ object Deps {
     object Coil {
         const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
     }
+
+    object Navigation {
+        const val precompose = "moe.tlaster:precompose:1.4.3"
+        const val precomposeViewmodel = "moe.tlaster:precompose-viewmodel:1.4.3"
+    }
 }
