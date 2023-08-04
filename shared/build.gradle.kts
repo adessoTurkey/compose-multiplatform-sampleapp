@@ -3,6 +3,7 @@ import com.example.moveeapp_compose_kmm.Deps
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
+    kotlin("plugin.serialization")
     id("com.android.library")
     id("org.jetbrains.compose")
     id("kotlin-parcelize")
@@ -47,10 +48,13 @@ kotlin {
                     api(ktorSerializationKotlinxJson)
                     api(ktorClientContentNegotiation)
                     api(ktorClientLogging)
+                    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+
                 }
 
                 // Logback for ktor logging
                 implementation(Deps.Logback.logbackClassic)
+
 
                 // Koin
                 with(Deps.Koin) {
@@ -69,6 +73,7 @@ kotlin {
                     api(precompose)
                     api(precomposeViewmodel)
                 }
+                api("io.github.qdsfdhvh:image-loader:1.5.1")
             }
         }
         val commonTest by getting {
@@ -91,6 +96,8 @@ kotlin {
                 api("androidx.activity:activity-compose:1.7.2")
                 api("androidx.appcompat:appcompat:1.6.1")
                 api("androidx.core:core-ktx:1.10.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+
 
             }
         }

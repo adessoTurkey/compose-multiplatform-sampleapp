@@ -1,8 +1,8 @@
 package com.example.moveeapp_compose_kmm.navigation
 
 import androidx.compose.runtime.Composable
-import com.example.moveeapp_compose_kmm.ui.scene.DetailScreen
-import com.example.moveeapp_compose_kmm.ui.scene.HomeScreen
+import com.example.moveeapp_compose_kmm.ui.scene.detailscreen.DetailScreen
+import com.example.moveeapp_compose_kmm.ui.scene.homescreen.HomeScreen
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
 
