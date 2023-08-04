@@ -3,6 +3,7 @@ import com.example.moveeapp_compose_kmm.Deps
 plugins {
     id("com.android.application")
     kotlin("android")
+    id("org.jetbrains.compose")
 }
 
 android {
