@@ -1,12 +1,13 @@
 package com.example.moveeapp_compose_kmm.data.remote
 
 import com.example.moveeapp_compose_kmm.data.model.PopularMovieModel
+import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.http.encodedPath
 
-class ApiImpl : ApiInterface {
+class ApiImpl(private val client: HttpClient) : ApiInterface {
 
     private fun HttpRequestBuilder.popularMovie(
         page: Int

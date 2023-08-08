@@ -10,14 +10,13 @@ import kotlinx.coroutines.launch
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 
-class HomeViewModel : ViewModel() {
-    private val repo = MovieRepository()
+class HomeViewModel (private val repository: MovieRepository) : ViewModel() {
     val popularMovieResponse =
         MutableStateFlow<DataState<List<PopularMovieModel.PopularMovies>>?>(DataState.Loading)
 
     fun popularMovies(page: Int) {
         viewModelScope.launch(Dispatchers.Main) {
-            repo.popularMovie(page).collectLatest {
+            repository.popularMovie(page).collectLatest {
                 popularMovieResponse.value = it
             }
         }

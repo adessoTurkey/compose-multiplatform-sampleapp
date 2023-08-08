@@ -1,11 +1,11 @@
 package com.example.moveeapp_compose_kmm.data.repository
 
 import com.example.moveeapp_compose_kmm.data.remote.ApiImpl
+import com.example.moveeapp_compose_kmm.data.remote.ApiInterface
 import com.example.moveeapp_compose_kmm.utils.DataState
 import kotlinx.coroutines.flow.flow
 
-class MovieRepository {
-    private val api = ApiImpl()
+class MovieRepository(private val api: ApiInterface) {
 
     fun popularMovie(page: Int) = flow {
         emit(DataState.Loading)

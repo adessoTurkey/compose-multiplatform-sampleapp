@@ -13,12 +13,13 @@ import com.example.moveeapp_compose_kmm.navigation.Route
 import com.example.moveeapp_compose_kmm.ui.MovieList
 import com.example.moveeapp_compose_kmm.utils.DataState
 import moe.tlaster.precompose.navigation.Navigator
+import org.koin.compose.koinInject
 
 @Composable
 fun HomeScreen(
     navigator: Navigator,
     onClick: () -> Unit,
-    viewModel: HomeViewModel = HomeViewModel()
+    viewModel: HomeViewModel = koinInject()
 ) {
     LaunchedEffect(true) {
     viewModel.popularMovies(1)
@@ -36,7 +37,7 @@ fun HomeScreen(
                     }
                 }
                 is DataState.Error ->{
-                        Text("erorororoor")
+                        Text("${it.exception}")
                 }
             }
         }

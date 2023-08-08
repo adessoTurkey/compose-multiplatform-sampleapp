@@ -61,6 +61,7 @@ kotlin {
                     api(core)
                     api(test)
                 }
+                api("io.insert-koin:koin-compose:1.0.4")
 
                 // KotlinX Serialization Json
                 implementation(Deps.Org.JetBrains.Kotlinx.kotlinxSerializationJson)
