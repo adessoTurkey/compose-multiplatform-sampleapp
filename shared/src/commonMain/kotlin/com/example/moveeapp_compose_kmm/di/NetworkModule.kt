@@ -23,6 +23,7 @@ val networkModule = module {
                 url{
                     takeFrom(Constants.BASE_URL)
                     parameters.append("api_key", Constants.API_KEY)
+
                 }
             }
             expectSuccess = true

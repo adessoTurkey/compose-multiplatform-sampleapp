@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.data.model
+package com.example.moveeapp_compose_kmm.data.remote.model
 
 import kotlinx.serialization.Serializable
 

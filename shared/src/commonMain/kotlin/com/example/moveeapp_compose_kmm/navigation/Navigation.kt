@@ -3,6 +3,7 @@ package com.example.moveeapp_compose_kmm.navigation
 import androidx.compose.runtime.Composable
 import com.example.moveeapp_compose_kmm.ui.scene.detailscreen.DetailScreen
 import com.example.moveeapp_compose_kmm.ui.scene.homescreen.HomeScreen
+import com.example.moveeapp_compose_kmm.ui.scene.loginscreen.LoginScreen
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
 
@@ -10,8 +11,11 @@ import moe.tlaster.precompose.navigation.Navigator
 fun Navigation(navigator: Navigator) {
     NavHost(
         navigator = navigator,
-        initialRoute = Route.Home.route
+        initialRoute = Route.Login.route
     ){
+        scene(route = Route.Login.route){
+            LoginScreen(onNavToHomePage = { navigator.navigate(Route.Home.route) } )
+        }
         scene(route = Route.Home.route){
             HomeScreen(navigator, onClick = {
                 navigator.navigate(Route.Detail.route)
