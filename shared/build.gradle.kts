@@ -7,6 +7,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.compose")
     id("kotlin-parcelize")
+    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -25,6 +26,8 @@ kotlin {
         framework {
             baseName = "shared"
             isStatic = true
+            export("dev.icerock.moko:resources:0.23.0") // for moko
+            export("dev.icerock.moko:graphics:0.9.0") // for moko
         }
         extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
@@ -74,6 +77,9 @@ kotlin {
                     api(precompose)
                     api(precomposeViewmodel)
                 }
+
+                //Moko
+                api("dev.icerock.moko:resources:0.23.0")
                 api("io.github.qdsfdhvh:image-loader:1.5.1")
             }
         }
@@ -88,9 +94,6 @@ kotlin {
             dependencies {
                 // Ktor
                 implementation(Deps.Io.Ktor.ktorClientAndroid)
-
-                // SqlDelight
-                implementation(Deps.CashApp.SQLDelight.androidDriver)
 
                 // Koin
                 implementation(Deps.Koin.android)
@@ -113,6 +116,7 @@ kotlin {
             dependencies {
                 implementation("io.ktor:ktor-client-darwin:2.3.2")
                 implementation("io.ktor:ktor-client-ios:2.3.1")
+
             }
         }
     }
@@ -129,3 +133,16 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
+
+multiplatformResources {
+    multiplatformResourcesPackage = "com.example.moveeapp_compose_kmm"
+    multiplatformResourcesClassName = "SharedRes"
+}
+
+//dependencies {
+//    implementation("androidx.core:core:1.10.1")
+//    commonMainApi("dev.icerock.moko:mvvm-core:0.16.1")
+//    commonMainApi("dev.icerock.moko:mvvm-compose:0.16.1")
+//    commonMainApi("dev.icerock.moko:mvvm-flow:0.16.1")
+//    commonMainApi("dev.icerock.moko:mvvm-flow-compose:0.16.1")
+//}

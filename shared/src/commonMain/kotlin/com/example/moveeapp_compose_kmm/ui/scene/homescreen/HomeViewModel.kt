@@ -1,6 +1,6 @@
 package com.example.moveeapp_compose_kmm.ui.scene.homescreen
 
-import com.example.moveeapp_compose_kmm.data.model.PopularMovieModel
+import com.example.moveeapp_compose_kmm.data.remote.model.PopularMovieModel
 import com.example.moveeapp_compose_kmm.data.repository.MovieRepository
 import com.example.moveeapp_compose_kmm.utils.DataState
 import kotlinx.coroutines.Dispatchers
@@ -21,4 +21,5 @@ class HomeViewModel (private val repository: MovieRepository) : ViewModel() {
             }
         }
     }
+
 }

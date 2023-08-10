@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.ui
+package com.example.moveeapp_compose_kmm.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.example.moveeapp_compose_kmm.data.model.PopularMovieModel
+import com.example.moveeapp_compose_kmm.data.remote.model.PopularMovieModel
 import com.example.moveeapp_compose_kmm.utils.Constants
 import com.seiko.imageloader.rememberAsyncImagePainter
 

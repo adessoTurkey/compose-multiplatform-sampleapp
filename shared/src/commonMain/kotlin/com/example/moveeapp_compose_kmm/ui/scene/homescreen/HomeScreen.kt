@@ -8,9 +8,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.moveeapp_compose_kmm.data.model.PopularMovieModel
+import com.example.moveeapp_compose_kmm.data.remote.model.PopularMovieModel
 import com.example.moveeapp_compose_kmm.navigation.Route
-import com.example.moveeapp_compose_kmm.ui.MovieList
+import com.example.moveeapp_compose_kmm.ui.components.MovieList
 import com.example.moveeapp_compose_kmm.utils.DataState
 import moe.tlaster.precompose.navigation.Navigator
 import org.koin.compose.koinInject
