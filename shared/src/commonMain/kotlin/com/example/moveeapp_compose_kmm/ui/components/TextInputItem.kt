@@ -5,10 +5,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
@@ -26,12 +27,13 @@ fun TextInputItem(
     leadingIcon: @Composable (() -> Unit)? = null
 
 ) {
-    OutlinedTextField(modifier = Modifier
-        .fillMaxWidth()
-        .padding(
-            vertical = 16.dp,
-            horizontal = 8.dp
-        ),
+    TextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                vertical = 8.dp,
+                horizontal = 16.dp
+            ),
         value = query,
         onValueChange = { onValueChange.invoke(it) },
         leadingIcon = leadingIcon,
@@ -40,9 +42,18 @@ fun TextInputItem(
         singleLine = true,
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Text,
-            imeAction = ImeAction.Default,
+            imeAction = ImeAction.Next,
         ),
         label = label,
         visualTransformation = visualTransformation,
-        isError = isError )
+        isError = isError,
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Color.White,
+            unfocusedBorderColor = Color.LightGray,
+            focusedLabelColor = Color.White,
+            unfocusedLabelColor = Color.White,
+            textColor = Color.White,
+            cursorColor = Color.White,
+        )
+    )
 }

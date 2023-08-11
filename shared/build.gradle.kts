@@ -78,9 +78,15 @@ kotlin {
                     api(precomposeViewmodel)
                 }
 
+                //image loader
+                api("io.github.qdsfdhvh:image-loader:1.5.1")
+
                 //Moko
                 api("dev.icerock.moko:resources:0.23.0")
-                api("io.github.qdsfdhvh:image-loader:1.5.1")
+                api("dev.icerock.moko:resources-compose:0.22.0")
+
+                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+                implementation(compose.components.resources)
             }
         }
         val commonTest by getting {
@@ -132,6 +138,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 }
 
 multiplatformResources {
