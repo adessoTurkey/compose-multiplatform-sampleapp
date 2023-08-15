@@ -1,15 +1,21 @@
 package com.example.moveeapp_compose_kmm.ui.scene.detailscreen
 
-import androidx.compose.foundation.Image
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import moe.tlaster.precompose.navigation.Navigator
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.screen.Screen
 
-@Composable
-fun DetailScreen(navigator: Navigator, onClick: () -> Unit) {
+class DetailScreen : Screen {
+    @Composable
+    override fun Content() {
+        DetailScreen()
+    }
 
-    Button(onClick = {onClick()} ){
-        Text("DetailToHome")
+    @Composable
+    fun DetailScreen() {
+
+        Text(modifier = Modifier.padding(30.dp), text = "DetailToHome")
     }
 }

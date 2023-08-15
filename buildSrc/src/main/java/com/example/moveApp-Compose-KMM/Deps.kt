@@ -78,5 +78,10 @@ object Deps {
     object Navigation {
         const val precompose = "moe.tlaster:precompose:1.4.3"
         const val precomposeViewmodel = "moe.tlaster:precompose-viewmodel:1.4.3"
+        object Voyager {
+            const val voyagerNavigation = "cafe.adriel.voyager:voyager-navigator:${Versions.voyagerVersion}"
+            const val voyagerViewModel = "cafe.adriel.voyager:voyager-androidx:${Versions.voyagerVersion}"
+            const val voyagerKoin = "cafe.adriel.voyager:voyager-koin:${Versions.voyagerVersion}"
+        }
     }
 }

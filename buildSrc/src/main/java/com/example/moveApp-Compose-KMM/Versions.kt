@@ -17,4 +17,5 @@ object Versions {
     const val logbackClassic = "1.2.11"
     const val kotlinWrappersBom = "1.0.0-pre.510"
     const val coil = "2.2.2"
+    const val voyagerVersion = "1.0.0-rc05"
 }

@@ -73,10 +73,9 @@ kotlin {
                 implementation(Deps.Org.JetBrains.Kotlinx.coroutinesCore)
 
                 //Navigation
-                with(Deps.Navigation) {
-                    api(precompose)
-                    api(precomposeViewmodel)
-                }
+                api(Deps.Navigation.Voyager.voyagerNavigation)
+                api(Deps.Navigation.Voyager.voyagerViewModel)
+                api(Deps.Navigation.Voyager.voyagerKoin)
 
                 //image loader
                 api("io.github.qdsfdhvh:image-loader:1.5.1")
@@ -107,6 +106,7 @@ kotlin {
                 api("androidx.appcompat:appcompat:1.6.1")
                 api("androidx.core:core-ktx:1.10.1")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+                api(Deps.Navigation.Voyager.voyagerKoin)
 
 
             }
