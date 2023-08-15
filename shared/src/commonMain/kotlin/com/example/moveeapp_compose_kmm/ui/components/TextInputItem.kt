@@ -42,7 +42,7 @@ fun TextInputItem(
         singleLine = true,
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Text,
-            imeAction = ImeAction.Next,
+            imeAction = ImeAction.Done,
         ),
         label = label,
         visualTransformation = visualTransformation,

@@ -27,18 +27,7 @@ internal fun MovieList(listItems: List<PopularMovieModel.PopularMovies>, onclick
                         start = 5.dp, end = 5.dp, top = 0.dp, bottom = 10.dp
                     )
                 ) {
-                    Image(
-                        painter = rememberAsyncImagePainter(
-                            Constants.IMAGE_BASE.plus(
-                                it.poster_path
-                            )
-                        ),
-                        contentDescription = it.poster_path,
-                        modifier = Modifier.size(250.dp).clickable {
-                            onclick()
-                        },
-                        contentScale = ContentScale.Crop,
-                    )
+                    ImageItem(imagePath = it.poster_path, onClick = onclick)
                 }
             }
         })

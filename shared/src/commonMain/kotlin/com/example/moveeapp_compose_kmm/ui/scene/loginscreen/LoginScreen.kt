@@ -43,7 +43,7 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
-                modifier = Modifier.fillMaxHeight(0.5f),
+                modifier = Modifier.fillMaxHeight(0.2f),
             ) {
                 Image(
                     modifier = Modifier.align(Alignment.Center),
@@ -78,7 +78,10 @@ fun LoginContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (loginUiState.loginError != null) {
-            Text(text = loginUiState.loginError, color = Color.White)
+            Text(
+                text = loginUiState.loginError,
+                color = MaterialTheme.colorScheme.primaryContainer
+            )
         }
 
         TextInputItem(
@@ -89,7 +92,7 @@ fun LoginContent(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Person,
-                    tint = Color.White,
+                    tint = MaterialTheme.colorScheme.primaryContainer,
                     contentDescription = "Username"
                 )
             },
@@ -104,7 +107,7 @@ fun LoginContent(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Lock,
-                    tint = Color.White,
+                    tint = MaterialTheme.colorScheme.primaryContainer,
                     contentDescription = "Password"
                 )
             },
@@ -114,8 +117,11 @@ fun LoginContent(
 
         Button(
             modifier = Modifier.fillMaxWidth().padding(32.dp),
-            shape = RoundedCornerShape(5.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Blue),
+            shape = MaterialTheme.shapes.extraSmall,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.primary
+            ),
             onClick = { onLogin() }) {
             Text(text = "Login")
         }
