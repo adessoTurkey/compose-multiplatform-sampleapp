@@ -3,14 +3,14 @@ package com.example.moveeapp_compose_kmm.ui.scene.loginscreen
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.coroutineScope
 import com.example.moveeapp_compose_kmm.data.repository.LoginRepository
 import kotlinx.coroutines.launch
-import moe.tlaster.precompose.viewmodel.ViewModel
-import moe.tlaster.precompose.viewmodel.viewModelScope
 
 class LoginViewModel(
     private val repository: LoginRepository
-) : ViewModel() {
+) : ScreenModel {
 
     val hasUser: LoginState
         get() = if (loginUiState.isSuccessLogin){
@@ -36,7 +36,7 @@ class LoginViewModel(
 
 
     fun login() {
-        viewModelScope.launch {
+        coroutineScope.launch {
             if (!validateLoginForm()) {
                 loginUiState = loginUiState.copy(loginError = "Email and password can not be empty")
                 return@launch
