@@ -10,16 +10,20 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class HomeViewModel (private val repository: MovieRepository) : ScreenModel {
+class HomeViewModel(private val repository: MovieRepository) : ScreenModel {
     val popularMovieResponse =
         MutableStateFlow<DataState<List<PopularMovieModel.PopularMovies>>?>(DataState.Loading)
 
     fun popularMovies(page: Int) {
         coroutineScope.launch(Dispatchers.Main) {
-            repository.popularMovie(page).collectLatest {
-                popularMovieResponse.value = it
+            if (popularMovieResponse.value is DataState.Success) {
+                return@launch
+            }
+            coroutineScope.launch(Dispatchers.Main) {
+                repository.popularMovie(page).collectLatest {
+                    popularMovieResponse.value = it
+                }
             }
         }
     }
-
 }

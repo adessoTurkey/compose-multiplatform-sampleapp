@@ -1,5 +1,5 @@
 package com.example.moveeapp_compose_kmm
 
-import moe.tlaster.precompose.PreComposeApplication
+import androidx.compose.ui.window.ComposeUIViewController
 
-fun MainViewController() = PreComposeApplication(title = "") { App() }
+fun MainViewController() = ComposeUIViewController{ App() }
