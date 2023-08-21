@@ -2,7 +2,7 @@ package com.example.moveeapp_compose_kmm.ui.scene.homescreen
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
-import com.example.moveeapp_compose_kmm.data.remote.model.PopularMovieModel
+import com.example.moveeapp_compose_kmm.data.remote.model.movie.PopularMovieModel
 import com.example.moveeapp_compose_kmm.data.repository.MovieRepository
 import com.example.moveeapp_compose_kmm.utils.DataState
 import kotlinx.coroutines.Dispatchers

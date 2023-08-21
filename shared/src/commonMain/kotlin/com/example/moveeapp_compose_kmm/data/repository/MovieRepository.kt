@@ -10,7 +10,7 @@ class MovieRepository(private val api: ApiInterface) {
         emit(DataState.Loading)
         try {
             val result = api.popularMovieList(page)
-            emit(DataState.Success(result.results))
+            emit(DataState.Success(result.movies))
         } catch (e: Exception) {
             emit(DataState.Error(e))
         }

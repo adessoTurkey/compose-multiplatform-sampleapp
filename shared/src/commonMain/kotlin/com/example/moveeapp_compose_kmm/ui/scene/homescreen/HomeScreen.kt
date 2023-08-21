@@ -13,7 +13,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.example.moveeapp_compose_kmm.data.remote.model.PopularMovieModel
+import com.example.moveeapp_compose_kmm.data.remote.model.movie.PopularMovieModel
 import com.example.moveeapp_compose_kmm.ui.components.MovieList
 import com.example.moveeapp_compose_kmm.ui.scene.detailscreen.DetailScreen
 import com.example.moveeapp_compose_kmm.utils.DataState
