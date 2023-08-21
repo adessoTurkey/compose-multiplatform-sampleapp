@@ -32,6 +32,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+
                 // Compose
                 with(compose) {
                     api(runtime)
@@ -42,38 +43,45 @@ kotlin {
                     api(animation)
                 }
 
+                // Coroutines
+                api(Deps.Org.JetBrains.Kotlinx.coroutinesCore)
+
+                // KotlinX Serialization Json
+                api(Deps.Org.JetBrains.Kotlinx.kotlinxSerializationJson)
+
                 // Ktor
                 with(Deps.Io.Ktor) {
                     api(ktorClientCore)
                     api(ktorSerializationKotlinxJson)
                     api(ktorClientContentNegotiation)
                     api(ktorClientLogging)
-                    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-
                 }
-
-                // Logback for ktor logging
-                implementation(Deps.Logback.logbackClassic)
-
 
                 // Koin
                 with(Deps.Koin) {
                     api(core)
                     api(test)
+                    api(compose)
                 }
-
-                // KotlinX Serialization Json
-                implementation(Deps.Org.JetBrains.Kotlinx.kotlinxSerializationJson)
-
-                // Coroutines
-                implementation(Deps.Org.JetBrains.Kotlinx.coroutinesCore)
 
                 //Navigation
-                with(Deps.Navigation) {
-                    api(precompose)
-                    api(precomposeViewmodel)
+                with(Deps.Navigation.Voyager) {
+                    api(navigation)
+                    api(viewModel)
+                    api(koin)
                 }
-                api("io.github.qdsfdhvh:image-loader:1.5.1")
+
+                // Logback for ktor logging
+                api(Deps.Logback.logbackClassic)
+
+                //Image loader
+                api(Deps.Resources.sekio)
+
+                //KVault
+                api(Deps.Kvault.Kvault)
+
+                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+                implementation(compose.components.resources)
             }
         }
         val commonTest by getting {
@@ -86,13 +94,14 @@ kotlin {
             dependsOn(commonMain)
             dependencies {
                 // Ktor
-                implementation(Deps.Io.Ktor.ktorClientAndroid)
-
-                // SqlDelight
-                implementation(Deps.CashApp.SQLDelight.androidDriver)
+                api(Deps.Io.Ktor.ktorClientAndroid)
 
                 // Koin
-                implementation(Deps.Koin.android)
+                api(Deps.Koin.android)
+                api(Deps.Navigation.Voyager.koin)
+
+                api(Deps.Org.JetBrains.Kotlinx.kotlinxSerializationJson)
+
                 api("androidx.activity:activity-compose:1.7.2")
                 api("androidx.appcompat:appcompat:1.6.1")
                 api("androidx.core:core-ktx:1.10.1")
@@ -112,6 +121,7 @@ kotlin {
             dependencies {
                 implementation("io.ktor:ktor-client-darwin:2.3.2")
                 implementation("io.ktor:ktor-client-ios:2.3.1")
+
             }
         }
     }
@@ -127,4 +137,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    sourceSets["main"].res.srcDirs("src/androidMain/res")
+    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 }
