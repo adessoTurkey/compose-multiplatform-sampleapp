@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.example.moveeapp_compose_kmm.data.remote.model.PopularMovieModel
+import com.example.moveeapp_compose_kmm.data.remote.model.movie.PopularMovieModel
 import com.example.moveeapp_compose_kmm.utils.Constants
 import com.seiko.imageloader.rememberAsyncImagePainter
 
@@ -30,10 +30,10 @@ internal fun MovieList(listItems: List<PopularMovieModel.PopularMovies>, onclick
                     Image(
                         painter = rememberAsyncImagePainter(
                             Constants.IMAGE_BASE.plus(
-                                it.poster_path
+                                it.posterPath
                             )
                         ),
-                        contentDescription = it.poster_path,
+                        contentDescription = it.posterPath,
                         modifier = Modifier.size(250.dp).clickable {
                             onclick()
                         },
