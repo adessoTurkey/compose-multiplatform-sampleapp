@@ -7,7 +7,6 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.compose")
     id("kotlin-parcelize")
-    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -26,8 +25,6 @@ kotlin {
         framework {
             baseName = "shared"
             isStatic = true
-            export("dev.icerock.moko:resources:0.23.0") // for moko
-            export("dev.icerock.moko:graphics:0.9.0") // for moko
         }
         extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
@@ -35,6 +32,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+
                 // Compose
                 with(compose) {
                     api(runtime)
@@ -45,44 +43,42 @@ kotlin {
                     api(animation)
                 }
 
+                // Coroutines
+                api(Deps.Org.JetBrains.Kotlinx.coroutinesCore)
+
+                // KotlinX Serialization Json
+                api(Deps.Org.JetBrains.Kotlinx.kotlinxSerializationJson)
+
                 // Ktor
                 with(Deps.Io.Ktor) {
                     api(ktorClientCore)
                     api(ktorSerializationKotlinxJson)
                     api(ktorClientContentNegotiation)
                     api(ktorClientLogging)
-                    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-
                 }
-
-                // Logback for ktor logging
-                implementation(Deps.Logback.logbackClassic)
-
 
                 // Koin
                 with(Deps.Koin) {
                     api(core)
                     api(test)
+                    api(compose)
                 }
-                api("io.insert-koin:koin-compose:1.0.4")
-
-                // KotlinX Serialization Json
-                implementation(Deps.Org.JetBrains.Kotlinx.kotlinxSerializationJson)
-
-                // Coroutines
-                implementation(Deps.Org.JetBrains.Kotlinx.coroutinesCore)
 
                 //Navigation
-                api(Deps.Navigation.Voyager.voyagerNavigation)
-                api(Deps.Navigation.Voyager.voyagerViewModel)
-                api(Deps.Navigation.Voyager.voyagerKoin)
+                with(Deps.Navigation.Voyager) {
+                    api(navigation)
+                    api(viewModel)
+                    api(koin)
+                }
 
-                //image loader
-                api("io.github.qdsfdhvh:image-loader:1.5.1")
+                // Logback for ktor logging
+                api(Deps.Logback.logbackClassic)
 
-                //Moko
-                api("dev.icerock.moko:resources:0.23.0")
-                api("dev.icerock.moko:resources-compose:0.22.0")
+                //Image loader
+                api(Deps.Resources.sekio)
+
+                //KVault
+                api(Deps.Kvault.Kvault)
 
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
@@ -98,15 +94,18 @@ kotlin {
             dependsOn(commonMain)
             dependencies {
                 // Ktor
-                implementation(Deps.Io.Ktor.ktorClientAndroid)
+                api(Deps.Io.Ktor.ktorClientAndroid)
 
                 // Koin
-                implementation(Deps.Koin.android)
+                api(Deps.Koin.android)
+                api(Deps.Navigation.Voyager.koin)
+
+                api(Deps.Org.JetBrains.Kotlinx.kotlinxSerializationJson)
+
                 api("androidx.activity:activity-compose:1.7.2")
                 api("androidx.appcompat:appcompat:1.6.1")
                 api("androidx.core:core-ktx:1.10.1")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-                api(Deps.Navigation.Voyager.voyagerKoin)
 
 
             }
@@ -138,18 +137,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    sourceSets["main"].res.srcDirs("src/androidMain/res")
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 }
-
-multiplatformResources {
-    multiplatformResourcesPackage = "com.example.moveeapp_compose_kmm"
-    multiplatformResourcesClassName = "SharedRes"
-}
-
-//dependencies {
-//    implementation("androidx.core:core:1.10.1")
-//    commonMainApi("dev.icerock.moko:mvvm-core:0.16.1")
-//    commonMainApi("dev.icerock.moko:mvvm-compose:0.16.1")
-//    commonMainApi("dev.icerock.moko:mvvm-flow:0.16.1")
-//    commonMainApi("dev.icerock.moko:mvvm-flow-compose:0.16.1")
-//}

@@ -1,3 +1,10 @@
 package com.example.moveeapp_compose_kmm.di
 
-fun commonAppModule() = listOf(networkModule, repositoryModule, viewModelModule)
+import org.koin.core.KoinApplication
+import org.koin.core.module.Module
+
+fun KoinApplication.init(){
+    modules(networkModule, repositoryModule, viewModelModule, settingsModule)
+}
+
+expect val settingsModule: Module

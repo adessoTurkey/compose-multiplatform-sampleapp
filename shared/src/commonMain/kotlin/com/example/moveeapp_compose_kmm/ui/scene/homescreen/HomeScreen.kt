@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.data.remote.model.PopularMovieModel
 import com.example.moveeapp_compose_kmm.ui.components.MovieList
@@ -22,22 +23,23 @@ import org.koin.compose.LocalKoinScope
 class HomeScreen : Screen, Serializable {
     @Composable
     override fun Content() {
-        val coinScope = LocalKoinScope.current
-        val viewModel : HomeViewModel = rememberScreenModel {
-            coinScope.get()
+        val navigator = LocalNavigator.currentOrThrow
+        val koinScope = LocalKoinScope.current
+        val viewModel: HomeViewModel = rememberScreenModel {
+            koinScope.get()
         }
-       HomeContent(viewModel)
+        HomeContent(viewModel = viewModel, navigator = navigator)
     }
 }
 
 @Composable
 fun HomeContent(
+    navigator: Navigator,
     viewModel: HomeViewModel
 ) {
     LaunchedEffect(viewModel) {
         viewModel.popularMovies(1)
     }
-    val voyagerNavigator = LocalNavigator.currentOrThrow
 
     Column(
         Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
@@ -50,7 +52,7 @@ fun HomeContent(
 
                 is DataState.Success<List<PopularMovieModel.PopularMovies>> -> {
                     MovieList(it.data) {
-                        voyagerNavigator.push(DetailScreen())
+                        navigator.push(DetailScreen())
                     }
                 }
 

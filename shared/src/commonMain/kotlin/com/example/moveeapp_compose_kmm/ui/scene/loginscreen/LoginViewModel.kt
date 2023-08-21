@@ -6,19 +6,18 @@ import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
 import com.example.moveeapp_compose_kmm.data.repository.LoginRepository
+import com.example.moveeapp_compose_kmm.data.repository.LoginState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val repository: LoginRepository
 ) : ScreenModel {
 
-    val hasUser: LoginState
-        get() = if (loginUiState.isSuccessLogin){
-            LoginState.LOGGED_IN
-        }else{
-            LoginState.LOGGED_OUT
-        }
-
+    private val _isLoggedIn = MutableStateFlow(repository.getLoginState())
+    val isLoggedIn: StateFlow<LoginState>
+        get() = _isLoggedIn
     var loginUiState by mutableStateOf(LoginUiState())
         private set
 
@@ -48,6 +47,7 @@ class LoginViewModel(
             )
                 .onSuccess {
                     loginUiState = loginUiState.copy(isLoading = false, isSuccessLogin = true)
+                    _isLoggedIn.value = LoginState.LOGGED_IN
                 }
                 .onFailure { e ->
                     loginUiState = loginUiState.copy(isLoading = false, loginError = e.message)
@@ -55,9 +55,4 @@ class LoginViewModel(
                 }
         }
     }
-}
-
-enum class LoginState {
-    LOGGED_IN,
-    LOGGED_OUT
 }
