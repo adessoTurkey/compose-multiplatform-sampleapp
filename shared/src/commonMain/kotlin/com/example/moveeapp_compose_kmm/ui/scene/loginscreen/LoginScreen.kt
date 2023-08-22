@@ -29,13 +29,14 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.data.repository.LoginState
 import com.example.moveeapp_compose_kmm.ui.components.TextInputItem
 import com.example.moveeapp_compose_kmm.ui.scene.homescreen.HomeScreen
 import com.example.moveeapp_compose_kmm.ui.scene.webviewscreen.WebViewScreen
 import com.example.moveeapp_compose_kmm.utils.Constants
+import dev.icerock.moko.resources.compose.painterResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.LocalKoinScope
 
 class LoginScreen : Screen {
@@ -59,7 +60,7 @@ fun LoginScreen(
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource("MR/images/login_background.png"),
+            painter = painterResource(MR.images.login_background),
             contentDescription = null,
             contentScale = ContentScale.FillBounds
         )
@@ -73,7 +74,7 @@ fun LoginScreen(
             ) {
                 Image(
                     modifier = Modifier.align(Alignment.Center),
-                    painter = painterResource("MR/images/movee_icon.png"),
+                    painter = painterResource(MR.images.movee_icon),
                     contentDescription = null
                 )
             }
