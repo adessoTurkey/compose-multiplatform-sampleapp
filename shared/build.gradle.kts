@@ -81,9 +81,6 @@ kotlin {
                 //KVault
                 api(Deps.Kvault.Kvault)
 
-                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                implementation(compose.components.resources)
-
                 //Moko
                 with(Deps.Resources.Moko) {
                     api(moko)
@@ -136,7 +133,7 @@ kotlin {
 
 android {
     namespace = "com.example.moveeapp_compose_kmm"
-    compileSdk = 33
+    compileSdk = 34
     defaultConfig {
         minSdk = 24
     }
