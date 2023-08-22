@@ -36,7 +36,6 @@ import com.example.moveeapp_compose_kmm.ui.scene.homescreen.HomeScreen
 import com.example.moveeapp_compose_kmm.ui.scene.webviewscreen.WebViewScreen
 import com.example.moveeapp_compose_kmm.utils.Constants
 import dev.icerock.moko.resources.compose.painterResource
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.koin.compose.LocalKoinScope
 
 class LoginScreen : Screen {
@@ -51,7 +50,6 @@ class LoginScreen : Screen {
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel, navigator: Navigator

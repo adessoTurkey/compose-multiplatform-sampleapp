@@ -8,11 +8,11 @@ plugins {
 
 android {
     namespace = "com.example.moveeapp_compose_kmm.android"
-    compileSdk = 33
+    compileSdk = 34
     defaultConfig {
         applicationId = "com.example.moveeapp_compose_kmm.android"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
     }

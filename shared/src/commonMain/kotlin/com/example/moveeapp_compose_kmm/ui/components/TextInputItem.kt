@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -47,13 +48,17 @@ fun TextInputItem(
         label = label,
         visualTransformation = visualTransformation,
         isError = isError,
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Color.White,
-            unfocusedBorderColor = Color.LightGray,
+        colors = TextFieldDefaults.colors(
+            focusedIndicatorColor = Color.White,
+            unfocusedIndicatorColor = Color.White,
             focusedLabelColor = Color.White,
             unfocusedLabelColor = Color.White,
-            textColor = Color.White,
+            focusedTextColor = Color.White,
+            unfocusedTextColor = Color.White,
             cursorColor = Color.White,
+            unfocusedContainerColor = Color.Transparent,
+            focusedContainerColor = Color.Transparent,
+            errorContainerColor = Color.Transparent,
         )
     )
 }
