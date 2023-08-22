@@ -7,6 +7,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.compose")
     id("kotlin-parcelize")
+    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -82,6 +83,12 @@ kotlin {
 
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
+
+                //Moko
+                with(Deps.Resources.Moko) {
+                    api(moko)
+                    api(compose)
+                }
             }
         }
         val commonTest by getting {
@@ -140,4 +147,8 @@ android {
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+}
+
+multiplatformResources {
+    multiplatformResourcesPackage = "com.example.moveeapp_compose_kmm"
 }

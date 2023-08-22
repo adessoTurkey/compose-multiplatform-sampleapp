@@ -6,6 +6,7 @@ plugins {
     kotlin("multiplatform").version("1.9.0").apply(false)
     id("org.jetbrains.compose") version "1.4.3" apply false
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.20"
+    id("dev.icerock.mobile.multiplatform-resources") version "0.23.0" apply false
 }
 
 tasks.register("clean", Delete::class) {
