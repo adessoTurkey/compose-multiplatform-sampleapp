@@ -32,7 +32,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.data.repository.LoginState
 import com.example.moveeapp_compose_kmm.ui.components.TextInputItem
-import com.example.moveeapp_compose_kmm.ui.scene.homescreen.HomeScreen
+import com.example.moveeapp_compose_kmm.ui.scene.moviescreen.MovieScreen
 import com.example.moveeapp_compose_kmm.ui.scene.webviewscreen.WebViewScreen
 import com.example.moveeapp_compose_kmm.utils.Constants
 import dev.icerock.moko.resources.compose.painterResource
@@ -168,7 +168,7 @@ fun LoginContent(
 
         LaunchedEffect(key1 = isLoggedIn) {
             if (isLoggedIn == LoginState.LOGGED_IN) {
-                navigator.push(HomeScreen())
+                navigator.push(MovieScreen())
             }
         }
     }

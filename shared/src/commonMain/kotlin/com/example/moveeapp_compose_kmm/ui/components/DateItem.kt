@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 @Composable
 fun DateItem(
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.secondary,
+    color: Color = MaterialTheme.colorScheme.primary,
     date: String?
 ) {
 

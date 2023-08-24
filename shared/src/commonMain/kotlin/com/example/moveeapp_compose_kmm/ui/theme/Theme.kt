@@ -16,10 +16,10 @@ private val shapes = Shapes(
 )
 
 private val colors = lightColorScheme().copy(
-    primary = Color(0xFF003dff),
-    secondary = Color(0xFF08090a),
-    primaryContainer = Color(0xFFFFFFFF),
-    secondaryContainer = Color(0xFFf4f4f4),
+    primary = Color(0xFF003dff), //blue
+    secondary = Color(0xFF08090a), //black
+    primaryContainer = Color(0xFFFFFFFF), //white
+    secondaryContainer = Color(0xFFf4f4f4), //lightGray
 )
 
 @Composable
