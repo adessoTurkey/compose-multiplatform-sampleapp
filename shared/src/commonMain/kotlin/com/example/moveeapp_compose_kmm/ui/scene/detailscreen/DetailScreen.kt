@@ -10,9 +10,9 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.example.moveeapp_compose_kmm.ui.scene.homescreen.HomeScreen
+import com.example.moveeapp_compose_kmm.ui.scene.moviescreen.MovieScreen
 
-class DetailScreen : Screen {
+class DetailScreen() : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
@@ -22,7 +22,7 @@ class DetailScreen : Screen {
 
 @Composable
 fun DetailContent(navigator: Navigator) {
-    Button(onClick = { navigator.push(HomeScreen()) }){
+    Button(onClick = { navigator.push(MovieScreen()) }){
         Text(modifier = Modifier.padding(30.dp), text = "DetailToHome")
     }
 }

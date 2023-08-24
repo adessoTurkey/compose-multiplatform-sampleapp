@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 fun RateItem(
     modifier: Modifier = Modifier,
     backgroundColor: Color = MaterialTheme.colorScheme.primary,
-    textColor: Color = MaterialTheme.colorScheme.secondary,
+    textColor: Color = MaterialTheme.colorScheme.primaryContainer,
     shape: CornerBasedShape = MaterialTheme.shapes.small,
     rate: String?
 ) {
@@ -34,7 +34,7 @@ fun RateItem(
                 contentDescription = null,
                 tint = textColor
             )
-            TextItem(text = rate.toString())
+            TextItem(text = rate.toString(), textColor = textColor)
         }
     }
 }

@@ -11,7 +11,6 @@ class MoveeApplication : Application() {
 
         startKoin {
             androidContext(this@MoveeApplication)
-            //androidLogger()
             init()
         }
     }

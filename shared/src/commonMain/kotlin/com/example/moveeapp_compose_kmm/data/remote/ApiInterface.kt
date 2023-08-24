@@ -6,10 +6,13 @@ import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseMod
 import com.example.moveeapp_compose_kmm.data.remote.model.login.RequestTokenResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionResponseModel
+import com.example.moveeapp_compose_kmm.data.remote.model.movie.NowPlayingMovieModel
 
 interface ApiInterface {
 
-    suspend fun popularMovieList(page: Int): PopularMovieModel
+    suspend fun popularMovie(): PopularMovieModel
+
+    suspend fun nowPlayingMovie(): NowPlayingMovieModel
 
     suspend fun createRequestToken(): RequestTokenResponseModel
 
