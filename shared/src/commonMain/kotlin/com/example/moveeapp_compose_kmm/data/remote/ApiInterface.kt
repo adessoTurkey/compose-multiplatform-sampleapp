@@ -1,5 +1,6 @@
 package com.example.moveeapp_compose_kmm.data.remote
 
+import com.example.moveeapp_compose_kmm.data.remote.model.CreditsModel
 import com.example.moveeapp_compose_kmm.data.remote.model.movie.PopularMovieModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseModel
@@ -17,6 +18,8 @@ interface ApiInterface {
     suspend fun nowPlayingMovie(): NowPlayingMovieModel
 
     suspend fun movieDetail(): MovieDetailModel
+
+    suspend fun movieCredit(): CreditsModel
 
     //Login
     suspend fun createRequestToken(): RequestTokenResponseModel
