@@ -6,6 +6,7 @@ import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseMod
 import com.example.moveeapp_compose_kmm.data.remote.model.login.RequestTokenResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionResponseModel
+import com.example.moveeapp_compose_kmm.data.remote.model.movie.MovieDetailModel
 import com.example.moveeapp_compose_kmm.data.remote.model.movie.NowPlayingMovieModel
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -23,6 +24,10 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
 
     override suspend fun nowPlayingMovie(): NowPlayingMovieModel {
         return client.get(NOW_PLAYING_MOVIE).body()
+    }
+
+    override suspend fun movieDetail(): MovieDetailModel {
+        return client.get(MOVIE_DETAIL).body()
     }
 
     override suspend fun createRequestToken(): RequestTokenResponseModel {
@@ -48,6 +53,7 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         //Movie
         const val POPULAR_MOVIE = "movie/popular"
         const val NOW_PLAYING_MOVIE = "movie/now_playing"
+        const val MOVIE_DETAIL = "movie/{movie_id}"
 
         //Login
         const val REQUEST_TOKEN = "authentication/token/new"
