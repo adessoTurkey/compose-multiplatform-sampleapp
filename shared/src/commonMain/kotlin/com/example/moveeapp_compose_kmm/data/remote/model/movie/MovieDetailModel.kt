@@ -1,5 +1,6 @@
 package com.example.moveeapp_compose_kmm.data.remote.model.movie
 
+import com.example.moveeapp_compose_kmm.data.remote.model.CreditsModel
 import com.example.moveeapp_compose_kmm.data.uimodel.MovieDetailUiModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -8,7 +9,7 @@ import kotlinx.serialization.Serializable
 data class MovieDetailModel(
     @SerialName("adult") val adult: Boolean,
     @SerialName("backdrop_path") val backdropPath: String,
-    @SerialName("belongs_to_collection") val belongsToCollection: BelongsToCollection,
+    @SerialName("belongs_to_collection") val belongsToCollection: BelongsToCollection?,
     @SerialName("budget") val budget: Int,
     @SerialName("genres") val genres: List<Genre>,
     @SerialName("homepage") val homepage: String,
@@ -63,7 +64,7 @@ data class MovieDetailModel(
         @SerialName("name") val name: String
     )
 
-    fun toUiModel() = MovieDetailUiModel(
+    fun toUiModel(credit : List<CreditsModel.Cast>) = MovieDetailUiModel(
         movieId = movieId,
         runtime = runtime,
         title = title,
@@ -73,8 +74,8 @@ data class MovieDetailModel(
         overview = overview,
         genre = getFormattedGenres(genres),
         voteCount = voteCount,
-        backdropPath = backdropPath
-
+        backdropPath = backdropPath,
+        credit = credit.map { it.toUiModel() }
     )
 
     private fun getFormattedGenres(list: List<Genre>): String {

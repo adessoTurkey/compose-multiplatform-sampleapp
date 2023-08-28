@@ -17,9 +17,9 @@ interface ApiInterface {
 
     suspend fun nowPlayingMovie(): NowPlayingMovieModel
 
-    suspend fun movieDetail(): MovieDetailModel
+    suspend fun movieDetail(movieId: Int): MovieDetailModel
 
-    suspend fun movieCredit(): CreditsModel
+    suspend fun movieCredit(movieId: Int): CreditsModel
 
     //Login
     suspend fun createRequestToken(): RequestTokenResponseModel
