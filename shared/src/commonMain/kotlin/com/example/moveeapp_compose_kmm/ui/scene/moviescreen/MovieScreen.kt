@@ -3,6 +3,7 @@ package com.example.moveeapp_compose_kmm.ui.scene.moviescreen
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
@@ -37,7 +38,7 @@ import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import com.example.moveeapp_compose_kmm.ui.scene.detailscreen.DetailScreen
+import com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen.MovieDetailScreen
 import com.example.moveeapp_compose_kmm.utils.Serializable
 import org.koin.compose.LocalKoinScope
 
@@ -61,30 +62,34 @@ fun MovieContent(
     uiState: MovieUiState
 ) {
 
-    LazyColumn {
-        item {
-            if (uiState.error != null) {
-                ErrorScreen(uiState.error)
-            }
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (uiState.error != null) {
+            ErrorScreen(uiState.error)
         }
 
+        if (uiState.isLoading) {
+            LoadingScreen()
+        }
+        SuccessContent(navigator, uiState.popularMovieData, uiState.nowPlayingMovieData)
+
+    }
+}
+
+@Composable
+fun SuccessContent(
+    navigator: Navigator,
+    popularMovieData: List<PopularMovieUiModel>,
+    nowPlayingMovieData: List<NowPlayingMovieUiModel>
+) {
+    LazyColumn {
         item {
-            if (uiState.isLoading){
-                LoadingScreen()
+            HorizontalMoviePager(popularMovieData) {
+                navigator.push(MovieDetailScreen(it))
             }
         }
-        item {
-            if (uiState.popularMovieData.isNotEmpty()) {
-                HorizontalMoviePager(uiState.popularMovieData) {
-                    navigator.push(DetailScreen())
-                }
-            }
-        }
-        items(uiState.nowPlayingMovieData) { nowPlayingMovies ->
-            if (uiState.nowPlayingMovieData.isNotEmpty()) {
-                NowPlayingMovieRow(nowPlayingMovies = nowPlayingMovies) {
-                    navigator.push(DetailScreen())
-                }
+        items(nowPlayingMovieData) { nowPlayingMovies ->
+            NowPlayingMovieRow(nowPlayingMovies = nowPlayingMovies) {
+                navigator.push(MovieDetailScreen(it))
             }
         }
     }

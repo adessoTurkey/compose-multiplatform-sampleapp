@@ -5,8 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LockClock
+import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,7 +19,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun RuntimeItem(
     modifier: Modifier = Modifier,
-    textColor: Color,
+    textColor: Color = MaterialTheme.colorScheme.primary,
     runtime: String
 ) {
 
@@ -27,7 +28,7 @@ fun RuntimeItem(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Icon(
-            imageVector = Icons.Default.LockClock,
+            imageVector = Icons.Default.Timer,
             contentDescription = null,
             modifier = Modifier.padding(end = 2.dp),
             tint = textColor

@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
@@ -16,7 +17,8 @@ fun TextItem(
     textColor: Color = MaterialTheme.colorScheme.secondary,
     fontSize: TextUnit = 16.sp,
     fontWeight: FontWeight = FontWeight.Normal,
-    maxLines: Int = 1
+    maxLines: Int = 1,
+    overflow: TextOverflow = TextOverflow.Clip
 ) {
     Text(
         text = text,
@@ -24,6 +26,7 @@ fun TextItem(
         color = textColor,
         fontSize = fontSize,
         fontWeight = fontWeight,
-        maxLines = maxLines
+        maxLines = maxLines,
+        overflow = overflow
     )
 }

@@ -1,13 +1,15 @@
 package com.example.moveeapp_compose_kmm.data.uimodel
 
-class MovieDetailUiModel(val movieId: Int,
-                         val runtime: Int,
-                         val releaseDate: String,
-                         val voteAverage: Double,
-                         val title: String,
-                         val overview: String,
-                         val posterPath: String,
-                         val genre: String,
-                         val voteCount:Int,
-                         val backdropPath: String
+data class MovieDetailUiModel(
+    val movieId: Int = 0,
+    val runtime: Int = 0,
+    val releaseDate: String = "",
+    val voteAverage: Double = 0.0,
+    val title: String = "",
+    val overview: String = "",
+    val posterPath: String = "",
+    val genre: String = "",
+    val voteCount: Int = 0,
+    val backdropPath: String = "",
+    val credit: List<CreditUiModel> = listOf()
 )

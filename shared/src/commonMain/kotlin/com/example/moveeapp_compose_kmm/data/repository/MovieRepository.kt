@@ -21,4 +21,19 @@ class MovieRepository(private val api: ApiInterface) {
             }
         )
     }
+    fun getMovieDetail(movieId: Int) = flow {
+        emit(
+            resultOf {
+                api.movieDetail(movieId)
+            }
+        )
+    }
+
+    fun getMovieCredits(movieId: Int) = flow {
+        emit(
+            resultOf {
+                api.movieCredit(movieId)
+            }
+        )
+    }
 }
