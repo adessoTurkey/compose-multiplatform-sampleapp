@@ -1,14 +1,18 @@
 package com.example.moveeapp_compose_kmm.data.remote
 
-import com.example.moveeapp_compose_kmm.data.remote.model.PopularMovieModel
+import com.example.moveeapp_compose_kmm.data.remote.model.CreditsModel
+import com.example.moveeapp_compose_kmm.data.remote.model.movie.PopularMovieModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.RequestTokenResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionResponseModel
+import com.example.moveeapp_compose_kmm.data.remote.model.movie.MovieDetailModel
+import com.example.moveeapp_compose_kmm.data.remote.model.movie.NowPlayingMovieModel
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
@@ -16,13 +20,21 @@ import io.ktor.http.contentType
 
 class ApiImpl(private val client: HttpClient) : ApiInterface {
 
+    //Movie
+    override suspend fun popularMovie(): PopularMovieModel {
+        return client.get(POPULAR_MOVIE).body()
+    }
 
-    override suspend fun popularMovieList(page: Int): PopularMovieModel {
-        return client.get(POPULAR_MOVIE) {
-            url {
-                parameters.append("page", page.toString())
-            }
-        }.body()
+    override suspend fun nowPlayingMovie(): NowPlayingMovieModel {
+        return client.get(NOW_PLAYING_MOVIE).body()
+    }
+
+    override suspend fun movieDetail(movieId: Int): MovieDetailModel {
+        return client.get("movie/$movieId").body()
+    }
+
+    override suspend fun movieCredit(movieId: Int): CreditsModel {
+        return client.get("movie/$movieId/credits").body()
     }
 
     override suspend fun createRequestToken(): RequestTokenResponseModel {
@@ -44,7 +56,14 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
     }
 
     companion object {
+
+        //Movie
         const val POPULAR_MOVIE = "movie/popular"
+        const val NOW_PLAYING_MOVIE = "movie/now_playing"
+        const val MOVIE_DETAIL = "movie/(movie_id)"
+        const val MOVIE_CREDITS: String = "movie/%d/credits"
+
+        //Login
         const val REQUEST_TOKEN = "authentication/token/new"
         const val LOGIN = "authentication/token/validate_with_login"
         const val SESSION = "authentication/session/new"
