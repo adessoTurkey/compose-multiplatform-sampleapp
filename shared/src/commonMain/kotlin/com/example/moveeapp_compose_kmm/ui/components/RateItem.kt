@@ -22,7 +22,7 @@ fun RateItem(
     shape: CornerBasedShape = MaterialTheme.shapes.small,
     rate: String?
 ) {
-    Surface(shape = shape, color = backgroundColor) {
+    Surface(modifier = modifier, shape = shape, color = backgroundColor) {
         Row(
             modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
             verticalAlignment = Alignment.CenterVertically,

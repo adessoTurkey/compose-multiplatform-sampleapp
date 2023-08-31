@@ -18,7 +18,7 @@ fun DateItem(
     date: String?
 ) {
 
-    Row(
+    Row(modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
