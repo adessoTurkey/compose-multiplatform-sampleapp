@@ -81,9 +81,7 @@ fun SuccessContent(navigator: Navigator, uiState: MovieDetailUiState) {
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                RateItem(
-                    rate = round(uiState.movieDetailData.voteAverage).toString() + " " + "(${uiState.movieDetailData.voteCount})"
-                )
+                RateItem(rate = round(uiState.movieDetailData.voteAverage).toString())
 
                 RuntimeItem(runtime = uiState.movieDetailData.runtime.toString())
             }
