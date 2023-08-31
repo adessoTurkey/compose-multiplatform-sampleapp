@@ -72,7 +72,7 @@ fun LoginScreen(
             ) {
                 Image(
                     modifier = Modifier.align(Alignment.Center),
-                    painter = painterResource(MR.images.movee_icon),
+                    painter = painterResource(MR.images.ic_login_movee),
                     contentDescription = null
                 )
             }

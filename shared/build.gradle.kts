@@ -70,6 +70,9 @@ kotlin {
                     api(navigation)
                     api(viewModel)
                     api(koin)
+                    api(tabNavigator)
+                    api(transition)
+                    api(bottomSheet)
                 }
 
                 // Logback for ktor logging
