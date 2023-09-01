@@ -10,7 +10,7 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import com.example.moveeapp_compose_kmm.ui.scene.tvscreen.TvScreen
 
-object TvScreenTab : Tab {
+internal object TvScreenTab : Tab {
 
     @Composable
     override fun Content() {
