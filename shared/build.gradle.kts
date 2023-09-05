@@ -72,7 +72,6 @@ kotlin {
                     api(koin)
                     api(tabNavigator)
                     api(transition)
-                    api(bottomSheet)
                 }
 
                 // Logback for ktor logging
@@ -105,7 +104,6 @@ kotlin {
 
                 // Koin
                 api(Deps.Koin.android)
-                api(Deps.Navigation.Voyager.koin)
 
                 api(Deps.Org.JetBrains.Kotlinx.kotlinxSerializationJson)
 
@@ -128,7 +126,6 @@ kotlin {
             dependencies {
                 implementation("io.ktor:ktor-client-darwin:2.3.2")
                 implementation("io.ktor:ktor-client-ios:2.3.1")
-
             }
         }
     }

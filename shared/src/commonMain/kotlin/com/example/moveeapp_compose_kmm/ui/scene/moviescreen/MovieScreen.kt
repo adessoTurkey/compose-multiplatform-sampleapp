@@ -24,11 +24,11 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.uimodel.movie.NowPlayingMovieUiModel
 import com.example.moveeapp_compose_kmm.data.uimodel.movie.PopularMovieUiModel
 import com.example.moveeapp_compose_kmm.ui.components.CardImageItem
@@ -40,16 +40,12 @@ import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen.MovieDetailScreen
 import com.example.moveeapp_compose_kmm.utils.Serializable
-import org.koin.compose.LocalKoinScope
 
 class MovieScreen : Screen, Serializable {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-        val koinScope = LocalKoinScope.current
-        val viewModel: MovieViewModel = rememberScreenModel {
-            koinScope.get()
-        }
+        val viewModel: MovieViewModel = viewModel()
 
         val uiState = viewModel.uiState.collectAsState().value
         MovieContent(uiState = uiState, navigator = navigator)
