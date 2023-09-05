@@ -1,7 +1,7 @@
 package com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen
 
-import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
+import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.data.repository.MovieRepository
 import com.example.moveeapp_compose_kmm.data.uimodel.MovieDetailUiModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.update
 
 class MovieDetailViewModel(
     private val repository: MovieRepository
-) : ScreenModel {
+) : ViewModel {
 
     private val _uiState = MutableStateFlow(MovieDetailUiState())
     val uiState: StateFlow<MovieDetailUiState> = _uiState
