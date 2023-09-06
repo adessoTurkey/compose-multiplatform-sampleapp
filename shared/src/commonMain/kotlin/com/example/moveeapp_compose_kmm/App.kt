@@ -10,17 +10,28 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
+import com.example.moveeapp_compose_kmm.ui.scene.splashscreen.SplashScreen
 import com.example.moveeapp_compose_kmm.ui.tab.MovieScreenTab
 import com.example.moveeapp_compose_kmm.ui.tab.TvScreenTab
 import com.example.moveeapp_compose_kmm.ui.theme.AppTheme
 
 @Composable
-internal fun App() {
+fun App() {
     AppTheme {
+        Navigator(SplashScreen())
+    }
+}
+
+internal object MainScreen : Screen {
+    @Composable
+    override fun Content() {
+
         TabNavigator(MovieScreenTab) {
             Scaffold(
                 content = {
