@@ -24,28 +24,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.MR
+import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.repository.LoginState
 import com.example.moveeapp_compose_kmm.ui.components.TextInputItem
 import com.example.moveeapp_compose_kmm.ui.scene.moviescreen.MovieScreen
 import com.example.moveeapp_compose_kmm.ui.scene.webviewscreen.WebViewScreen
 import com.example.moveeapp_compose_kmm.utils.Constants
 import dev.icerock.moko.resources.compose.painterResource
-import org.koin.compose.LocalKoinScope
 
 class LoginScreen : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-        val koinScope = LocalKoinScope.current
-        val viewModel: LoginViewModel = rememberScreenModel {
-            koinScope.get()
-        }
+        val viewModel: LoginViewModel = viewModel()
         LoginScreen(viewModel = viewModel, navigator = navigator)
     }
 }
@@ -144,7 +140,7 @@ fun LoginContent(
                     navigateToWebViewScreen(url = Constants.FORGOT_PASSWORD, navigator = navigator)
                 },
                 color = MaterialTheme.colorScheme.primaryContainer
-                )
+            )
         }
 
         Button(
@@ -164,7 +160,7 @@ fun LoginContent(
                 navigateToWebViewScreen(url = Constants.REGISTER, navigator = navigator)
             },
             color = MaterialTheme.colorScheme.primaryContainer
-            )
+        )
 
         LaunchedEffect(key1 = isLoggedIn) {
             if (isLoggedIn == LoginState.LOGGED_IN) {
