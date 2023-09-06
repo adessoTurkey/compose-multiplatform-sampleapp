@@ -68,6 +68,10 @@ kotlin {
                 //Navigation
                 with(Deps.Navigation.Voyager) {
                     api(navigation)
+                    api(viewModel)
+                    api(koin)
+                    api(tabNavigator)
+                    api(transition)
                 }
 
                 // Logback for ktor logging
