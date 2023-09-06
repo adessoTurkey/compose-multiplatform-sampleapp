@@ -9,6 +9,9 @@ import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionRequestMo
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.movie.MovieDetailModel
 import com.example.moveeapp_compose_kmm.data.remote.model.movie.NowPlayingMovieModel
+import com.example.moveeapp_compose_kmm.data.remote.model.tv.PopularTvModel
+import com.example.moveeapp_compose_kmm.data.remote.model.tv.TopRatedTvModel
+import com.example.moveeapp_compose_kmm.data.remote.model.tv.TvDetailModel
 
 interface ApiInterface {
 
@@ -20,6 +23,15 @@ interface ApiInterface {
     suspend fun movieDetail(movieId: Int): MovieDetailModel
 
     suspend fun movieCredit(movieId: Int): CreditsModel
+
+    //Tv
+    suspend fun popularTv(): PopularTvModel
+
+    suspend fun topRatedTv(): TopRatedTvModel
+
+    suspend fun tvDetail(tvId: Int): TvDetailModel
+
+    suspend fun tvCredit(tvId: Int): CreditsModel
 
     //Login
     suspend fun createRequestToken(): RequestTokenResponseModel
