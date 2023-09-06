@@ -21,18 +21,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.uimodel.CreditUiModel
 import com.example.moveeapp_compose_kmm.ui.components.CardImageItem
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.RuntimeItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import org.koin.compose.LocalKoinScope
 import kotlin.math.round
 
 class MovieDetailScreen(
@@ -42,10 +41,7 @@ class MovieDetailScreen(
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-        val koinScope = LocalKoinScope.current
-        val viewModel: MovieDetailViewModel = rememberScreenModel {
-            koinScope.get()
-        }
+        val viewModel: MovieDetailViewModel = viewModel()
         val uiState by viewModel.uiState.collectAsState()
 
         viewModel.fetchData(movieId)
