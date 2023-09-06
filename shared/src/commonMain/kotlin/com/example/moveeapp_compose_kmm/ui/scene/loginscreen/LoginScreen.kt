@@ -29,10 +29,10 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.MR
+import com.example.moveeapp_compose_kmm.MainScreen
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.repository.LoginState
 import com.example.moveeapp_compose_kmm.ui.components.TextInputItem
-import com.example.moveeapp_compose_kmm.ui.scene.moviescreen.MovieScreen
 import com.example.moveeapp_compose_kmm.ui.scene.webviewscreen.WebViewScreen
 import com.example.moveeapp_compose_kmm.utils.Constants
 import dev.icerock.moko.resources.compose.painterResource
@@ -68,7 +68,7 @@ fun LoginScreen(
             ) {
                 Image(
                     modifier = Modifier.align(Alignment.Center),
-                    painter = painterResource(MR.images.movee_icon),
+                    painter = painterResource(MR.images.ic_login_movee),
                     contentDescription = null
                 )
             }
@@ -164,7 +164,7 @@ fun LoginContent(
 
         LaunchedEffect(key1 = isLoggedIn) {
             if (isLoggedIn == LoginState.LOGGED_IN) {
-                navigator.push(MovieScreen())
+                navigator.replace(MainScreen)
             }
         }
     }

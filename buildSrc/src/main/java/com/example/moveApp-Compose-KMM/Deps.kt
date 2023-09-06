@@ -36,6 +36,9 @@ object Deps {
             const val navigation = "cafe.adriel.voyager:voyager-navigator:${Versions.voyager}"
             const val viewModel = "cafe.adriel.voyager:voyager-androidx:${Versions.voyager}"
             const val koin = "cafe.adriel.voyager:voyager-koin:${Versions.voyager}"
+            const val tabNavigator = "cafe.adriel.voyager:voyager-tab-navigator:${Versions.voyager}"
+            const val transition = "cafe.adriel.voyager:voyager-transitions:${Versions.voyager}"
+            const val bottomSheet = "cafe.adriel.voyager:voyager-bottom-sheet-navigator:${Versions.voyager}"
         }
     }
 
