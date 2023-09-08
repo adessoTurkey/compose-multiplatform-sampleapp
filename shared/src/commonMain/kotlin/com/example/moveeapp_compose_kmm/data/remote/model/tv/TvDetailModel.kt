@@ -18,7 +18,7 @@ data class TvDetailModel(
     @SerialName("in_production") val inProduction: Boolean,
     @SerialName("languages") val languages: List<String>,
     @SerialName("last_air_date") val lastAirDate: String,
-    @SerialName("last_episode_to_air") val lastEpisodeToAir: LastEpisodeToAir,
+    @SerialName("last_episode_to_air") val lastEpisodeToAir: LastEpisodeToAir?,
     @SerialName("name") val title: String,
     @SerialName("networks") val networks: List<Network>,
     @SerialName("number_of_episodes") val numberOfEpisodes: Int,
@@ -29,8 +29,8 @@ data class TvDetailModel(
     @SerialName("overview") val overview: String,
     @SerialName("popularity") val popularity: Double,
     @SerialName("poster_path") val posterPath: String,
-    @SerialName("production_companies") val productionCompanies: List<ProductionCompany>,
-    @SerialName("production_countries") val productionCountries: List<ProductionCountry>,
+    @SerialName("production_companies") val productionCompanies: List<ProductionCompany>?,
+    @SerialName("production_countries") val productionCountries: List<ProductionCountry>?,
     @SerialName("seasons") val seasons: List<Season>,
     @SerialName("spoken_languages") val spokenLanguages: List<SpokenLanguage>,
     @SerialName("status") val status: String,
@@ -65,7 +65,7 @@ data class TvDetailModel(
         @SerialName("runtime") val runtime: Int,
         @SerialName("season_number") val seasonNumber: Int,
         @SerialName("show_id") val showId: Int,
-        @SerialName("still_path") val stillPath: String,
+        @SerialName("still_path") val stillPath: String?,
         @SerialName("vote_average") val voteAverage: Double,
         @SerialName("vote_count") val voteCount: Int
     )
@@ -81,7 +81,7 @@ data class TvDetailModel(
     @Serializable
     data class ProductionCompany(
         @SerialName("id") val id: Int,
-        @SerialName("logo_path") val logoPath: String,
+        @SerialName("logo_path") val logoPath: String?,
         @SerialName("name") val name: String,
         @SerialName("origin_country") val originCountry: String
     )
@@ -110,7 +110,7 @@ data class TvDetailModel(
         @SerialName("name") val name: String
     )
 
-    fun toUiModel(credit : List<CreditsModel.Cast>) = TvDetailUiModel(
+    fun toUiModel(credit: List<CreditsModel.Cast>) = TvDetailUiModel(
         tvSeriesId = tvSeriesId,
         title = title,
         posterPath = posterPath,
@@ -119,8 +119,13 @@ data class TvDetailModel(
         numberOfSeasons = numberOfSeasons,
         overview = overview,
         originalLanguage = originalLanguage,
+        genre = getFormattedGenres(genres),
         voteCount = voteCount,
         backdropPath = backdropPath,
         credit = credit.map { it.toUiModel() }
     )
+    private fun getFormattedGenres(list: List<Genre>): String {
+        val filteredGenres = list.filter { it.name.isNotEmpty() }.map { it.name }
+        return filteredGenres.joinToString(", ")
+    }
 }

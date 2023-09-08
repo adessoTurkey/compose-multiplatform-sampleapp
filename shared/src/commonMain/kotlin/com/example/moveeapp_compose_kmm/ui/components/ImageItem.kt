@@ -7,26 +7,30 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.ContentScale.Companion.Crop
 import androidx.compose.ui.unit.dp
 import com.example.moveeapp_compose_kmm.utils.Constants
 import com.seiko.imageloader.rememberAsyncImagePainter
 
 @Composable
 fun PosterImageItem(
+    modifier: Modifier = Modifier,
+    contentScale: ContentScale = Crop,
     imagePath: String?
 ) {
     Image(
+        modifier = modifier.fillMaxSize(),
         painter = rememberAsyncImagePainter(
             Constants.IMAGE_BASE.plus(imagePath)
         ),
         contentDescription = null,
-        modifier = Modifier.fillMaxSize(),
-        contentScale = ContentScale.Crop
+        contentScale = contentScale
     )
 }
 
 @Composable
 fun CardImageItem(
+    modifier: Modifier = Modifier,
     imagePath: String?
 ) {
     Image(
@@ -34,7 +38,7 @@ fun CardImageItem(
             Constants.IMAGE_BASE.plus(imagePath)
         ),
         contentDescription = null,
-        modifier = Modifier.size(width = 100.dp, height = 150.dp),
-        contentScale = ContentScale.Crop,
+        modifier = modifier.size(width = 100.dp, height = 150.dp),
+        contentScale = Crop,
     )
 }

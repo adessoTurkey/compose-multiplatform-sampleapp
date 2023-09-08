@@ -1,6 +1,8 @@
 package com.example.moveeapp_compose_kmm
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -35,7 +37,9 @@ internal object MainScreen : Screen {
         TabNavigator(MovieScreenTab) {
             Scaffold(
                 content = {
-                    CurrentTab()
+                    Box(modifier = Modifier.padding(it)) {
+                        CurrentTab()
+                    }
                 },
                 bottomBar = {
                     BottomNavigation(

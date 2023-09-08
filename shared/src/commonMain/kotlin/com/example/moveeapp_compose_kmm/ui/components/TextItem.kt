@@ -18,7 +18,8 @@ fun TextItem(
     fontSize: TextUnit = 16.sp,
     fontWeight: FontWeight = FontWeight.Normal,
     maxLines: Int = 1,
-    overflow: TextOverflow = TextOverflow.Clip
+    overflow: TextOverflow = TextOverflow.Clip,
+    lineHeight: TextUnit = TextUnit.Unspecified
 ) {
     Text(
         text = text,
@@ -27,6 +28,7 @@ fun TextItem(
         fontSize = fontSize,
         fontWeight = fontWeight,
         maxLines = maxLines,
-        overflow = overflow
+        overflow = overflow,
+        lineHeight = lineHeight
     )
 }
