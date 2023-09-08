@@ -20,6 +20,7 @@ private val colors = lightColorScheme().copy(
     secondary = Color(0xFF08090a), //black
     primaryContainer = Color(0xFFFFFFFF), //white
     secondaryContainer = Color(0xFFf4f4f4), //lightGray
+    background = Color(0xFFf4f4f4)
 )
 
 @Composable

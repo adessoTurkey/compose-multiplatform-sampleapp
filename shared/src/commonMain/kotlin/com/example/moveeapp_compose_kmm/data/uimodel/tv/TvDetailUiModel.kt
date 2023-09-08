@@ -10,6 +10,7 @@ data class TvDetailUiModel(
     val numberOfSeasons: Int = 0,
     val numberOfEpisodes: Int = 0,
     val overview: String = "",
+    val genre: String = "",
     val originalLanguage: String = "",
     val voteCount: Int = 0,
     val backdropPath: String = "",

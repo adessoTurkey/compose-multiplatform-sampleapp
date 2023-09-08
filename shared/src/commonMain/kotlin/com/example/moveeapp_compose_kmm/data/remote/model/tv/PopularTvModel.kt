@@ -28,7 +28,7 @@ data class PopularTvModel(
         @SerialName("vote_count") val voteCount: Int
     ) {
         fun toUiModel() = PopularTvUiModel(
-            tvSeriesId = tvSeriesId,
+            tvId = tvSeriesId,
             title = title,
             posterPath = posterPath
         )
