@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun DateItem(
@@ -27,6 +28,6 @@ fun DateItem(
             contentDescription = null,
             tint = color
         )
-        TextItem(text = date.toString())
+        TextItem(text = date.toString(), fontSize = 14.sp)
     }
 }

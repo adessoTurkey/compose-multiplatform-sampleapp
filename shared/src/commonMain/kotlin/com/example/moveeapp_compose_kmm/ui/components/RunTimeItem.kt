@@ -19,19 +19,20 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun RuntimeItem(
     modifier: Modifier = Modifier,
-    textColor: Color = MaterialTheme.colorScheme.primary,
+    textColor: Color = MaterialTheme.colorScheme.secondary,
+    iconColor: Color = MaterialTheme.colorScheme.primary,
     runtime: String
 ) {
 
     Row(modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         Icon(
             imageVector = Icons.Default.Timer,
             contentDescription = null,
             modifier = Modifier.padding(end = 2.dp),
-            tint = textColor
+            tint = iconColor
         )
         Text(
             text = "$runtime min",
