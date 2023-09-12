@@ -40,11 +40,13 @@ data class MovieDetailModel(
         @SerialName("name") val name: String,
         @SerialName("poster_path") val posterPath: String
     )
+
     @Serializable
     data class Genre(
         @SerialName("id") val id: Int,
         @SerialName("name") val name: String
     )
+
     @Serializable
     data class ProductionCompany(
         @SerialName("id") val id: Int,
@@ -52,11 +54,13 @@ data class MovieDetailModel(
         @SerialName("name") val name: String,
         @SerialName("origin_country") val originCountry: String
     )
+
     @Serializable
     data class ProductionCountry(
         @SerialName("iso_3166_1") val iso31661: String,
         @SerialName("name") val name: String
     )
+
     @Serializable
     data class SpokenLanguage(
         @SerialName("english_name") val englishName: String,
@@ -64,7 +68,7 @@ data class MovieDetailModel(
         @SerialName("name") val name: String
     )
 
-    fun toUiModel(credit : List<CreditsModel.Cast>) = MovieDetailUiModel(
+    fun toUiModel(credit: List<CreditsModel.Cast>) = MovieDetailUiModel(
         movieId = movieId,
         runtime = runtime,
         title = title,
@@ -79,13 +83,8 @@ data class MovieDetailModel(
     )
 
     private fun getFormattedGenres(list: List<Genre>): String {
-        var tmp = ""
-        list.forEach {
-            if (it.name.isNotEmpty()) {
-                tmp = "${it.name}, $tmp"
-            }
-        }
-        return tmp
+        val filteredGenres = list.filter { it.name.isNotEmpty() }.map { it.name }
+        return filteredGenres.joinToString(", ")
     }
 
 }
