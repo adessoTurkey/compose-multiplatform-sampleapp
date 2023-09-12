@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.Card
+import androidx.compose.material.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.uimodel.movie.NowPlayingMovieUiModel
@@ -48,16 +48,15 @@ class MovieScreen : Screen, Serializable {
         val viewModel: MovieViewModel = viewModel()
 
         val uiState = viewModel.uiState.collectAsState().value
-        MovieContent(uiState = uiState, navigator = navigator)
+        MovieContent(uiState = uiState, onDetailClick = { navigator.push(MovieDetailScreen(it)) })
     }
 }
 
 @Composable
 fun MovieContent(
-    navigator: Navigator,
-    uiState: MovieUiState
+    uiState: MovieUiState,
+    onDetailClick: (Int) -> Unit
 ) {
-
     Box(modifier = Modifier.fillMaxSize()) {
         if (uiState.error != null) {
             ErrorScreen(uiState.error)
@@ -66,26 +65,29 @@ fun MovieContent(
         if (uiState.isLoading) {
             LoadingScreen()
         }
-        SuccessContent(navigator, uiState.popularMovieData, uiState.nowPlayingMovieData)
-
+        SuccessContent(
+            popularMovieData = uiState.popularMovieData,
+            nowPlayingMovieData = uiState.nowPlayingMovieData,
+            onDetailClick = onDetailClick
+        )
     }
 }
 
 @Composable
 fun SuccessContent(
-    navigator: Navigator,
     popularMovieData: List<PopularMovieUiModel>,
-    nowPlayingMovieData: List<NowPlayingMovieUiModel>
+    nowPlayingMovieData: List<NowPlayingMovieUiModel>,
+    onDetailClick: (Int) -> Unit
 ) {
     LazyColumn {
         item {
-            HorizontalMoviePager(popularMovieData) {
-                navigator.push(MovieDetailScreen(it))
+            HorizontalMoviePager(popularMovieData) { id ->
+                onDetailClick(id)
             }
         }
         items(nowPlayingMovieData) { nowPlayingMovies ->
-            NowPlayingMovieRow(nowPlayingMovies = nowPlayingMovies) {
-                navigator.push(MovieDetailScreen(it))
+            NowPlayingMovieRow(nowPlayingMovies = nowPlayingMovies) { id ->
+                onDetailClick(id)
             }
         }
     }
@@ -94,14 +96,14 @@ fun SuccessContent(
 @Composable
 fun NowPlayingMovieRow(
     nowPlayingMovies: NowPlayingMovieUiModel,
-    onClick: (Int) -> Unit
+    onDetailClick: (Int) -> Unit
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(150.dp)
             .padding(horizontal = 16.dp, vertical = 8.dp)
-            .clickable { onClick.invoke(nowPlayingMovies.movieId) },
+            .clickable { onDetailClick.invoke(nowPlayingMovies.movieId) },
         shape = MaterialTheme.shapes.small,
     ) {
         Row {
@@ -136,7 +138,7 @@ fun NowPlayingMovieRow(
 @Composable
 fun HorizontalMoviePager(
     popularMovie: List<PopularMovieUiModel>,
-    onclick: (Int) -> Unit
+    onDetailClick: (Int) -> Unit
 ) {
     val pagerState = rememberPagerState(
         initialPage = 0,
@@ -145,31 +147,37 @@ fun HorizontalMoviePager(
         popularMovie.size
     }
 
-    HorizontalPager(
-        state = pagerState,
-        modifier = Modifier.fillMaxSize()
-    ) { page ->
-        Card(
-            Modifier
-                .graphicsLayer {
-                    val pageOffset = pagerState.initialPageOffsetFraction
-                    lerp(
-                        start = 0.65f,
-                        stop = 1f,
-                        fraction = 0.5f - pageOffset.coerceIn(0f, 1f)
-                    ).also { scale ->
-                        scaleX = scale
-                        scaleY = scale
-                    }
-                }
-                .fillMaxWidth()
-                .clickable {
-                    onclick(popularMovie[page].movieId)
-                }
-                .aspectRatio(0.666f)) {
+    Box {
+        Surface(
+            modifier = Modifier.fillMaxWidth().height(250.dp),
+            color = MaterialTheme.colorScheme.primary
+        ) {}
 
-            PosterImageItem(imagePath = popularMovie[page].posterPath)
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier.fillMaxSize()
+        ) { page ->
+            Card(
+                Modifier
+                    .graphicsLayer {
+                        val pageOffset = pagerState.initialPageOffsetFraction
+                        lerp(
+                            start = 0.65f,
+                            stop = 1f,
+                            fraction = 0.5f - pageOffset.coerceIn(0f, 1f)
+                        ).also { scale ->
+                            scaleX = scale
+                            scaleY = scale
+                        }
+                    }
+                    .fillMaxWidth()
+                    .clickable {
+                        onDetailClick(popularMovie[page].movieId)
+                    }
+                    .aspectRatio(0.666f)) {
+
+                PosterImageItem(imagePath = popularMovie[page].posterPath)
+            }
         }
     }
 }
-
