@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.uimodel.CreditUiModel
@@ -65,19 +64,26 @@ class TvDetailScreen(private val tvId: Int) : Screen {
             if (uiState.isLoading) {
                 LoadingScreen()
             }
-            SuccessContent(navigator = navigator, uiState = uiState)
+            SuccessContent(
+                uiState = uiState,
+                onDetailClick = { }, //todo navigate to actor detail
+                onBackPressed = { navigator.pop() })
         }
     }
 }
 
 @Composable
-fun SuccessContent(navigator: Navigator, uiState: TvDetailUiState) {
+fun SuccessContent(
+    uiState: TvDetailUiState,
+    onDetailClick: (Int) -> Unit,
+    onBackPressed: () -> Unit
+) {
     val scrollState = rememberScrollState()
 
     Column(modifier = Modifier.verticalScroll(scrollState)) {
 
         DetailScreensAppBar(
-            leadingIcon = { BackPressedItem { navigator.pop() } },
+            leadingIcon = { BackPressedItem { onBackPressed() } },
             trailingIcon = { FavouriteItem { } },
             content = {
                 PosterImageItem(
@@ -94,7 +100,7 @@ fun SuccessContent(navigator: Navigator, uiState: TvDetailUiState) {
             }
         )
         TvDetailContent(uiState = uiState)
-        TvCreditLazyRow(navigator = navigator, uiState = uiState)
+        TvCreditLazyRow(uiState = uiState, onDetailClick = onDetailClick)
     }
 }
 
@@ -149,8 +155,8 @@ fun TvDetailContent(uiState: TvDetailUiState) {
 
 @Composable
 fun TvCreditLazyRow(
-    navigator: Navigator,
-    uiState: TvDetailUiState
+    uiState: TvDetailUiState,
+    onDetailClick: (Int) -> Unit
 ) {
     TextItem(
         text = "Cast",
@@ -166,8 +172,7 @@ fun TvCreditLazyRow(
         items(uiState.tvDetailData.credit.size) { index ->
             TvCreditCardView(
                 credit = uiState.tvDetailData.credit[index],
-                onClick = { id -> })
-            //TODO navigate to cast detail screen
+                onClick = { id -> onDetailClick(id) })
         }
     }
 }
