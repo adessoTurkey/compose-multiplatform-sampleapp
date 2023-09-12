@@ -18,6 +18,7 @@ import androidx.compose.material.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -53,7 +54,9 @@ class MovieDetailScreen(
         val viewModel: MovieDetailViewModel = viewModel()
         val uiState by viewModel.uiState.collectAsState()
 
-        viewModel.fetchData(movieId)
+        LaunchedEffect(Unit) {
+            viewModel.fetchData(movieId)
+        }
 
         Box(
             modifier = Modifier.fillMaxSize()
@@ -69,7 +72,8 @@ class MovieDetailScreen(
             SuccessContent(
                 uiState = uiState,
                 onDetailClick = { }, //todo navigate to actor detail
-                onBackPressed = { navigator.pop() })
+                onBackPressed = navigator::pop
+            )
         }
     }
 }

@@ -19,6 +19,7 @@ import androidx.compose.material.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -51,7 +52,9 @@ class TvDetailScreen(private val tvId: Int) : Screen {
         val viewModel: TvDetailViewModel = viewModel()
         val uiState by viewModel.uiState.collectAsState()
 
-        viewModel.fetchData(tvId)
+        LaunchedEffect(Unit) {
+            viewModel.fetchData(tvId)
+        }
 
         Box(
             modifier = Modifier.fillMaxSize()
@@ -67,7 +70,8 @@ class TvDetailScreen(private val tvId: Int) : Screen {
             SuccessContent(
                 uiState = uiState,
                 onDetailClick = { }, //todo navigate to actor detail
-                onBackPressed = { navigator.pop() })
+                onBackPressed = navigator::pop
+            )
         }
     }
 }

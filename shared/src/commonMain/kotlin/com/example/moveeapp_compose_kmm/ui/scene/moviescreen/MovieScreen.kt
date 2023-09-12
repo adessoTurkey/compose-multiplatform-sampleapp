@@ -20,6 +20,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
@@ -47,7 +48,7 @@ class MovieScreen : Screen, Serializable {
         val navigator = LocalNavigator.currentOrThrow
         val viewModel: MovieViewModel = viewModel()
 
-        val uiState = viewModel.uiState.collectAsState().value
+        val uiState by viewModel.uiState.collectAsState()
         MovieContent(uiState = uiState, onDetailClick = { navigator.push(MovieDetailScreen(it)) })
     }
 }
