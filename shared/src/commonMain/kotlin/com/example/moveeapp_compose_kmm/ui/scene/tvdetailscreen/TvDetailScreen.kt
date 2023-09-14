@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -42,6 +43,7 @@ import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
+import com.example.moveeapp_compose_kmm.ui.scene.actordetail.ActorDetailScreen
 import kotlin.math.round
 
 class TvDetailScreen(private val tvId: Int) : Screen {
@@ -69,7 +71,9 @@ class TvDetailScreen(private val tvId: Int) : Screen {
             }
             SuccessContent(
                 uiState = uiState,
-                onDetailClick = { }, //todo navigate to actor detail
+                onDetailClick = {
+                    navigator.push(ActorDetailScreen(it))
+                },
                 onBackPressed = navigator::pop
             )
         }
@@ -186,7 +190,10 @@ fun TvCreditCardView(
     credit: CreditUiModel,
     onClick: (Int) -> Unit
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        modifier = Modifier.width(110.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Card(
             modifier = Modifier
                 .size(100.dp)
@@ -199,7 +206,6 @@ fun TvCreditCardView(
             text = credit.originalName,
             modifier = Modifier.padding(horizontal = 3.dp, vertical = 5.dp),
             fontSize = 15.sp,
-            maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
     }
