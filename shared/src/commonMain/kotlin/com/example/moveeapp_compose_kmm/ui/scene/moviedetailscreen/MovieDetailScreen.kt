@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
@@ -71,6 +74,7 @@ class MovieDetailScreen(
             if (uiState.isLoading) {
                 LoadingScreen()
             }
+
             SuccessContent(
                 uiState = uiState,
                 onDetailClick = {
@@ -84,17 +88,27 @@ class MovieDetailScreen(
 
 @Composable
 fun SuccessContent(
+    modifier: Modifier = Modifier,
     uiState: MovieDetailUiState,
     onDetailClick: (Int) -> Unit,
     onBackPressed: () -> Unit
 ) {
     val scrollState = rememberScrollState()
 
-    Column(modifier = Modifier.verticalScroll(scrollState)) {
-
+    Column(modifier = modifier.verticalScroll(scrollState)) {
         DetailScreensAppBar(
-            leadingIcon = { BackPressedItem { onBackPressed() } },
-            trailingIcon = { FavouriteItem { } },
+            leadingIcon = {
+                BackPressedItem(
+                    modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars)
+                ) {
+                    onBackPressed()
+                }
+            },
+            trailingIcon = {
+                FavouriteItem(
+                    modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars)
+                ) { }
+            },
             content = {
                 PosterImageItem(
                     imagePath = uiState.movieDetailData.backdropPath,
@@ -109,7 +123,9 @@ fun SuccessContent(
                 )
             }
         )
+
         MovieDetailContent(uiState = uiState)
+
         MovieCreditLazyRow(uiState = uiState, onDetailClick = onDetailClick)
     }
 }
