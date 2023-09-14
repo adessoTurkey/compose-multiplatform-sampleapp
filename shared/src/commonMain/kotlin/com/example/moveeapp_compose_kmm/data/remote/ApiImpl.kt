@@ -1,7 +1,6 @@
 package com.example.moveeapp_compose_kmm.data.remote
 
 import com.example.moveeapp_compose_kmm.data.remote.model.CreditsModel
-import com.example.moveeapp_compose_kmm.data.remote.model.movie.PopularMovieModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.RequestTokenResponseModel
@@ -9,6 +8,9 @@ import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionRequestMo
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.movie.MovieDetailModel
 import com.example.moveeapp_compose_kmm.data.remote.model.movie.NowPlayingMovieModel
+import com.example.moveeapp_compose_kmm.data.remote.model.movie.PopularMovieModel
+import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonCreditsModel
+import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonDetailModel
 import com.example.moveeapp_compose_kmm.data.remote.model.tv.PopularTvModel
 import com.example.moveeapp_compose_kmm.data.remote.model.tv.TopRatedTvModel
 import com.example.moveeapp_compose_kmm.data.remote.model.tv.TvDetailModel
@@ -73,6 +75,14 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
             contentType(ContentType.Application.Json)
             setBody(requestModel)
         }.body()
+    }
+
+    override suspend fun personDetail(personId: Int): PersonDetailModel {
+        return client.get("person/$personId").body()
+    }
+
+    override suspend fun personCredit(personId: Int): PersonCreditsModel {
+        return client.get("person/$personId/combined_credits").body()
     }
 
     companion object {
