@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PersonDetailResponse(
+data class PersonDetailModel(
     @SerialName("also_known_as") val alsoKnownAs: List<String>,
     @SerialName("adult") val adult: Boolean,
     @SerialName("biography") val biography: String,
@@ -20,7 +20,7 @@ data class PersonDetailResponse(
     @SerialName("popularity") val popularity: Double,
     @SerialName("profile_path") val profilePath: String
 ) {
-    fun toUiModel(credit: List<PersonCreditsResponse.Cast>) = ActorDetailUiModel(
+    fun toUiModel(credit: List<PersonCreditsModel.Cast>) = ActorDetailUiModel(
         name = name,
         biography = biography,
         birthday = birthday,
@@ -31,7 +31,7 @@ data class PersonDetailResponse(
 }
 
 @Serializable
-data class PersonCreditsResponse(
+data class PersonCreditsModel(
     @SerialName("cast") val cast: List<Cast>?=null,
     @SerialName("crew") val crew: List<Crew>?=null,
     @SerialName("id") val id: Int?=null
@@ -71,23 +71,23 @@ data class PersonCreditsResponse(
 
     @Serializable
     data class Crew(
-        @SerialName("adult") val adult: Boolean?=null, //
-        @SerialName("backdrop_path") val backdropPath: String?=null,//
-        @SerialName("credit_id") val creditId: String?=null,//
-        @SerialName("department") val department: String?=null,//
-        @SerialName("genre_ids") val genreIds: List<Int>?=null,//
-        @SerialName("id") val id: Int?=null,//
-        @SerialName("job") val job: String?=null,//
-        @SerialName("media_type") val mediaType: String?=null,//
-        @SerialName("original_language") val originalLanguage: String?=null,//
-        @SerialName("original_title") val originalTitle: String?=null,//
-        @SerialName("overview") val overview: String?=null,//
-        @SerialName("popularity") val popularity: Double?=null,//
-        @SerialName("poster_path") val posterPath: String?=null,//
-        @SerialName("release_date") val releaseDate: String?=null,//
-        @SerialName("title") val title: String?=null,//
-        @SerialName("video") val video: Boolean?=null,//
-        @SerialName("vote_average") val voteAverage: Double?=null,//
-        @SerialName("vote_count") val voteCount: Int?=null//
+        @SerialName("adult") val adult: Boolean?=null,
+        @SerialName("backdrop_path") val backdropPath: String?=null,
+        @SerialName("credit_id") val creditId: String?=null,
+        @SerialName("department") val department: String?=null,
+        @SerialName("genre_ids") val genreIds: List<Int>?=null,
+        @SerialName("id") val id: Int?=null,
+        @SerialName("job") val job: String?=null,
+        @SerialName("media_type") val mediaType: String?=null,
+        @SerialName("original_language") val originalLanguage: String?=null,
+        @SerialName("original_title") val originalTitle: String?=null,
+        @SerialName("overview") val overview: String?=null,
+        @SerialName("popularity") val popularity: Double?=null,
+        @SerialName("poster_path") val posterPath: String?=null,
+        @SerialName("release_date") val releaseDate: String?=null,
+        @SerialName("title") val title: String?=null,
+        @SerialName("video") val video: Boolean?=null,
+        @SerialName("vote_average") val voteAverage: Double?=null,
+        @SerialName("vote_count") val voteCount: Int?=null
     )
 }
