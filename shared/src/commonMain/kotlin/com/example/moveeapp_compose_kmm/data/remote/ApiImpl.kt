@@ -9,8 +9,8 @@ import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionResponseM
 import com.example.moveeapp_compose_kmm.data.remote.model.movie.MovieDetailModel
 import com.example.moveeapp_compose_kmm.data.remote.model.movie.NowPlayingMovieModel
 import com.example.moveeapp_compose_kmm.data.remote.model.movie.PopularMovieModel
-import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonCreditsResponse
-import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonDetailResponse
+import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonCreditsModel
+import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonDetailModel
 import com.example.moveeapp_compose_kmm.data.remote.model.tv.PopularTvModel
 import com.example.moveeapp_compose_kmm.data.remote.model.tv.TopRatedTvModel
 import com.example.moveeapp_compose_kmm.data.remote.model.tv.TvDetailModel
@@ -77,11 +77,11 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         }.body()
     }
 
-    override suspend fun personDetail(personId: Int): PersonDetailResponse {
+    override suspend fun personDetail(personId: Int): PersonDetailModel {
         return client.get("person/$personId").body()
     }
 
-    override suspend fun personCredit(personId: Int): PersonCreditsResponse {
+    override suspend fun personCredit(personId: Int): PersonCreditsModel {
         return client.get("person/$personId/combined_credits").body()
     }
 

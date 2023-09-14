@@ -9,8 +9,8 @@ import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionResponseM
 import com.example.moveeapp_compose_kmm.data.remote.model.movie.MovieDetailModel
 import com.example.moveeapp_compose_kmm.data.remote.model.movie.NowPlayingMovieModel
 import com.example.moveeapp_compose_kmm.data.remote.model.movie.PopularMovieModel
-import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonCreditsResponse
-import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonDetailResponse
+import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonCreditsModel
+import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonDetailModel
 import com.example.moveeapp_compose_kmm.data.remote.model.tv.PopularTvModel
 import com.example.moveeapp_compose_kmm.data.remote.model.tv.TopRatedTvModel
 import com.example.moveeapp_compose_kmm.data.remote.model.tv.TvDetailModel
@@ -42,8 +42,8 @@ interface ApiInterface {
 
     suspend fun createSession(requestModel: SessionRequestModel): SessionResponseModel
 
-    suspend fun personDetail(personId: Int): PersonDetailResponse
+    suspend fun personDetail(personId: Int): PersonDetailModel
 
-    suspend fun personCredit(personId: Int): PersonCreditsResponse
+    suspend fun personCredit(personId: Int): PersonCreditsModel
 
 }
