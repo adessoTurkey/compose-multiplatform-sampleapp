@@ -1,5 +1,6 @@
 package com.example.moveeapp_compose_kmm.di
 
+import com.example.moveeapp_compose_kmm.ui.scene.actordetail.ActorDetailViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.moviescreen.MovieViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.loginscreen.LoginViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen.MovieDetailViewModel
@@ -15,4 +16,5 @@ val viewModelModule = module {
     factory { SplashViewModel(get()) }
     factory { TvViewModel(get()) }
     factory { TvDetailViewModel(get()) }
+    factory { ActorDetailViewModel(get()) }
 }
