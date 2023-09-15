@@ -1,6 +1,7 @@
 package com.example.moveeapp_compose_kmm.data.remote
 
 import com.example.moveeapp_compose_kmm.data.remote.model.CreditsModel
+import com.example.moveeapp_compose_kmm.data.remote.model.SearchModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.RequestTokenResponseModel
@@ -58,6 +59,15 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         return client.get("tv/$tvId/credits").body()
     }
 
+    //Search
+    override suspend fun search(query: String): SearchModel {
+        return client.get(SEARCH) {
+            url {
+                parameters.append("query", query)
+            }
+        }.body()
+    }
+
     //Login
     override suspend fun createRequestToken(): RequestTokenResponseModel {
         return client.get(REQUEST_TOKEN).body()
@@ -77,6 +87,7 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         }.body()
     }
 
+    //Person
     override suspend fun personDetail(personId: Int): PersonDetailModel {
         return client.get("person/$personId").body()
     }
@@ -94,6 +105,9 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         //Tv
         const val POPULAR_TV = "tv/popular"
         const val TOP_RATED_TV = "tv/top_rated"
+
+        //Search
+        const val SEARCH = "search/multi"
 
         //Login
         const val REQUEST_TOKEN = "authentication/token/new"
