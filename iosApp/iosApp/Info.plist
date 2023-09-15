@@ -20,6 +20,7 @@
 	<string>1</string>
     <key>CFBundleLocalizations</key><array>
     <string>en</string>
+    <string>tr</string>
     </array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

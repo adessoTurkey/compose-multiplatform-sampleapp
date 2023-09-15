@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.uimodel.CreditUiModel
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
@@ -44,6 +45,7 @@ import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.ui.scene.actordetail.ActorDetailScreen
+import dev.icerock.moko.resources.compose.stringResource
 import kotlin.math.round
 
 class TvDetailScreen(private val tvId: Int) : Screen {
@@ -149,12 +151,12 @@ fun TvDetailContent(uiState: TvDetailUiState) {
             horizontalArrangement = Arrangement.Start
         ) {
             ChipItem(
-                string = "Seasons: ${uiState.tvDetailData.numberOfSeasons}",
+                string = stringResource(MR.strings.tv_detail_season) + "${uiState.tvDetailData.numberOfSeasons}",
                 backgroundColor = MaterialTheme.colorScheme.secondary
             )
             Spacer(modifier = Modifier.padding(8.dp))
             ChipItem(
-                string = "Episodes: ${uiState.tvDetailData.numberOfEpisodes}",
+                string = stringResource(MR.strings.tv_detail_episode) +  "${uiState.tvDetailData.numberOfEpisodes}",
                 backgroundColor = MaterialTheme.colorScheme.secondary
             )
         }
@@ -167,7 +169,7 @@ fun TvCreditLazyRow(
     onDetailClick: (Int) -> Unit
 ) {
     TextItem(
-        text = "Cast",
+        text = stringResource(MR.strings.movie_detail_cast),
         fontSize = 28.sp,
         fontWeight = FontWeight.Bold,
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
