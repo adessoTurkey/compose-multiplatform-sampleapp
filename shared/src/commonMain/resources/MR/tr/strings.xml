@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="string">Bu türkçe text inş basarsın</string>
+    <string name="hello_world">hello world</string>
+    <string name="hello_world2">tr text</string>
+    <string name="actor_born">Doğum tarihi:</string>
+    <string name="login_username">Kullanıcı adı</string>
+    <string name="login_password">Şifre</string>
+    <string name="login_forgot_password">Şifreni mi unuttun?</string>
+    <string name="login_title">Giriş yap</string>
+    <string name="login_register">Henüz bir hesabın yok mu? Hemen kaydol!</string>
+    <string name="movie_detail_cast">Oyuncular</string>
+    <string name="tv_detail_season">Sezonlar:</string>
+    <string name="tv_detail_episode">Bölümler:</string>
+    <string name="tab_movies">Filmler</string>
+    <string name="expandable_show_more">Daha fazla >></string>
+    <string name="expandable_show_less">Daha az göster</string>
+
+
+</resources>
+

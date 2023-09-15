@@ -13,7 +13,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -33,9 +37,11 @@ import com.example.moveeapp_compose_kmm.MainScreen
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.repository.LoginState
 import com.example.moveeapp_compose_kmm.ui.components.TextInputItem
+import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.ui.scene.webviewscreen.WebViewScreen
 import com.example.moveeapp_compose_kmm.utils.Constants
 import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 
 class LoginScreen : Screen {
     @Composable
@@ -106,12 +112,17 @@ fun LoginContent(
             modifier = Modifier.fillMaxWidth(),
             query = loginUiState.userName,
             onValueChange = { onUserNameChange(it) },
-            label = { Text(text = "Username") },
+            label = {
+                TextItem(
+                    text = stringResource(MR.strings.login_username),
+                    textColor = MaterialTheme.colorScheme.primaryContainer
+                )
+            },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Person,
                     tint = Color.White,
-                    contentDescription = "Username"
+                    contentDescription = stringResource(MR.strings.login_username)
                 )
             },
             isError = loginUiState.loginError != null
@@ -121,12 +132,17 @@ fun LoginContent(
             modifier = Modifier.fillMaxWidth(),
             query = loginUiState.password,
             onValueChange = { onPasswordChange(it) },
-            label = { Text(text = "Password") },
+            label = {
+                TextItem(
+                    text = stringResource(MR.strings.login_password),
+                    textColor = MaterialTheme.colorScheme.primaryContainer
+                )
+            },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Lock,
                     tint = Color.White,
-                    contentDescription = "Password"
+                    contentDescription = stringResource(MR.strings.login_password)
                 )
             },
             isError = loginUiState.loginError != null,
@@ -134,12 +150,12 @@ fun LoginContent(
         )
 
         Row {
-            Text(
-                text = "Forgot Password?",
+            TextItem(
+                text = stringResource(MR.strings.login_forgot_password),
                 modifier = Modifier.clickable {
                     navigateToWebViewScreen(url = Constants.FORGOT_PASSWORD, navigator = navigator)
                 },
-                color = MaterialTheme.colorScheme.primaryContainer
+                textColor = MaterialTheme.colorScheme.primaryContainer
             )
         }
 
@@ -151,15 +167,16 @@ fun LoginContent(
                 contentColor = Color.Blue
             ),
             onClick = { onLogin() }) {
-            Text(text = "Login")
+            TextItem(text = stringResource(MR.strings.login_title),
+                textColor = MaterialTheme.colorScheme.primary)
         }
 
-        Text(
-            text = "Don't have an account? Register Now",
+        TextItem(
+            text = stringResource(MR.strings.login_register),
             modifier = Modifier.clickable {
                 navigateToWebViewScreen(url = Constants.REGISTER, navigator = navigator)
             },
-            color = MaterialTheme.colorScheme.primaryContainer
+            textColor = MaterialTheme.colorScheme.primaryContainer
         )
 
         LaunchedEffect(key1 = isLoggedIn) {

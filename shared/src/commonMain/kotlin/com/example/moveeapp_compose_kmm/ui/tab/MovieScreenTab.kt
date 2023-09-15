@@ -8,6 +8,7 @@ import cafe.adriel.voyager.navigator.tab.TabOptions
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.ui.scene.moviescreen.MovieScreen
 import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 
 internal object MovieScreenTab : Tab {
 
@@ -19,11 +20,12 @@ internal object MovieScreenTab : Tab {
     override val options: TabOptions
         @Composable get() {
             val icon = painterResource(MR.images.ic_tabbar_movie)
+            val title = stringResource(MR.strings.tab_movies)
 
             return remember {
                 TabOptions(
                     index = 0u,
-                    title = "Movies",
+                    title = title,
                     icon = icon
                 )
             }
