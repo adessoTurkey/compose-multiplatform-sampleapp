@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
-    <string name="string">Bu türkçe text inş basarsın</string>
-    <string name="hello_world">hello world</string>
-    <string name="hello_world2">tr text</string>
     <string name="actor_born">Doğum tarihi:</string>
     <string name="login_username">Kullanıcı adı</string>
     <string name="login_password">Şifre</string>
@@ -15,7 +12,8 @@
     <string name="tab_movies">Filmler</string>
     <string name="expandable_show_more">Daha fazla >></string>
     <string name="expandable_show_less">Daha az göster</string>
-
+    <string name="search_empty_text">Aramanız herhangi bir sonuç vermedi</string>
+    <string name="search_title">Arama</string>
 
 </resources>
 
