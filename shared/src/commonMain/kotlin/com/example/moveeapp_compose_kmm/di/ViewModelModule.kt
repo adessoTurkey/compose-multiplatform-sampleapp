@@ -4,6 +4,7 @@ import com.example.moveeapp_compose_kmm.ui.scene.actordetail.ActorDetailViewMode
 import com.example.moveeapp_compose_kmm.ui.scene.moviescreen.MovieViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.loginscreen.LoginViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen.MovieDetailViewModel
+import com.example.moveeapp_compose_kmm.ui.scene.searchscreen.SearchViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.splashscreen.SplashViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.tvdetailscreen.TvDetailViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.tvscreen.TvViewModel
@@ -16,5 +17,6 @@ val viewModelModule = module {
     factory { SplashViewModel(get()) }
     factory { TvViewModel(get()) }
     factory { TvDetailViewModel(get()) }
+    factory { SearchViewModel(get()) }
     factory { ActorDetailViewModel(get()) }
 }
