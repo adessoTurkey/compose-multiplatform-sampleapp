@@ -51,7 +51,6 @@ class TvScreen : Screen {
         val viewModel: TvViewModel = viewModel()
         val uiState by viewModel.uiState.collectAsState()
 
-
         TvContent(navigator = navigator, uiState = uiState)
     }
 }
