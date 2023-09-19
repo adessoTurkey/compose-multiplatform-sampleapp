@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -55,16 +56,17 @@ fun DetailScreensAppBar(
 }
 
 @Composable
-fun BackPressedItem(onBackPressed: () -> Unit) {
+fun BackPressedItem(modifier: Modifier = Modifier, onBackPressed: () -> Unit) {
     Surface(
-        modifier = Modifier.padding(start = 24.dp, top = 9.dp).size(35.dp),
+        modifier = modifier.padding(start = 31.dp, top = 24.dp).size(35.dp),
         shape = CircleShape,
         color = MaterialTheme.colorScheme.primary
     ) {
         Icon(
             modifier = Modifier
-                .clickable { onBackPressed() }
-                .padding(8.dp),
+                .fillMaxSize()
+                .clickable(onClick = onBackPressed)
+                .padding(7.dp),
             painter = painterResource(MR.images.ic_arrow_back),
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primaryContainer
@@ -73,16 +75,17 @@ fun BackPressedItem(onBackPressed: () -> Unit) {
 }
 
 @Composable
-fun FavouriteItem(onFavouriteClicked: () -> Unit) {
+fun FavouriteItem(modifier: Modifier = Modifier, onFavouriteClicked: () -> Unit) {
     Surface(
-        modifier = Modifier.padding(end = 24.dp, top = 9.dp).size(35.dp),
+        modifier = modifier.padding(end = 31.dp, top = 24.dp).size(35.dp),
         shape = CircleShape,
         color = MaterialTheme.colorScheme.primaryContainer
     ) {
         Icon(
             modifier = Modifier
-                .clickable { onFavouriteClicked() }
-                .padding(6.dp),
+                .fillMaxSize()
+                .clickable(onClick = onFavouriteClicked)
+                .padding(7.dp),
             painter = painterResource(MR.images.ic_heart),
             contentDescription = null,
             tint = MaterialTheme.colorScheme.secondary
