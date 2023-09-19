@@ -1,6 +1,7 @@
 package com.example.moveeapp_compose_kmm.data.remote
 
 import com.example.moveeapp_compose_kmm.data.remote.model.CreditsModel
+import com.example.moveeapp_compose_kmm.data.remote.model.SearchModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.RequestTokenResponseModel
@@ -35,15 +36,18 @@ interface ApiInterface {
 
     suspend fun tvCredit(tvId: Int): CreditsModel
 
+    //Search
+    suspend fun search(query: String): SearchModel
+
+    //Person
+    suspend fun personDetail(personId: Int): PersonDetailModel
+
+    suspend fun personCredit(personId: Int): PersonCreditsModel
+
     //Login
     suspend fun createRequestToken(): RequestTokenResponseModel
 
     suspend fun createRequestTokenWithLogin(requestModel: LoginRequestModel): LoginResponseModel
 
     suspend fun createSession(requestModel: SessionRequestModel): SessionResponseModel
-
-    suspend fun personDetail(personId: Int): PersonDetailModel
-
-    suspend fun personCredit(personId: Int): PersonCreditsModel
-
 }

@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class MovieDetailModel(
     @SerialName("adult") val adult: Boolean,
-    @SerialName("backdrop_path") val backdropPath: String,
+    @SerialName("backdrop_path") val backdropPath: String?,
     @SerialName("belongs_to_collection") val belongsToCollection: BelongsToCollection?,
     @SerialName("budget") val budget: Int,
     @SerialName("genres") val genres: List<Genre>,
@@ -35,7 +35,7 @@ data class MovieDetailModel(
 ) {
     @Serializable
     data class BelongsToCollection(
-        @SerialName("backdrop_path") val backdropPath: String,
+        @SerialName("backdrop_path") val backdropPath: String?,
         @SerialName("id") val id: Int,
         @SerialName("name") val name: String,
         @SerialName("poster_path") val posterPath: String
@@ -78,7 +78,7 @@ data class MovieDetailModel(
         overview = overview,
         genre = getFormattedGenres(genres),
         voteCount = voteCount,
-        backdropPath = backdropPath,
+        backdropPath = backdropPath ?: "",
         credit = credit.map { it.toUiModel() }
     )
 
