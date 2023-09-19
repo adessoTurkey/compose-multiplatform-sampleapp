@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.uimodel.ActorCreditUiModel
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
@@ -33,6 +34,7 @@ import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen.MovieDetailScreen
 import com.example.moveeapp_compose_kmm.ui.scene.tvdetailscreen.TvDetailScreen
+import dev.icerock.moko.resources.compose.stringResource
 
 class ActorDetailScreen(
     private val actorId: Int
@@ -88,7 +90,7 @@ fun SuccessContent(
                 horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
                 TextItem(
-                    text = "Born:",
+                    text = stringResource(MR.strings.actor_born),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
