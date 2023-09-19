@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="actor_born">Born:</string>
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_forgot_password">Forgot Password?</string>
+    <string name="login_title">Login</string>
+    <string name="login_register">Don\'t have an account? Register now!</string>
+    <string name="movie_detail_cast">Cast</string>
+    <string name="tv_detail_season">Seasons:</string>
+    <string name="tv_detail_episode">Episodes:</string>
+    <string name="tab_movies">Movies</string>
+    <string name="expandable_show_more">Show More >></string>
+    <string name="expandable_show_less">Show Less</string>
+    <string name="search_empty_text">Your search didn\'t have any results</string>
+    <string name="search_title">Search</string>
+
+</resources>
+

@@ -47,6 +47,7 @@ import com.example.moveeapp_compose_kmm.ui.scene.actordetail.ActorDetailScreen
 import com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen.MovieDetailScreen
 import com.example.moveeapp_compose_kmm.ui.scene.tvdetailscreen.TvDetailScreen
 import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 
 class SearchScreen : Screen {
 
@@ -109,7 +110,7 @@ fun SearchContent(
             )
             Column(modifier = Modifier.padding(horizontal = 24.dp).padding(top = 40.dp)) {
                 TextItem(
-                    text = "Search",
+                    text = stringResource(MR.strings.search_title),
                     fontSize = 34.sp,
                     fontWeight = FontWeight.Bold,
                     textColor = MaterialTheme.colorScheme.primaryContainer
@@ -145,7 +146,7 @@ fun SearchContent(
                                 )
                                 TextItem(
                                     modifier = Modifier.padding(top = 8.dp),
-                                    text = "Your search didn't have any results",
+                                    text = stringResource(MR.strings.search_empty_text),
                                     textColor = MaterialTheme.colorScheme.primary,
                                     fontSize = 18.sp
                                 )

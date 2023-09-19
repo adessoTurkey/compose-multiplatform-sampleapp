@@ -8,7 +8,9 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.ui.scene.tvscreen.TvScreen
+import dev.icerock.moko.resources.compose.stringResource
 
 internal object TvScreenTab : Tab {
 
@@ -21,11 +23,12 @@ internal object TvScreenTab : Tab {
         @Composable
         get() {
             val icon = rememberVectorPainter(Icons.Default.Tv) //TODO TvSeries icon will change
+            val title = stringResource(MR.strings.tab_movies)
 
             return remember {
                 TabOptions(
                     index = 0u,
-                    title = "Tv Series",
+                    title = title,
                     icon = icon
                 )
             }
