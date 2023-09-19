@@ -1,8 +1,10 @@
 package com.example.moveeapp_compose_kmm
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -39,7 +41,9 @@ internal object MainScreen : Screen {
             Scaffold(
                 modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars),
                 content = {
-                    CurrentTab()
+                    Box(modifier = Modifier.padding(bottom = it.calculateBottomPadding())) {
+                        CurrentTab()
+                    }
                 },
                 bottomBar = {
                     BottomNavigation(
