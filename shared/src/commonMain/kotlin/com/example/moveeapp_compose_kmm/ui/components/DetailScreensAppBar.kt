@@ -27,6 +27,7 @@ import dev.icerock.moko.resources.compose.painterResource
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreensAppBar(
+    modifier: Modifier = Modifier,
     title: String? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
@@ -35,7 +36,7 @@ fun DetailScreensAppBar(
     Box {
         content()
         TopAppBar(
-            modifier = Modifier.align(Alignment.TopCenter),
+            modifier = modifier.align(Alignment.TopCenter),
             colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
             title = { TextItem(text = title ?: "") },
             navigationIcon = {
@@ -58,7 +59,7 @@ fun DetailScreensAppBar(
 @Composable
 fun BackPressedItem(modifier: Modifier = Modifier, onBackPressed: () -> Unit) {
     Surface(
-        modifier = modifier.padding(start = 31.dp, top = 24.dp).size(35.dp),
+        modifier = modifier.padding(start = 24.dp).size(35.dp),
         shape = CircleShape,
         color = MaterialTheme.colorScheme.primary
     ) {
@@ -77,7 +78,7 @@ fun BackPressedItem(modifier: Modifier = Modifier, onBackPressed: () -> Unit) {
 @Composable
 fun FavouriteItem(modifier: Modifier = Modifier, onFavouriteClicked: () -> Unit) {
     Surface(
-        modifier = modifier.padding(end = 31.dp, top = 24.dp).size(35.dp),
+        modifier = modifier.padding(end = 24.dp).size(35.dp),
         shape = CircleShape,
         color = MaterialTheme.colorScheme.primaryContainer
     ) {
