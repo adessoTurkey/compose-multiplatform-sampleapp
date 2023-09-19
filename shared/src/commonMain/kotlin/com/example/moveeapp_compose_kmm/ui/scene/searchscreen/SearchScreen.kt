@@ -8,11 +8,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -57,17 +60,17 @@ class SearchScreen : Screen {
         val uiState by viewModel.uiState.collectAsState()
         val queryState by viewModel.query.collectAsState()
 
-        Box(modifier = Modifier.background(MaterialTheme.colorScheme.secondaryContainer)) {
+        Column(modifier = Modifier.background(MaterialTheme.colorScheme.secondaryContainer)) {
+            Spacer(
+                Modifier.fillMaxWidth().windowInsetsTopHeight(WindowInsets.statusBars)
+                    .background(MaterialTheme.colorScheme.primary)
+            )
 
             if (uiState.error != null) {
                 ErrorScreen(uiState.error!!)
             }
 
-            if (uiState.isLoading) {
-                LoadingScreen()
-            }
-            SearchContent(
-                uiState = uiState,
+            SearchContent(uiState = uiState,
                 query = queryState,
                 handleQueryState = viewModel::handleQueryChange,
                 onDetailClick = { id, mediaType ->
@@ -84,8 +87,7 @@ class SearchScreen : Screen {
                             navigator.push(ActorDetailScreen(id))
                         }
                     }
-                }
-            )
+                })
         }
     }
 }
@@ -99,16 +101,11 @@ fun SearchContent(
 ) {
     Column {
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.secondaryContainer)
-                .padding()
+            modifier = Modifier.fillMaxSize()
+                .background(MaterialTheme.colorScheme.secondaryContainer).padding()
         ) {
             Spacer(
-                modifier = Modifier
-                    .height(250.dp)
-                    .fillMaxWidth()
-                    .align(Alignment.TopCenter)
+                modifier = Modifier.height(250.dp).fillMaxWidth().align(Alignment.TopCenter)
                     .background(MaterialTheme.colorScheme.primary)
             )
             Column(modifier = Modifier.padding(horizontal = 24.dp).padding(top = 40.dp)) {
@@ -124,25 +121,36 @@ fun SearchContent(
                     onValueChange = handleQueryState
                 )
 
-                if (uiState.emptyState) {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Image(
-                                painter = painterResource(MR.images.search_place_holder),
-                                contentDescription = null
-                            )
-                            TextItem(
-                                modifier = Modifier.padding(top = 8.dp),
-                                text = stringResource(MR.strings.search_empty_text),
-                                textColor = MaterialTheme.colorScheme.primary,
-                                fontSize = 18.sp
-                            )
+                when {
+                    uiState.isLoading -> {
+                        LoadingScreen()
+                    }
+
+                    !uiState.emptyState -> {
+                        LazyColumn {
+                            items(uiState.data) {
+                                SearchRow(search = it, onDetailClick = onDetailClick)
+                            }
                         }
                     }
-                } else {
-                    LazyColumn {
-                        items(uiState.data) {
-                            SearchRow(search = it, onDetailClick = onDetailClick)
+
+                    uiState.emptyState -> {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                Image(
+                                    painter = painterResource(MR.images.search_place_holder),
+                                    contentDescription = null
+                                )
+                                TextItem(
+                                    modifier = Modifier.padding(top = 8.dp),
+                                    text = stringResource(MR.strings.search_empty_text),
+                                    textColor = MaterialTheme.colorScheme.primary,
+                                    fontSize = 18.sp
+                                )
+                            }
                         }
                     }
                 }
@@ -154,9 +162,7 @@ fun SearchContent(
 @Composable
 fun SearchRow(search: SearchUiModel, onDetailClick: (Int, String) -> Unit) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 10.dp)
+        modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp)
             .clickable { onDetailClick(search.id, search.mediaType) },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer),
@@ -169,9 +175,7 @@ fun SearchRow(search: SearchUiModel, onDetailClick: (Int, String) -> Unit) {
                 contentScale = ContentScale.Fit
             )
             Column(
-                modifier = Modifier
-                    .height(height = 100.dp)
-                    .padding(horizontal = 16.dp)
+                modifier = Modifier.height(height = 100.dp).padding(horizontal = 16.dp)
                     .fillMaxWidth(), verticalArrangement = Arrangement.SpaceBetween
             ) {
                 TextItem(

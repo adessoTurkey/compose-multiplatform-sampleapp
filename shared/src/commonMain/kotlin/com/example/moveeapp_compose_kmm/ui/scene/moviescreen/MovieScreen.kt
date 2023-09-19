@@ -1,16 +1,21 @@
 package com.example.moveeapp_compose_kmm.ui.scene.moviescreen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
@@ -47,8 +52,8 @@ class MovieScreen : Screen, Serializable {
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val viewModel: MovieViewModel = viewModel()
-
         val uiState by viewModel.uiState.collectAsState()
+
         MovieContent(uiState = uiState, onDetailClick = { navigator.push(MovieDetailScreen(it)) })
     }
 }
@@ -58,7 +63,15 @@ fun MovieContent(
     uiState: MovieUiState,
     onDetailClick: (Int) -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Spacer(
+            Modifier.fillMaxWidth()
+                .windowInsetsTopHeight(WindowInsets.statusBars)
+                .background(MaterialTheme.colorScheme.primary)
+        )
+
         if (uiState.error != null) {
             ErrorScreen(uiState.error)
         }
@@ -66,7 +79,9 @@ fun MovieContent(
         if (uiState.isLoading) {
             LoadingScreen()
         }
+
         SuccessContent(
+            modifier = Modifier.weight(1f),
             popularMovieData = uiState.popularMovieData,
             nowPlayingMovieData = uiState.nowPlayingMovieData,
             onDetailClick = onDetailClick
@@ -76,11 +91,12 @@ fun MovieContent(
 
 @Composable
 fun SuccessContent(
+    modifier: Modifier = Modifier,
     popularMovieData: List<PopularMovieUiModel>,
     nowPlayingMovieData: List<NowPlayingMovieUiModel>,
     onDetailClick: (Int) -> Unit
 ) {
-    LazyColumn {
+    LazyColumn(modifier = modifier) {
         item {
             HorizontalMoviePager(popularMovieData) { id ->
                 onDetailClick(id)
