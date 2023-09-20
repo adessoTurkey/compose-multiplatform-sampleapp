@@ -25,6 +25,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -82,6 +85,9 @@ class MovieDetailScreen(
                 onDetailClick = {
                     navigator.push(ActorDetailScreen(it))
                 },
+                onFavouriteClicked = { isFav, movieId ->
+                    viewModel.addFavorite(favorite = isFav, mediaType = "movie", mediaId = movieId)
+                },
                 onBackPressed = navigator::pop
             )
         }
@@ -93,23 +99,27 @@ fun SuccessContent(
     modifier: Modifier = Modifier,
     uiState: MovieDetailUiState,
     onDetailClick: (Int) -> Unit,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    onFavouriteClicked: (isFav: Boolean, movieId: Int) -> Unit
 ) {
     val scrollState = rememberScrollState()
+    var isFavourite by remember { mutableStateOf(false) }
 
     Column(modifier = modifier.verticalScroll(scrollState)) {
         DetailScreensAppBar(
             leadingIcon = {
                 BackPressedItem(
                     modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars)
-                ) {
-                    onBackPressed()
-                }
+                ) { onBackPressed() }
             },
             trailingIcon = {
-                FavouriteItem(
-                    modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars)
-                ) { }
+                FavouriteItem(modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars),
+                    isFavorite = isFavourite,
+                    onFavouriteClicked = { fav ->
+                        isFavourite = fav
+                        onFavouriteClicked(fav, uiState.movieDetailData.movieId)
+                    }
+                )
             },
             content = {
                 PosterImageItem(

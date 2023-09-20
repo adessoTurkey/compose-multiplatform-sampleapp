@@ -1,5 +1,6 @@
 package com.example.moveeapp_compose_kmm.di
 
+import com.example.moveeapp_compose_kmm.data.repository.AccountRepository
 import com.example.moveeapp_compose_kmm.data.repository.LoginRepository
 import com.example.moveeapp_compose_kmm.data.repository.MovieRepository
 import com.example.moveeapp_compose_kmm.data.repository.PersonRepository
@@ -13,4 +14,5 @@ val repositoryModule = module{
     single { TvRepository(get()) }
     single { SearchRepository(get()) }
     single { PersonRepository(get()) }
+    single { AccountRepository(get(), get()) }
 }

@@ -10,6 +10,7 @@
     <string name="tv_detail_season">Seasons:</string>
     <string name="tv_detail_episode">Episodes:</string>
     <string name="tab_movies">Movies</string>
+    <string name="tab_profile">Profile</string>
     <string name="expandable_show_more">Show More >></string>
     <string name="expandable_show_less">Show Less</string>
     <string name="search_empty_text">Your search didn\'t have any results</string>

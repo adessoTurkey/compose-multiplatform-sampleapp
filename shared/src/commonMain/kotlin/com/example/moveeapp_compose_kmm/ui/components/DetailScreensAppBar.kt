@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -17,6 +18,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -75,20 +80,26 @@ fun BackPressedItem(modifier: Modifier = Modifier, onBackPressed: () -> Unit) {
 }
 
 @Composable
-fun FavouriteItem(modifier: Modifier = Modifier, onFavouriteClicked: () -> Unit) {
+fun FavouriteItem(modifier: Modifier = Modifier, isFavorite: Boolean = false, onFavouriteClicked: (isFavorite: Boolean) -> Unit = {}) {
     Surface(
         modifier = modifier.padding(end = 31.dp, top = 24.dp).size(35.dp),
         shape = CircleShape,
         color = MaterialTheme.colorScheme.primaryContainer
     ) {
-        Icon(
-            modifier = Modifier
-                .fillMaxSize()
-                .clickable(onClick = onFavouriteClicked)
-                .padding(7.dp),
-            painter = painterResource(MR.images.ic_heart),
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.secondary
-        )
+
+        IconButton(
+            onClick = {
+                onFavouriteClicked(!isFavorite)
+            }
+        ) {
+            Icon(
+                modifier = Modifier
+                    .padding(6.dp),
+                painter = painterResource(if (isFavorite) MR.images.ic_heart_filled else MR.images.ic_heart),
+                contentDescription = null,
+                tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary
+            )
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 package com.example.moveeapp_compose_kmm.di
 
+import com.example.moveeapp_compose_kmm.ui.scene.account.AccountDetailViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.actordetail.ActorDetailViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.moviescreen.MovieViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.loginscreen.LoginViewModel
@@ -12,8 +13,9 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     factory { MovieViewModel(get()) }
-    factory { LoginViewModel(get()) }
-    factory { MovieDetailViewModel(get()) }
+    factory { LoginViewModel(get(), get(), get()) }
+    factory { MovieDetailViewModel(get(), get(), get()) }
+    factory { AccountDetailViewModel(get()) }
     factory { SplashViewModel(get()) }
     factory { TvViewModel(get()) }
     factory { TvDetailViewModel(get()) }

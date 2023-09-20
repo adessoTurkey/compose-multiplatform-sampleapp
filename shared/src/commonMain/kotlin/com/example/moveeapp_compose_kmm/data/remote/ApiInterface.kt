@@ -2,6 +2,9 @@ package com.example.moveeapp_compose_kmm.data.remote
 
 import com.example.moveeapp_compose_kmm.data.remote.model.CreditsModel
 import com.example.moveeapp_compose_kmm.data.remote.model.SearchModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.AccountResponse
+import com.example.moveeapp_compose_kmm.data.remote.model.account.AddFavoriteModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.AddFavoriteRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.RequestTokenResponseModel
@@ -50,4 +53,9 @@ interface ApiInterface {
     suspend fun createRequestTokenWithLogin(requestModel: LoginRequestModel): LoginResponseModel
 
     suspend fun createSession(requestModel: SessionRequestModel): SessionResponseModel
+
+    suspend fun addFavorite(accountId: Int,  addFavoriteRequestModel: AddFavoriteRequestModel, sessionId: String) : AddFavoriteModel
+
+    suspend fun accountDetails(sessionId: String) : AccountResponse
+
 }
