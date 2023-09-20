@@ -20,6 +20,7 @@ import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import com.example.moveeapp_compose_kmm.ui.scene.splashscreen.SplashScreen
+import com.example.moveeapp_compose_kmm.ui.tab.AccountTab
 import com.example.moveeapp_compose_kmm.ui.tab.MovieScreenTab
 import com.example.moveeapp_compose_kmm.ui.tab.SearchTab
 import com.example.moveeapp_compose_kmm.ui.tab.TvScreenTab
@@ -51,6 +52,7 @@ internal object MainScreen : Screen {
                         TabNavigationItem(tab = MovieScreenTab)
                         TabNavigationItem(tab = TvScreenTab)
                         TabNavigationItem(tab = SearchTab)
+                        TabNavigationItem(tab = AccountTab)
                     }
                 },
                 contentColor = MaterialTheme.colorScheme.secondaryContainer

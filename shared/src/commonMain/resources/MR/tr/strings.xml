@@ -10,6 +10,7 @@
     <string name="tv_detail_season">Sezonlar:</string>
     <string name="tv_detail_episode">Bölümler:</string>
     <string name="tab_movies">Filmler</string>
+    <string name="tab_profile">Profil</string>
     <string name="expandable_show_more">Daha fazla >></string>
     <string name="expandable_show_less">Daha az göster</string>
     <string name="search_empty_text">Aramanız herhangi bir sonuç vermedi</string>

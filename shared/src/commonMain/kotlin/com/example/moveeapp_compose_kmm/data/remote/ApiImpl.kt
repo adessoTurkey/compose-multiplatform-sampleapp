@@ -2,6 +2,9 @@ package com.example.moveeapp_compose_kmm.data.remote
 
 import com.example.moveeapp_compose_kmm.data.remote.model.CreditsModel
 import com.example.moveeapp_compose_kmm.data.remote.model.SearchModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.AccountResponse
+import com.example.moveeapp_compose_kmm.data.remote.model.account.AddFavoriteModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.AddFavoriteRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.RequestTokenResponseModel
@@ -95,6 +98,31 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
     override suspend fun personCredit(personId: Int): PersonCreditsModel {
         return client.get("person/$personId/combined_credits").body()
     }
+
+    //Account
+    override suspend fun addFavorite(
+        accountId: Int,
+        addFavoriteRequestModel: AddFavoriteRequestModel,
+        sessionId: String
+    ): AddFavoriteModel {
+        return client.post("account/$accountId/favorite") {
+            contentType(ContentType.Application.Json)
+            url {
+                parameters.append("session_id", sessionId)
+            }
+            setBody(addFavoriteRequestModel)
+        }.body()
+    }
+
+    override suspend fun accountDetails(sessionId: String): AccountResponse {
+        return client.get("account") {
+            url {
+                parameters.append("session_id", sessionId)
+            }
+        }.body()
+    }
+
+
 
     companion object {
 
