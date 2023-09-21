@@ -1,11 +1,11 @@
 package com.example.moveeapp_compose_kmm.data.remote.model.account
 
-import com.example.moveeapp_compose_kmm.data.uimodel.AccountUiModel
+import com.example.moveeapp_compose_kmm.data.uimodel.account.AccountUiModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AccountResponse(
+data class AccountDetailModel(
     @SerialName("avatar") val avatar: Avatar,
     @SerialName ("id") val id: Int,
     @SerialName ("include_adult")val includeAdult: Boolean,
@@ -29,6 +29,7 @@ data class AccountResponse(
     fun toUiModel() = AccountUiModel(
         username = username,
         accountId = id,
-        country = iso31661
+        country = iso31661,
+        originalName = name
     )
 }

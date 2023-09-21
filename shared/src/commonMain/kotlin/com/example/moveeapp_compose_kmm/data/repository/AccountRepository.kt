@@ -2,9 +2,11 @@ package com.example.moveeapp_compose_kmm.data.repository
 
 import com.example.moveeapp_compose_kmm.core.SessionSettings
 import com.example.moveeapp_compose_kmm.data.remote.ApiInterface
-import com.example.moveeapp_compose_kmm.data.remote.model.account.AccountResponse
-import com.example.moveeapp_compose_kmm.data.remote.model.account.AddFavoriteModel
-import com.example.moveeapp_compose_kmm.data.remote.model.account.AddFavoriteRequestModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.AccountDetailModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteRequestModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteResponseModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteMovieModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteTvModel
 import com.example.moveeapp_compose_kmm.domain.model.IsFavorite
 import com.example.moveeapp_compose_kmm.utils.resultOf
 
@@ -13,7 +15,7 @@ class AccountRepository(
     private val sessionSettings: SessionSettings
 ) {
 
-    suspend fun getAccountDetail(): Result<AccountResponse> {
+    suspend fun getAccountDetail(): Result<AccountDetailModel> {
         return resultOf {
             api.accountDetails(sessionSettings.getSessionId() ?: "")
         }
@@ -22,7 +24,7 @@ class AccountRepository(
     suspend fun addFavorite(
         accountId: Int,
         addFavoriteRequestModel: AddFavoriteRequestModel
-    ): Result<AddFavoriteModel> {
+    ): Result<AddFavoriteResponseModel> {
         return resultOf {
             api.addFavorite(
                 accountId,
@@ -48,6 +50,18 @@ class AccountRepository(
                 sessionId = sessionSettings.getSessionId() ?: "", tvId
             ).favorite
             IsFavorite(isFavorite ?: false)
+        }
+    }
+
+    suspend fun getFavoriteMovie(accountId: Int, sessionId: String): Result<FavoriteMovieModel> {
+        return resultOf {
+            api.getFavoriteMovie(accountId = accountId, sessionId = sessionId)
+        }
+    }
+
+    suspend fun getFavoriteTv(accountId: Int, sessionId: String): Result<FavoriteTvModel> {
+        return resultOf {
+            api.getFavoriteTv(accountId = accountId, sessionId = sessionId)
         }
     }
 }
