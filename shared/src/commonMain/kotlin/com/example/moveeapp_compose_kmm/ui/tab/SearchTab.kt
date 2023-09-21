@@ -8,6 +8,7 @@ import cafe.adriel.voyager.navigator.tab.TabOptions
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.ui.scene.searchscreen.SearchScreen
 import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 
 internal object SearchTab : Tab {
 
@@ -20,11 +21,12 @@ internal object SearchTab : Tab {
         @Composable
         get() {
             val icon = painterResource(MR.images.ic_tabbar_search)
+            val title = stringResource(MR.strings.tab_search)
 
             return remember {
                 TabOptions(
                     index = 0u,
-                    title = "Search",
+                    title = title,
                     icon = icon
                 )
             }

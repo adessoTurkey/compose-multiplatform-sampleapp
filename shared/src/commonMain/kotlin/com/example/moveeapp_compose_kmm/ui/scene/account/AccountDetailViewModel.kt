@@ -3,7 +3,7 @@ package com.example.moveeapp_compose_kmm.ui.scene.account
 import cafe.adriel.voyager.core.model.coroutineScope
 import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.data.uimodel.AccountUiModel
-import com.example.moveeapp_compose_kmm.domain.GetAccountDetailUseCase
+import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.GetAccountDetailUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update

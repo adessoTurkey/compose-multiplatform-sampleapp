@@ -23,7 +23,7 @@ internal object TvScreenTab : Tab {
         @Composable
         get() {
             val icon = rememberVectorPainter(Icons.Default.Tv) //TODO TvSeries icon will change
-            val title = stringResource(MR.strings.tab_movies)
+            val title = stringResource(MR.strings.tab_tv)
 
             return remember {
                 TabOptions(

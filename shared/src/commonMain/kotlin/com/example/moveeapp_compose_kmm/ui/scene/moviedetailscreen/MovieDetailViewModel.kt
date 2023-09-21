@@ -5,8 +5,8 @@ import com.example.moveeapp_compose_kmm.core.SessionSettings
 import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.data.repository.MovieRepository
 import com.example.moveeapp_compose_kmm.data.uimodel.MovieDetailUiModel
-import com.example.moveeapp_compose_kmm.domain.AddFavoriteUseCase
-import com.example.moveeapp_compose_kmm.domain.GetMovieStateUseCase
+import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.AddFavoriteUseCase
+import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.GetMovieStateUseCase
 import com.example.moveeapp_compose_kmm.utils.ShadredPrefConstants
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -51,7 +51,7 @@ class MovieDetailViewModel(
         }.launchIn(coroutineScope)
     }
 
-    fun updateFavorite(mediaId: Int, mediaType: String, isFavorite: Boolean) {
+    fun addFavorite(mediaId: Int, mediaType: String, isFavorite: Boolean) {
         coroutineScope.launch {
             val accountId = sessionSettings.getInt(ShadredPrefConstants.KEY_ACCOUNT_ID)
             val result = addFavoriteUseCase.execute(
