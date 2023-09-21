@@ -86,7 +86,7 @@ class MovieDetailScreen(
                     navigator.push(ActorDetailScreen(it))
                 },
                 onFavouriteClicked = { isFav, movieId ->
-                    viewModel.updateFavorite(
+                    viewModel.addFavorite(
                         mediaType = Constants.MOVIE,
                         mediaId = movieId,
                         isFavorite = isFav
@@ -106,7 +106,7 @@ fun SuccessContent(
     isFavorite: Boolean,
     onDetailClick: (Int) -> Unit,
     onBackPressed: () -> Unit,
-    onFavouriteClicked: (isFav: Boolean, movieId: Int) -> Unit,
+    onFavouriteClicked: (isFav: Boolean, movieId: Int) -> Unit
 ) {
     val scrollState = rememberScrollState()
 

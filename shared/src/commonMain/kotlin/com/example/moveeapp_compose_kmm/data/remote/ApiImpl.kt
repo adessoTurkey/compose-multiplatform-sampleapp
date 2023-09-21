@@ -109,7 +109,7 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         return client.post("account/$accountId/favorite") {
             contentType(ContentType.Application.Json)
             url {
-                parameters.append("session_id", sessionId)
+                parameters.append(SESSION_ID, sessionId)
             }
             setBody(addFavoriteRequestModel)
         }.body()
@@ -118,7 +118,7 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
     override suspend fun accountDetails(sessionId: String): AccountResponse {
         return client.get("account") {
             url {
-                parameters.append("session_id", sessionId)
+                parameters.append(SESSION_ID, sessionId)
             }
         }.body()
     }
@@ -127,16 +127,16 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         return client.get("movie/${movieId}/account_states"){
             contentType(ContentType.Application.Json)
             url {
-                parameters.append("session_id", sessionId)
+                parameters.append(SESSION_ID, sessionId)
             }
         }.body()
     }
 
     override suspend fun getTvState(sessionId: String, tvId: Int): AccountStateResponseModel {
-        return client.get("movie/${tvId}/account_states") {
+        return client.get("tv/${tvId}/account_states") {
             contentType(ContentType.Application.Json)
             url {
-                parameters.append("session_id", sessionId)
+                parameters.append(SESSION_ID, sessionId)
             }
         }.body()
     }
@@ -159,6 +159,8 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         const val REQUEST_TOKEN = "authentication/token/new"
         const val LOGIN = "authentication/token/validate_with_login"
         const val SESSION = "authentication/session/new"
+
+        const val SESSION_ID = "session_id"
     }
 }
 

@@ -8,7 +8,7 @@ import com.example.moveeapp_compose_kmm.core.SessionSettings
 import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.data.repository.LoginRepository
 import com.example.moveeapp_compose_kmm.data.repository.LoginState
-import com.example.moveeapp_compose_kmm.domain.GetAccountDetailUseCase
+import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.GetAccountDetailUseCase
 import com.example.moveeapp_compose_kmm.utils.ShadredPrefConstants
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
