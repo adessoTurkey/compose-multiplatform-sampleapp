@@ -12,8 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,9 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -51,6 +48,7 @@ import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.RuntimeItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.ui.scene.actordetail.ActorDetailScreen
+import com.example.moveeapp_compose_kmm.utils.Constants
 import dev.icerock.moko.resources.compose.stringResource
 import kotlin.math.round
 
@@ -63,9 +61,11 @@ class MovieDetailScreen(
         val navigator = LocalNavigator.currentOrThrow
         val viewModel: MovieDetailViewModel = viewModel()
         val uiState by viewModel.uiState.collectAsState()
+        val isFavorite by viewModel.isFavorite.collectAsState()
 
         LaunchedEffect(Unit) {
             viewModel.fetchData(movieId)
+            viewModel.getMovieState(movieId)
         }
 
         Box(
@@ -86,9 +86,14 @@ class MovieDetailScreen(
                     navigator.push(ActorDetailScreen(it))
                 },
                 onFavouriteClicked = { isFav, movieId ->
-                    viewModel.addFavorite(favorite = isFav, mediaType = "movie", mediaId = movieId)
+                    viewModel.updateFavorite(
+                        mediaType = Constants.MOVIE,
+                        mediaId = movieId,
+                        isFavorite = isFav
+                    )
                 },
-                onBackPressed = navigator::pop
+                onBackPressed = navigator::pop,
+                isFavorite = isFavorite
             )
         }
     }
@@ -98,12 +103,12 @@ class MovieDetailScreen(
 fun SuccessContent(
     modifier: Modifier = Modifier,
     uiState: MovieDetailUiState,
+    isFavorite: Boolean,
     onDetailClick: (Int) -> Unit,
     onBackPressed: () -> Unit,
-    onFavouriteClicked: (isFav: Boolean, movieId: Int) -> Unit
+    onFavouriteClicked: (isFav: Boolean, movieId: Int) -> Unit,
 ) {
     val scrollState = rememberScrollState()
-    var isFavourite by remember { mutableStateOf(false) }
 
     Column(modifier = modifier.verticalScroll(scrollState)) {
         DetailScreensAppBar(
@@ -114,10 +119,9 @@ fun SuccessContent(
             },
             trailingIcon = {
                 FavouriteItem(modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars),
-                    isFavorite = isFavourite,
-                    onFavouriteClicked = { fav ->
-                        isFavourite = fav
-                        onFavouriteClicked(fav, uiState.movieDetailData.movieId)
+                    isFavorite = isFavorite,
+                    onFavouriteClicked = {
+                        onFavouriteClicked(!isFavorite, uiState.movieDetailData.movieId)
                     }
                 )
             },
