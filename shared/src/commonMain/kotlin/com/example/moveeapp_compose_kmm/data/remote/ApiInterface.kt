@@ -3,6 +3,7 @@ package com.example.moveeapp_compose_kmm.data.remote
 import com.example.moveeapp_compose_kmm.data.remote.model.CreditsModel
 import com.example.moveeapp_compose_kmm.data.remote.model.SearchModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.AccountResponse
+import com.example.moveeapp_compose_kmm.data.remote.model.account.AccountStateResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.AddFavoriteModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.AddFavoriteRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
@@ -58,4 +59,7 @@ interface ApiInterface {
 
     suspend fun accountDetails(sessionId: String) : AccountResponse
 
+    suspend fun getMovieState(sessionId: String, movieId: Int) : AccountStateResponseModel
+
+    suspend fun getTvState(sessionId: String, tvId: Int) : AccountStateResponseModel
 }

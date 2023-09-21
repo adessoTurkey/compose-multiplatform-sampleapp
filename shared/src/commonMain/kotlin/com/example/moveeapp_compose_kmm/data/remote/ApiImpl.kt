@@ -3,6 +3,7 @@ package com.example.moveeapp_compose_kmm.data.remote
 import com.example.moveeapp_compose_kmm.data.remote.model.CreditsModel
 import com.example.moveeapp_compose_kmm.data.remote.model.SearchModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.AccountResponse
+import com.example.moveeapp_compose_kmm.data.remote.model.account.AccountStateResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.AddFavoriteModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.AddFavoriteRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
@@ -122,6 +123,23 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         }.body()
     }
 
+    override suspend fun getMovieState(sessionId: String, movieId: Int): AccountStateResponseModel {
+        return client.get("movie/${movieId}/account_states"){
+            contentType(ContentType.Application.Json)
+            url {
+                parameters.append("session_id", sessionId)
+            }
+        }.body()
+    }
+
+    override suspend fun getTvState(sessionId: String, tvId: Int): AccountStateResponseModel {
+        return client.get("movie/${tvId}/account_states") {
+            contentType(ContentType.Application.Json)
+            url {
+                parameters.append("session_id", sessionId)
+            }
+        }.body()
+    }
 
 
     companion object {
