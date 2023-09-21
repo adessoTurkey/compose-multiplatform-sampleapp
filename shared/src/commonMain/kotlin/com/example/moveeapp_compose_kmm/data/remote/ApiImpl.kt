@@ -2,10 +2,12 @@ package com.example.moveeapp_compose_kmm.data.remote
 
 import com.example.moveeapp_compose_kmm.data.remote.model.CreditsModel
 import com.example.moveeapp_compose_kmm.data.remote.model.SearchModel
-import com.example.moveeapp_compose_kmm.data.remote.model.account.AccountResponse
-import com.example.moveeapp_compose_kmm.data.remote.model.account.AccountStateResponseModel
-import com.example.moveeapp_compose_kmm.data.remote.model.account.AddFavoriteModel
-import com.example.moveeapp_compose_kmm.data.remote.model.account.AddFavoriteRequestModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.AccountDetailModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AccountStateResponseModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteResponseModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteRequestModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteMovieModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteTvModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.RequestTokenResponseModel
@@ -105,7 +107,7 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         accountId: Int,
         addFavoriteRequestModel: AddFavoriteRequestModel,
         sessionId: String
-    ): AddFavoriteModel {
+    ): AddFavoriteResponseModel {
         return client.post("account/$accountId/favorite") {
             contentType(ContentType.Application.Json)
             url {
@@ -115,7 +117,7 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         }.body()
     }
 
-    override suspend fun accountDetails(sessionId: String): AccountResponse {
+    override suspend fun accountDetails(sessionId: String): AccountDetailModel {
         return client.get("account") {
             url {
                 parameters.append(SESSION_ID, sessionId)
@@ -136,6 +138,22 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         return client.get("tv/${tvId}/account_states") {
             contentType(ContentType.Application.Json)
             url {
+                parameters.append(SESSION_ID, sessionId)
+            }
+        }.body()
+    }
+
+    override suspend fun getFavoriteMovie(accountId: Int, sessionId: String): FavoriteMovieModel {
+        return client.get("account/{$accountId}/favorite/movies"){
+            url{
+                parameters.append(SESSION_ID, sessionId)
+            }
+        }.body()
+    }
+
+    override suspend fun getFavoriteTv(accountId: Int, sessionId: String): FavoriteTvModel {
+        return client.get("account/{$accountId}/favorite/tv"){
+            url{
                 parameters.append(SESSION_ID, sessionId)
             }
         }.body()

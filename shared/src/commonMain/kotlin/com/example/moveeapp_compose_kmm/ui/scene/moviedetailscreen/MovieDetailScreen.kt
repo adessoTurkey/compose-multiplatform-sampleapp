@@ -112,13 +112,12 @@ fun SuccessContent(
 
     Column(modifier = modifier.verticalScroll(scrollState)) {
         DetailScreensAppBar(
+            modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars),
             leadingIcon = {
-                BackPressedItem(
-                    modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars)
-                ) { onBackPressed() }
+                BackPressedItem{ onBackPressed() }
             },
             trailingIcon = {
-                FavouriteItem(modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars),
+                FavouriteItem(
                     isFavorite = isFavorite,
                     onFavouriteClicked = {
                         onFavouriteClicked(!isFavorite, uiState.movieDetailData.movieId)

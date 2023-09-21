@@ -16,5 +16,8 @@
     <string name="expandable_show_more">Show More >></string>
     <string name="expandable_show_less">Show Less</string>
     <string name="search_empty_text">Your search didn\'t have any results</string>
+    <string name="hello">Hello</string>
+    <string name="fav_tv">Favorite TV Series</string>
+    <string name="fav_movie">Favorite Movies</string>
 </resources>
 

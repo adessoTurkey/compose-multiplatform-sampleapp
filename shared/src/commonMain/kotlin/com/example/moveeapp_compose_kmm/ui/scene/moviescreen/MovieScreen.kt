@@ -45,9 +45,8 @@ import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen.MovieDetailScreen
-import com.example.moveeapp_compose_kmm.utils.Serializable
 
-class MovieScreen : Screen, Serializable {
+class MovieScreen : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow

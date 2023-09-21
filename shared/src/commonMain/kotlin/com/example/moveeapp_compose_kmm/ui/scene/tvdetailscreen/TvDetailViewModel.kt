@@ -63,7 +63,6 @@ class TvDetailViewModel(
             if (result.isSuccess) {
                 _isFavorite.value = result.getOrNull()?.value ?: false
             }
-
         }
     }
 
