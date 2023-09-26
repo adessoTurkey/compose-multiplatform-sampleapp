@@ -35,10 +35,10 @@ fun App() {
     }
 }
 
-internal object MainScreen : Screen {
+internal class MainScreen : Screen {
     @Composable
     override fun Content() {
-        TabNavigator(MovieScreenTab) {
+        TabNavigator(MovieScreenTab(), true) { //TODO
             Scaffold(
                 modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars),
                 content = {
@@ -53,10 +53,10 @@ internal object MainScreen : Screen {
                         contentColor = MaterialTheme.colorScheme.secondary,
                         elevation = 4.dp,
                     ) {
-                        TabNavigationItem(tab = MovieScreenTab)
-                        TabNavigationItem(tab = TvScreenTab)
-                        TabNavigationItem(tab = SearchTab)
-                        TabNavigationItem(tab = AccountTab)
+                        TabNavigationItem(tab = MovieScreenTab())
+                        TabNavigationItem(tab = TvScreenTab())
+                        TabNavigationItem(tab = SearchTab())
+                        TabNavigationItem(tab = AccountTab())
                     }
                 },
                 contentColor = MaterialTheme.colorScheme.secondaryContainer

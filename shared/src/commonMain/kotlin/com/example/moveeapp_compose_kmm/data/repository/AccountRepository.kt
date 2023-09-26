@@ -7,6 +7,8 @@ import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFa
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteMovieModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteTvModel
+import com.example.moveeapp_compose_kmm.data.remote.model.login.LogoutRequestModel
+import com.example.moveeapp_compose_kmm.data.remote.model.login.LogoutResponseModel
 import com.example.moveeapp_compose_kmm.domain.model.IsFavorite
 import com.example.moveeapp_compose_kmm.utils.resultOf
 
@@ -62,6 +64,12 @@ class AccountRepository(
     suspend fun getFavoriteTv(accountId: Int, sessionId: String): Result<FavoriteTvModel> {
         return resultOf {
             api.getFavoriteTv(accountId = accountId, sessionId = sessionId)
+        }
+    }
+
+    suspend fun logout(logoutRequestModel: LogoutRequestModel): Result<LogoutResponseModel> {
+        return resultOf {
+            api.logout(logoutRequestModel)
         }
     }
 }

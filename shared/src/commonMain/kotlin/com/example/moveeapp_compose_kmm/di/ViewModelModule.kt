@@ -16,7 +16,7 @@ val viewModelModule = module {
     factory { MovieViewModel(get()) }
     factory { LoginViewModel(get(), get(), get()) }
     factory { MovieDetailViewModel(get(), get(), get(), get()) }
-    factory { AccountDetailViewModel(get()) }
+    factory { AccountDetailViewModel(get(), get()) }
     factory { SplashViewModel(get()) }
     factory { TvViewModel(get()) }
     factory { TvDetailViewModel(get(), get(), get(), get()) }
