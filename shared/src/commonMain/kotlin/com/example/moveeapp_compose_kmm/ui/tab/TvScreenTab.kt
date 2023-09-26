@@ -12,7 +12,7 @@ import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.ui.scene.tvscreen.TvScreen
 import dev.icerock.moko.resources.compose.stringResource
 
-internal object TvScreenTab : Tab {
+internal class TvScreenTab : Tab {
 
     @Composable
     override fun Content() {

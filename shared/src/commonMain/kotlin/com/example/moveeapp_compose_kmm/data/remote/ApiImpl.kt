@@ -10,6 +10,8 @@ import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.Favor
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteTvModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseModel
+import com.example.moveeapp_compose_kmm.data.remote.model.login.LogoutRequestModel
+import com.example.moveeapp_compose_kmm.data.remote.model.login.LogoutResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.RequestTokenResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionResponseModel
@@ -23,6 +25,7 @@ import com.example.moveeapp_compose_kmm.data.remote.model.tv.TopRatedTvModel
 import com.example.moveeapp_compose_kmm.data.remote.model.tv.TvDetailModel
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
@@ -159,6 +162,13 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         }.body()
     }
 
+    override suspend fun logout(logoutRequestModel: LogoutRequestModel): LogoutResponseModel {
+        return client.delete(LOGOUT){
+            setBody(logoutRequestModel)
+            contentType(ContentType.Application.Json)
+        }.body()
+    }
+
 
     companion object {
 
@@ -177,6 +187,9 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         const val REQUEST_TOKEN = "authentication/token/new"
         const val LOGIN = "authentication/token/validate_with_login"
         const val SESSION = "authentication/session/new"
+
+        //Logout
+        const val LOGOUT = "authentication/session"
 
         const val SESSION_ID = "session_id"
     }

@@ -10,7 +10,7 @@ import com.example.moveeapp_compose_kmm.ui.scene.searchscreen.SearchScreen
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 
-internal object SearchTab : Tab {
+internal class SearchTab : Tab {
 
     @Composable
     override fun Content() {

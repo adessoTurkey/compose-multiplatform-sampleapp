@@ -12,12 +12,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsTopHeight
+import androidx.compose.material.Button
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -31,6 +33,7 @@ import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.ui.scene.account.favoritescreen.FavoriteScreen
+import com.example.moveeapp_compose_kmm.ui.scene.splashscreen.SplashScreen
 import dev.icerock.moko.resources.compose.fontFamilyResource
 import dev.icerock.moko.resources.compose.stringResource
 
@@ -40,7 +43,13 @@ class AccountScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val viewModel: AccountDetailViewModel = viewModel()
         val uiState by viewModel.uiState.collectAsState()
+        val logoutState by viewModel.logoutState.collectAsState()
 
+        LaunchedEffect(logoutState) {
+            if (logoutState) {
+                navigator.parent?.parent?.replaceAll(SplashScreen())
+            }
+        }
 
         Column(modifier = Modifier.background(MaterialTheme.colorScheme.secondaryContainer)) {
             Spacer(
@@ -51,7 +60,9 @@ class AccountScreen : Screen {
             SuccessContent(
                 uiState = uiState,
                 onFavMovieClick = { navigator.push(FavoriteScreen(it)) },
-                onFavTvClick = { navigator.push(FavoriteScreen(it)) })
+                onFavTvClick = { navigator.push(FavoriteScreen(it)) },
+                onLogoutClick = { viewModel.logout() }
+            )
         }
     }
 }
@@ -60,7 +71,8 @@ class AccountScreen : Screen {
 fun SuccessContent(
     uiState: AccountUiState,
     onFavMovieClick: (MediaType) -> Unit,
-    onFavTvClick: (MediaType) -> Unit
+    onFavTvClick: (MediaType) -> Unit,
+    onLogoutClick: () -> Unit,
 ) {
     Column {
         Surface(
@@ -136,6 +148,10 @@ fun SuccessContent(
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(end = 16.dp)
                 )
+            }
+
+            Button(onClick = onLogoutClick) {
+                TextItem(text = "Logout")
             }
         }
     }
