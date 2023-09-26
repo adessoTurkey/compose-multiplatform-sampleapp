@@ -2,6 +2,7 @@ package com.example.moveeapp_compose_kmm.data.remote.model
 
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.data.uimodel.SearchUiModel
+import com.example.moveeapp_compose_kmm.utils.Constants
 import dev.icerock.moko.resources.ImageResource
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -48,15 +49,15 @@ data class SearchModel(
 
         private fun getNameType() : String =
             when (this.mediaType) {
-                "movie" -> {
+                Constants.MOVIE -> {
                     "Movie"
                 }
 
-                "tv" -> {
+                Constants.TV -> {
                     "TV Series"
                 }
 
-                "person" -> {
+                Constants.PERSON -> {
                     "Person"
                 } else -> ""
             }

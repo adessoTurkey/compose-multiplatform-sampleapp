@@ -14,4 +14,12 @@ class SessionSettings(private val kvault: KVault) {
         return kvault.string(ShadredPrefConstants.KEY_SESSION_ID)
     }
 
+    fun setInt(value: Int, key: String) {
+        kvault.set(key, value)
+    }
+
+    fun getInt(key: String): Int? {
+        return kvault.int(key)
+    }
+
 }

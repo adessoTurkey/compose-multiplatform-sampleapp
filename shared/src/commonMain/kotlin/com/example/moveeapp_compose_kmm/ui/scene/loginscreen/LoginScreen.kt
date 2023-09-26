@@ -181,7 +181,7 @@ fun LoginContent(
 
         LaunchedEffect(key1 = isLoggedIn) {
             if (isLoggedIn == LoginState.LOGGED_IN) {
-                navigator.replace(MainScreen)
+                navigator.replace(MainScreen())
             }
         }
     }

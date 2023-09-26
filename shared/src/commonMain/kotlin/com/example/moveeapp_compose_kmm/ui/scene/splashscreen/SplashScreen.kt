@@ -31,7 +31,7 @@ class SplashScreen : Screen {
             }
 
             LoginState.LOGGED_IN -> {
-                navigator.replace(MainScreen)
+                navigator.replace(MainScreen())
             }
         }
     }

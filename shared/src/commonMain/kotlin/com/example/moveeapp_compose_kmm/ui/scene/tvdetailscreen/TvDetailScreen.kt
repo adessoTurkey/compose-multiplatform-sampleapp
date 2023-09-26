@@ -48,6 +48,7 @@ import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.ui.scene.actordetail.ActorDetailScreen
+import com.example.moveeapp_compose_kmm.utils.Constants
 import dev.icerock.moko.resources.compose.stringResource
 import kotlin.math.round
 
@@ -58,9 +59,11 @@ class TvDetailScreen(private val tvId: Int) : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val viewModel: TvDetailViewModel = viewModel()
         val uiState by viewModel.uiState.collectAsState()
+        val isFavorite by viewModel.isFavorite.collectAsState()
 
         LaunchedEffect(Unit) {
             viewModel.fetchData(tvId)
+            viewModel.getTvState(tvId)
         }
 
         Box(
@@ -80,7 +83,15 @@ class TvDetailScreen(private val tvId: Int) : Screen {
                 onDetailClick = {
                     navigator.push(ActorDetailScreen(it))
                 },
-                onBackPressed = navigator::pop
+                onFavouriteClicked = { isFav, tvId ->
+                    viewModel.addFavorite(
+                        mediaId = tvId,
+                        mediaType = Constants.TV,
+                        isFavorite = isFav
+                    )
+                },
+                onBackPressed = navigator::pop,
+                isFavorite = isFavorite,
             )
         }
     }
@@ -89,8 +100,10 @@ class TvDetailScreen(private val tvId: Int) : Screen {
 @Composable
 fun SuccessContent(
     uiState: TvDetailUiState,
+    isFavorite: Boolean,
     onDetailClick: (Int) -> Unit,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    onFavouriteClicked: (isFav: Boolean, movieId: Int) -> Unit
 ) {
     val scrollState = rememberScrollState()
 
@@ -105,8 +118,15 @@ fun SuccessContent(
             },
             trailingIcon = {
                 FavouriteItem(
-                    modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars)
-                ) { }
+                    modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars),
+                    isFavorite = isFavorite,
+                    onFavouriteClicked = {
+                        onFavouriteClicked(
+                            !isFavorite,
+                            uiState.tvDetailData.tvSeriesId
+                        )
+                    }
+                )
             },
             content = {
                 PosterImageItem(
@@ -169,7 +189,7 @@ fun TvDetailContent(uiState: TvDetailUiState) {
             )
             Spacer(modifier = Modifier.padding(8.dp))
             ChipItem(
-                string = stringResource(MR.strings.tv_detail_episode) +  "${uiState.tvDetailData.numberOfEpisodes}",
+                string = stringResource(MR.strings.tv_detail_episode) + "${uiState.tvDetailData.numberOfEpisodes}",
                 backgroundColor = MaterialTheme.colorScheme.secondary
             )
         }
