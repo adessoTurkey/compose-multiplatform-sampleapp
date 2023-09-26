@@ -10,7 +10,7 @@ import com.example.moveeapp_compose_kmm.ui.scene.moviescreen.MovieScreen
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 
-internal object MovieScreenTab : Tab {
+internal class MovieScreenTab : Tab {
 
     @Composable
     override fun Content() {

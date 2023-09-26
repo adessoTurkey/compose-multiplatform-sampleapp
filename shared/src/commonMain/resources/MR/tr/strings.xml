@@ -10,10 +10,14 @@
     <string name="tv_detail_season">Sezonlar:</string>
     <string name="tv_detail_episode">Bölümler:</string>
     <string name="tab_movies">Filmler</string>
+    <string name="tab_tv">Diziler</string>
+    <string name="tab_search">Arama</string>
+    <string name="tab_profile">Profil</string>
     <string name="expandable_show_more">Daha fazla >></string>
     <string name="expandable_show_less">Daha az göster</string>
     <string name="search_empty_text">Aramanız herhangi bir sonuç vermedi</string>
-    <string name="search_title">Arama</string>
-
+    <string name="hello">Merhaba</string>
+    <string name="fav_tv">Favori Diziler</string>
+    <string name="fav_movie">Favori Filmler</string>
 </resources>
 

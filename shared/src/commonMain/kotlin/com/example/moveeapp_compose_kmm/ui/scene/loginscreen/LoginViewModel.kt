@@ -4,18 +4,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.core.model.coroutineScope
+import com.example.moveeapp_compose_kmm.core.SessionSettings
 import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.data.repository.LoginRepository
 import com.example.moveeapp_compose_kmm.data.repository.LoginState
+import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.GetAccountDetailUseCase
+import com.example.moveeapp_compose_kmm.utils.ShadredPrefConstants
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val repository: LoginRepository
+    private val loginRepository: LoginRepository,
+    private val sessionSettings: SessionSettings,
+    private val getAccountDetailUseCase: GetAccountDetailUseCase
 ) : ViewModel {
 
-    private val _isLoggedIn = MutableStateFlow(repository.getLoginState())
+    private val _isLoggedIn = MutableStateFlow(loginRepository.getLoginState())
     val isLoggedIn: StateFlow<LoginState>
         get() = _isLoggedIn
     var loginUiState by mutableStateOf(LoginUiState())
@@ -41,18 +46,31 @@ class LoginViewModel(
                 return@launch
             }
             loginUiState = loginUiState.copy(isLoading = true, loginError = null)
-            repository.login(
+            loginRepository.login(
                 loginUiState.userName,
                 loginUiState.password
             )
                 .onSuccess {
-                    loginUiState = loginUiState.copy(isLoading = false, isSuccessLogin = true)
-                    _isLoggedIn.value = LoginState.LOGGED_IN
+                    getAccountDetail()
                 }
                 .onFailure { e ->
                     loginUiState = loginUiState.copy(isLoading = false, loginError = e.message)
                     e.printStackTrace()
                 }
+        }
+    }
+
+    private fun getAccountDetail() {
+        coroutineScope.launch {
+            val result = getAccountDetailUseCase.execute()
+            if (result.isSuccess) {
+                sessionSettings.setInt(
+                    key = ShadredPrefConstants.KEY_ACCOUNT_ID,
+                    value = result.getOrNull()?.id ?: 0
+                )
+                loginUiState = loginUiState.copy(isLoading = false, isSuccessLogin = true)
+                _isLoggedIn.value = LoginState.LOGGED_IN
+            }
         }
     }
 }

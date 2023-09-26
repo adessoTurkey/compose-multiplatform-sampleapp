@@ -110,7 +110,7 @@ fun SearchContent(
             )
             Column(modifier = Modifier.padding(horizontal = 24.dp).padding(top = 40.dp)) {
                 TextItem(
-                    text = stringResource(MR.strings.search_title),
+                    text = stringResource(MR.strings.tab_search),
                     fontSize = 34.sp,
                     fontWeight = FontWeight.Bold,
                     textColor = MaterialTheme.colorScheme.primaryContainer

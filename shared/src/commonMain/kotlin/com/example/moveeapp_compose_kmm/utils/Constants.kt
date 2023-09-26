@@ -6,8 +6,12 @@ object Constants {
     const val IMAGE_BASE = "https://image.tmdb.org/t/p/w342"
     const val REGISTER = "https://www.themoviedb.org/signup"
     const val FORGOT_PASSWORD = "https://www.themoviedb.org/reset-password"
+    const val MOVIE = "movie"
+    const val TV = "tv"
+    const val PERSON = "person"
 }
 
 object ShadredPrefConstants{
     const val KEY_SESSION_ID = "key_session_id"
+    const val KEY_ACCOUNT_ID = "key_account_id"
 }
