@@ -19,5 +19,6 @@
     <string name="hello">Merhaba</string>
     <string name="fav_tv">Favori Diziler</string>
     <string name="fav_movie">Favori Filmler</string>
+    <string name="share">Paylaş</string>
 </resources>
 
