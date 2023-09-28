@@ -8,6 +8,8 @@ import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFa
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteMovieModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteTvModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.rate.RateDto
+import com.example.moveeapp_compose_kmm.data.remote.model.account.rate.RateResponse
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LogoutRequestModel
@@ -71,6 +73,14 @@ interface ApiInterface {
 
     suspend fun getFavoriteMovie(accountId: Int, sessionId: String) : FavoriteMovieModel
     suspend fun getFavoriteTv(accountId: Int, sessionId: String) : FavoriteTvModel
+
+    //Rating
+
+    suspend fun rateMovie(rating: RateDto, movieId: Int, sessionId: String): RateResponse
+
+    suspend fun rateTvShow(rating: RateDto, tvShowId: Int, sessionId: String): RateResponse
+    suspend fun removeMovieRating(movieId: Int, sessionId: String)
+    suspend fun removeTvShowRating(tvShowId: Int, sessionId: String)
 
     //Logout
     suspend fun logout(logoutRequestModel: LogoutRequestModel) : LogoutResponseModel
