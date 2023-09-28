@@ -7,9 +7,15 @@ import com.example.moveeapp_compose_kmm.data.repository.TvRepository
 import com.example.moveeapp_compose_kmm.data.uimodel.tv.TvDetailUiModel
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.AddFavoriteUseCase
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.GetTvStateUseCase
+import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RateTvShowUseCase
+import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RemoveTvShowRatingUseCase
 import com.example.moveeapp_compose_kmm.utils.ShadredPrefConstants
+import kotlin.math.roundToInt
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
@@ -19,7 +25,9 @@ class TvDetailViewModel(
     private val repository: TvRepository,
     private val sessionSettings: SessionSettings,
     private val addFavoriteUseCase: AddFavoriteUseCase,
-    private val getTvStateUseCase: GetTvStateUseCase
+    private val getTvStateUseCase: GetTvStateUseCase,
+    private val rateTvShowUseCase: RateTvShowUseCase,
+    private val removeTvShowRatingUseCase: RemoveTvShowRatingUseCase,
 ) : ViewModel {
 
     private val _uiState = MutableStateFlow(TvDetailUiState())
@@ -27,6 +35,10 @@ class TvDetailViewModel(
 
     private val _isFavorite = MutableStateFlow(false)
     val isFavorite: StateFlow<Boolean> = _isFavorite
+
+    private val _uiRating = MutableStateFlow<Int?>(null)
+    private val _actualRating = MutableStateFlow<Int?>(null)
+    val rating = _uiRating.asStateFlow()
 
     fun fetchData(tvId: Int) {
         combine(
@@ -60,18 +72,53 @@ class TvDetailViewModel(
                 mediaType = mediaType,
                 isFavorite = isFavorite
             )
-            if (result.isSuccess) {
-                _isFavorite.value = result.getOrNull()?.value ?: false
-            }
+
+            if (result.isSuccess) _isFavorite.value = isFavorite
         }
     }
 
     fun getTvState(tvId: Int) {
         coroutineScope.launch {
             val result = getTvStateUseCase.execute(tvId)
+
             if (result.isSuccess) {
-                _isFavorite.value = result.getOrNull()?.value ?: false
+                _isFavorite.value = result.getOrNull()?.isFavorite ?: false
+                result.getOrNull()?.rating?.roundToInt().also {
+                    _uiRating.value = it
+                    _actualRating.value = it
+                }
             }
+        }
+    }
+
+    private val _rateJob = MutableStateFlow<Job?>(null)
+    fun rateTvShow(rating: Int, tvShowId: Int) {
+        if (_uiRating.value == rating) {
+            _uiRating.value = null
+        } else {
+            _uiRating.value = rating
+        }
+
+        _rateJob.value?.cancel()
+
+        if (_rateJob.value?.isActive == true) return
+
+        _rateJob.value = coroutineScope.launch {
+            delay(500)
+
+            if (_actualRating.value == rating) {
+                removeTvShowRatingUseCase.execute(tvShowId).onSuccess {
+                    _actualRating.value = null
+                }
+            } else {
+                val isRateSuccess = rateTvShowUseCase.execute(rating, tvShowId)
+
+                if (isRateSuccess.value) {
+                    _actualRating.value = rating
+                }
+            }
+
+            _uiRating.value = _actualRating.value
         }
     }
 }

@@ -20,5 +20,6 @@
     <string name="fav_tv">Favorite TV Series</string>
     <string name="fav_movie">Favorite Movies</string>
     <string name="share">Share</string>
+    <string name="rate">Rate</string>
 </resources>
 
