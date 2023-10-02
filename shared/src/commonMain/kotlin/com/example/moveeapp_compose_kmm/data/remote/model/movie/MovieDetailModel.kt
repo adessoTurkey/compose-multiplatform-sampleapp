@@ -79,7 +79,8 @@ data class MovieDetailModel(
         genre = getFormattedGenres(genres),
         voteCount = voteCount,
         backdropPath = backdropPath ?: "",
-        credit = credit.map { it.toUiModel() }
+        credit = credit.map { it.toUiModel() },
+        homepage = homepage
     )
 
     private fun getFormattedGenres(list: List<Genre>): String {
