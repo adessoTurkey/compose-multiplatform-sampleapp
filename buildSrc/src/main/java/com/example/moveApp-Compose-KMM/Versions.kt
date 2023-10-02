@@ -8,6 +8,6 @@ object Versions {
     const val koin = "3.4.3"
     const val imageLoader = "1.5.1"
     const val logbackClassic = "1.2.11"
-    const val voyager = "1.0.0-rc05"
+    const val voyager = "1.0.0-rc07"
     const val compose = "1.5.0-rc01"
 }
