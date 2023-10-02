@@ -11,5 +11,6 @@ data class MovieDetailUiModel(
     val genre: String = "",
     val voteCount: Int = 0,
     val backdropPath: String = "",
-    val credit: List<CreditUiModel> = listOf()
+    val credit: List<CreditUiModel> = listOf(),
+    val homepage: String = ""
 )

@@ -14,5 +14,6 @@ data class TvDetailUiModel(
     val originalLanguage: String = "",
     val voteCount: Int = 0,
     val backdropPath: String = "",
-    val credit: List<CreditUiModel> = listOf()
+    val credit: List<CreditUiModel> = listOf(),
+    val homepage: String = ""
 )

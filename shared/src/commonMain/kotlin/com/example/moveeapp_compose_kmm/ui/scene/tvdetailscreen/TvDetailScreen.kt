@@ -20,12 +20,17 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -36,6 +41,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.MR
+import com.example.moveeapp_compose_kmm.core.Share
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.uimodel.CreditUiModel
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
@@ -43,6 +49,7 @@ import com.example.moveeapp_compose_kmm.ui.components.ChipItem
 import com.example.moveeapp_compose_kmm.ui.components.DetailScreensAppBar
 import com.example.moveeapp_compose_kmm.ui.components.ErrorScreen
 import com.example.moveeapp_compose_kmm.ui.components.FavouriteItem
+import com.example.moveeapp_compose_kmm.ui.components.FloatingActionButtonItem
 import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
@@ -165,6 +172,21 @@ fun TvDetailContent(uiState: TvDetailUiState) {
             text = uiState.tvDetailData.genre,
             textColor = MaterialTheme.colorScheme.secondary
         )
+
+        var shareText by remember { mutableStateOf("") }
+
+        FloatingActionButtonItem(
+            modifier = Modifier.padding(vertical = 12.dp),
+            text = stringResource(MR.strings.share),
+            icon = Icons.Default.Share,
+            onClick = { shareText = uiState.tvDetailData.homepage }
+        )
+
+        if (shareText.isNotEmpty()) {
+            Share(shareText)
+            shareText = ""
+        }
+
 
         Divider(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
