@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -65,12 +66,14 @@ fun RateButton(
     value: State<Int?>,
     onValueChange: (Int) -> Unit
 ) {
-    Column(
+    Box(
         modifier = modifier,
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start
+        contentAlignment = Alignment.TopStart
     ) {
-        Row(verticalAlignment = Alignment.Top) {
+        Column(
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             IconButton(
                 modifier = Modifier.background(
                     color = MaterialTheme.colorScheme.primary,
@@ -88,28 +91,29 @@ fun RateButton(
                 )
             }
 
-            RateButtonContent(
-                transition = transition,
-                value = value,
-                onValueChange = onValueChange
-            )
-        }
+            Spacer(modifier = Modifier.height(8.dp))
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Row(modifier = Modifier.animateContentSize()) {
-            TextItem(
-                text = stringResource(MR.strings.rate),
-                fontSize = 15.sp
-            )
-
-            if (value.value != null) {
+            Row(modifier = Modifier.animateContentSize()) {
                 TextItem(
-                    text = " (${value.value})",
+                    text = stringResource(MR.strings.rate),
                     fontSize = 15.sp
                 )
+
+                if (value.value != null) {
+                    TextItem(
+                        text = " (${value.value})",
+                        fontSize = 15.sp
+                    )
+                }
             }
         }
+
+        RateButtonContent(
+            modifier = Modifier.padding(start = rateButtonSize),
+            transition = transition,
+            value = value,
+            onValueChange = onValueChange
+        )
     }
 }
 
