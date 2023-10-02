@@ -36,6 +36,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.MR
+import com.example.moveeapp_compose_kmm.core.BackHandler
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.uimodel.CreditUiModel
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
@@ -93,6 +94,10 @@ class TvDetailScreen(private val tvId: Int) : Screen {
                 onBackPressed = navigator::pop,
                 isFavorite = isFavorite,
             )
+        }
+
+        BackHandler(isEnabled = true) {
+            navigator.pop()
         }
     }
 }
