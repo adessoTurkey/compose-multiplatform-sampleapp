@@ -5,11 +5,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
@@ -26,6 +28,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -53,6 +56,7 @@ import com.example.moveeapp_compose_kmm.ui.components.FloatingActionButtonItem
 import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
+import com.example.moveeapp_compose_kmm.ui.components.RateRow
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.ui.scene.actordetail.ActorDetailScreen
 import com.example.moveeapp_compose_kmm.utils.Constants
@@ -67,6 +71,7 @@ class TvDetailScreen(private val tvId: Int) : Screen {
         val viewModel: TvDetailViewModel = viewModel()
         val uiState by viewModel.uiState.collectAsState()
         val isFavorite by viewModel.isFavorite.collectAsState()
+        val rating = viewModel.rating.collectAsState()
 
         LaunchedEffect(Unit) {
             viewModel.fetchData(tvId)
@@ -99,6 +104,8 @@ class TvDetailScreen(private val tvId: Int) : Screen {
                 },
                 onBackPressed = navigator::pop,
                 isFavorite = isFavorite,
+                ratingValue = rating,
+                onRateTvShow = viewModel::rateTvShow
             )
         }
     }
@@ -108,6 +115,8 @@ class TvDetailScreen(private val tvId: Int) : Screen {
 fun SuccessContent(
     uiState: TvDetailUiState,
     isFavorite: Boolean,
+    ratingValue: State<Int?>,
+    onRateTvShow: (rate: Int, tvShowId: Int) -> Unit,
     onDetailClick: (Int) -> Unit,
     onBackPressed: () -> Unit,
     onFavouriteClicked: (isFav: Boolean, movieId: Int) -> Unit
@@ -149,13 +158,17 @@ fun SuccessContent(
                 )
             }
         )
-        TvDetailContent(uiState = uiState)
+        TvDetailContent(uiState = uiState, ratingValue = ratingValue, onRateTvShow = onRateTvShow)
         TvCreditLazyRow(uiState = uiState, onDetailClick = onDetailClick)
     }
 }
 
 @Composable
-fun TvDetailContent(uiState: TvDetailUiState) {
+fun TvDetailContent(
+    uiState: TvDetailUiState,
+    ratingValue: State<Int?>,
+    onRateTvShow: (rate: Int, tvShowId: Int) -> Unit,
+) {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
 
         TextItem(
@@ -173,19 +186,24 @@ fun TvDetailContent(uiState: TvDetailUiState) {
             textColor = MaterialTheme.colorScheme.secondary
         )
 
-        var shareText by remember { mutableStateOf("") }
+        RateRow(
+            modifier = Modifier.padding(vertical = 12.dp).height(IntrinsicSize.Min),
+            ratingValue = ratingValue,
+            onRatingValueChange = { onRateTvShow.invoke(it, uiState.tvDetailData.tvSeriesId) },
+            hidableContent = {
+                var shareText by remember { mutableStateOf("") }
 
-        FloatingActionButtonItem(
-            modifier = Modifier.padding(vertical = 12.dp),
-            text = stringResource(MR.strings.share),
-            icon = Icons.Default.Share,
-            onClick = { shareText = uiState.tvDetailData.homepage }
-        )
+                FloatingActionButtonItem(
+                    text = stringResource(MR.strings.share),
+                    icon = Icons.Default.Share,
+                    onClick = { shareText = uiState.tvDetailData.homepage }
+                )
 
-        if (shareText.isNotEmpty()) {
-            Share(shareText)
-            shareText = ""
-        }
+                if (shareText.isNotEmpty()) {
+                    Share(shareText)
+                    shareText = ""
+                }
+            })
 
 
         Divider(

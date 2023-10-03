@@ -2,8 +2,6 @@ package com.example.moveeapp_compose_kmm.domain.usecase.accountusecase
 
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteRequestModel
 import com.example.moveeapp_compose_kmm.data.repository.AccountRepository
-import com.example.moveeapp_compose_kmm.domain.model.IsFavorite
-import com.example.moveeapp_compose_kmm.utils.Constants
 
 class AddFavoriteUseCase(private val repository: AccountRepository) {
 
@@ -12,7 +10,7 @@ class AddFavoriteUseCase(private val repository: AccountRepository) {
         mediaId: Int,
         mediaType: String,
         isFavorite: Boolean
-    ): Result<IsFavorite> {
+    ): Result<Unit> {
         val result = repository.addFavorite(
             accountId = accountId,
             AddFavoriteRequestModel(
@@ -21,18 +19,10 @@ class AddFavoriteUseCase(private val repository: AccountRepository) {
                 mediaType = mediaType
             )
         )
-        return if (result.isSuccess) {
-            when (mediaType) {
-                Constants.MOVIE -> {
-                    repository.getMovieIsFavorite(mediaId)
-                }
-
-                else -> {
-                    repository.getTvIsFavorite(mediaId)
-                }
-            }
+        return if (result.isSuccess && result.getOrNull()?.success == true) {
+            Result.success(Unit)
         } else {
-            Result.failure(Throwable(message = "Hata!"))
+            Result.failure(Throwable())
         }
     }
 }
