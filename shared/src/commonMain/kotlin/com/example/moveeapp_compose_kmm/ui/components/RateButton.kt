@@ -4,7 +4,6 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Transition
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -125,19 +124,11 @@ private fun RateButtonContent(
     onValueChange: (Int) -> Unit
 ) {
     if (transition.lastTransitionedValue()) {
-        val alpha by transition.animateFloat(transitionSpec = {
-            if (true isTransitioningTo false) {
-                tween(1000)
-            } else {
-                tween(250)
-            }
-        }) { visible ->
+        val alpha by transition.animateFloat { visible ->
             if (visible) 1f else 0f
         }
 
-        val spacerOffset by transition.animateDp(transitionSpec = {
-            tween(1000)
-        }) { visible ->
+        val spacerOffset by transition.animateDp { visible ->
             if (visible) spacerOffsetTarget else 0.dp
         }
 
@@ -184,9 +175,7 @@ private fun RateButtonContent(
             )
 
             for (starNumber in 1..starButtonNumber) {
-                val itemOffset by transition.animateDp(transitionSpec = {
-                    tween(1000)
-                }) { visible ->
+                val itemOffset by transition.animateDp { visible ->
                     if (visible) {
                         val starOffset = (starNumber - 1) * (starItemSize + starItemStartPadding)
                         starOffset + spaceBeforeRateButtons
