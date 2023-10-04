@@ -23,7 +23,7 @@ data class MovieDetailModel(
     @SerialName("production_companies") val productionCompanies: List<ProductionCompany>,
     @SerialName("production_countries") val productionCountries: List<ProductionCountry>,
     @SerialName("release_date") val releaseDate: String,
-    @SerialName("revenue") val revenue: Int,
+    @SerialName("revenue") val revenue: Long,
     @SerialName("runtime") val runtime: Int,
     @SerialName("spoken_languages") val spokenLanguages: List<SpokenLanguage>,
     @SerialName("status") val status: String,
@@ -79,7 +79,8 @@ data class MovieDetailModel(
         genre = getFormattedGenres(genres),
         voteCount = voteCount,
         backdropPath = backdropPath ?: "",
-        credit = credit.map { it.toUiModel() }
+        credit = credit.map { it.toUiModel() },
+        homepage = homepage
     )
 
     private fun getFormattedGenres(list: List<Genre>): String {

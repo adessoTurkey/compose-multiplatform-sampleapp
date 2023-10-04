@@ -122,7 +122,8 @@ data class TvDetailModel(
         genre = getFormattedGenres(genres),
         voteCount = voteCount,
         backdropPath = backdropPath,
-        credit = credit.map { it.toUiModel() }
+        credit = credit.map { it.toUiModel() },
+        homepage = homepage
     )
     private fun getFormattedGenres(list: List<Genre>): String {
         val filteredGenres = list.filter { it.name.isNotEmpty() }.map { it.name }
