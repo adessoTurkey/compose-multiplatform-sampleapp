@@ -7,11 +7,11 @@ import kotlinx.serialization.Serializable
 data class AccountStateResponseModel(
     @SerialName("favorite") val favorite: Boolean? = null,
     @SerialName("id") val id: Int? = null,
-    @SerialName("rated") val rated: Boolean? = null,
+    @SerialName("rated") val rated: Rated? = null,
     @SerialName("watch_list") val watchList: Boolean? = null
 ) {
     @Serializable
     data class Rated(
-        @SerialName("value") val value : Int? = null
+        @SerialName("value") val value: Double? = null
     )
 }

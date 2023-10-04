@@ -7,9 +7,11 @@ import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFa
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteMovieModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteTvModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.rate.RateDto
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LogoutRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LogoutResponseModel
-import com.example.moveeapp_compose_kmm.domain.model.IsFavorite
+import com.example.moveeapp_compose_kmm.domain.model.MovieAccountState
+import com.example.moveeapp_compose_kmm.domain.model.TvAccountState
 import com.example.moveeapp_compose_kmm.utils.resultOf
 
 class AccountRepository(
@@ -36,22 +38,22 @@ class AccountRepository(
         }
     }
 
-    suspend fun getMovieIsFavorite(movieId: Int): Result<IsFavorite> {
+    suspend fun getMovieAccountState(movieId: Int): Result<MovieAccountState> {
         return resultOf {
-            val isFavorite = api.getMovieState(
+            val response = api.getMovieState(
                 sessionId = sessionSettings.getSessionId() ?: "",
                 movieId
-            ).favorite
-            IsFavorite(isFavorite ?: false)
+            )
+            MovieAccountState(response.favorite ?: false, response.rated?.value)
         }
     }
 
-    suspend fun getTvIsFavorite(tvId: Int): Result<IsFavorite> {
+    suspend fun getTvAccountState(tvId: Int): Result<TvAccountState> {
         return resultOf {
-            val isFavorite = api.getTvState(
+            val response = api.getTvState(
                 sessionId = sessionSettings.getSessionId() ?: "", tvId
-            ).favorite
-            IsFavorite(isFavorite ?: false)
+            )
+            TvAccountState(response.favorite ?: false, response.rated?.value)
         }
     }
 
@@ -71,5 +73,41 @@ class AccountRepository(
         return resultOf {
             api.logout(logoutRequestModel)
         }
+    }
+
+    suspend fun rateMovie(rating: Double, movieId: Int): Result<Boolean> {
+        val result = resultOf {
+            api.rateMovie(
+                rating = RateDto(value = rating),
+                movieId = movieId,
+                sessionId = sessionSettings.getSessionId()!!
+            )
+        }
+
+        return result.map { it.success }
+    }
+
+    suspend fun removeMovieRating(movieId: Int): Result<Unit> {
+        return resultOf {
+            api.removeMovieRating(movieId, sessionSettings.getSessionId()!!)
+        }
+    }
+
+    suspend fun removeTvShowRating(tvShowId: Int): Result<Unit> {
+        return resultOf {
+            api.removeTvShowRating(tvShowId, sessionSettings.getSessionId()!!)
+        }
+    }
+
+    suspend fun rateTvShow(rating: Double, movieId: Int): Result<Boolean> {
+        val result = resultOf {
+            api.rateTvShow(
+                rating = RateDto(value = rating),
+                tvShowId = movieId,
+                sessionId = sessionSettings.getSessionId()!!
+            )
+        }
+
+        return result.map { it.success }
     }
 }

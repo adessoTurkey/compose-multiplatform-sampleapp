@@ -4,10 +4,12 @@ import com.example.moveeapp_compose_kmm.data.remote.model.CreditsModel
 import com.example.moveeapp_compose_kmm.data.remote.model.SearchModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.AccountDetailModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AccountStateResponseModel
-import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteRequestModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteMovieModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteTvModel
+import com.example.moveeapp_compose_kmm.data.remote.model.account.rate.RateDto
+import com.example.moveeapp_compose_kmm.data.remote.model.account.rate.RateResponse
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LogoutRequestModel
@@ -129,7 +131,7 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
     }
 
     override suspend fun getMovieState(sessionId: String, movieId: Int): AccountStateResponseModel {
-        return client.get("movie/${movieId}/account_states"){
+        return client.get("movie/${movieId}/account_states") {
             contentType(ContentType.Application.Json)
             url {
                 parameters.append(SESSION_ID, sessionId)
@@ -147,23 +149,63 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
     }
 
     override suspend fun getFavoriteMovie(accountId: Int, sessionId: String): FavoriteMovieModel {
-        return client.get("account/{$accountId}/favorite/movies"){
-            url{
+        return client.get("account/{$accountId}/favorite/movies") {
+            url {
                 parameters.append(SESSION_ID, sessionId)
             }
         }.body()
     }
 
     override suspend fun getFavoriteTv(accountId: Int, sessionId: String): FavoriteTvModel {
-        return client.get("account/{$accountId}/favorite/tv"){
-            url{
+        return client.get("account/{$accountId}/favorite/tv") {
+            url {
                 parameters.append(SESSION_ID, sessionId)
             }
         }.body()
     }
 
+    override suspend fun rateMovie(rating: RateDto, movieId: Int, sessionId: String): RateResponse {
+        return client.post("movie/$movieId/rating") {
+            contentType(ContentType.Application.Json)
+            url {
+                parameters.append(SESSION_ID, sessionId)
+            }
+            setBody(rating)
+        }.body()
+    }
+
+    override suspend fun rateTvShow(
+        rating: RateDto,
+        tvShowId: Int,
+        sessionId: String
+    ): RateResponse {
+        return client.post("tv/$tvShowId/rating") {
+            contentType(ContentType.Application.Json)
+            url {
+                parameters.append(SESSION_ID, sessionId)
+            }
+            setBody(rating)
+        }.body()
+    }
+
+    override suspend fun removeMovieRating(movieId: Int, sessionId: String) {
+        client.delete("movie/$movieId/rating") {
+            url {
+                parameters.append(SESSION_ID, sessionId)
+            }
+        }
+    }
+
+    override suspend fun removeTvShowRating(tvShowId: Int, sessionId: String) {
+        client.delete("tv/$tvShowId/rating") {
+            url {
+                parameters.append(SESSION_ID, sessionId)
+            }
+        }
+    }
+
     override suspend fun logout(logoutRequestModel: LogoutRequestModel): LogoutResponseModel {
-        return client.delete(LOGOUT){
+        return client.delete(LOGOUT) {
             setBody(logoutRequestModel)
             contentType(ContentType.Application.Json)
         }.body()

@@ -15,11 +15,11 @@ import org.koin.dsl.module
 val viewModelModule = module {
     factory { MovieViewModel(get()) }
     factory { LoginViewModel(get(), get(), get()) }
-    factory { MovieDetailViewModel(get(), get(), get(), get()) }
+    factory { MovieDetailViewModel(get(), get(), get(), get(), get(), get()) }
     factory { AccountDetailViewModel(get(), get()) }
     factory { SplashViewModel(get()) }
     factory { TvViewModel(get()) }
-    factory { TvDetailViewModel(get(), get(), get(), get()) }
+    factory { TvDetailViewModel(get(), get(), get(), get(), get(), get()) }
     factory { SearchViewModel(get()) }
     factory { ActorDetailViewModel(get()) }
     factory { FavoriteViewModel(get(), get()) }
