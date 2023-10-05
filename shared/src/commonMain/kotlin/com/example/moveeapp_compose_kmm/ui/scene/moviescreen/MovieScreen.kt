@@ -34,7 +34,6 @@ import androidx.compose.ui.util.lerp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.example.moveeapp_compose_kmm.core.StatusBarAppearance
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.uimodel.movie.NowPlayingMovieUiModel
 import com.example.moveeapp_compose_kmm.data.uimodel.movie.PopularMovieUiModel
@@ -55,8 +54,6 @@ class MovieScreen : Screen {
         val uiState by viewModel.uiState.collectAsState()
 
         MovieContent(uiState = uiState, onDetailClick = { navigator.push(MovieDetailScreen(it)) })
-
-        StatusBarAppearance(isBackgroundLight = false)
     }
 }
 

@@ -34,7 +34,6 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.example.moveeapp_compose_kmm.core.StatusBarAppearance
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.uimodel.tv.PopularTvUiModel
 import com.example.moveeapp_compose_kmm.data.uimodel.tv.TopRatedTvUiModel
@@ -53,8 +52,6 @@ class TvScreen : Screen {
         val uiState by viewModel.uiState.collectAsState()
 
         TvContent(navigator = navigator, uiState = uiState)
-
-        StatusBarAppearance(isBackgroundLight = false)
     }
 }
 

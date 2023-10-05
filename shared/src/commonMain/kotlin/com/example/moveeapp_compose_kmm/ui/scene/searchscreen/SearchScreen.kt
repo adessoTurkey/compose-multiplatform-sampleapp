@@ -37,7 +37,6 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.BackHandler
-import com.example.moveeapp_compose_kmm.core.StatusBarAppearance
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.uimodel.SearchUiModel
 import com.example.moveeapp_compose_kmm.ui.components.CardImageItem
@@ -95,8 +94,6 @@ class SearchScreen : Screen {
         BackHandler(isEnabled = true) {
             navigator.pop()
         }
-
-        StatusBarAppearance(isBackgroundLight = false)
     }
 }
 
