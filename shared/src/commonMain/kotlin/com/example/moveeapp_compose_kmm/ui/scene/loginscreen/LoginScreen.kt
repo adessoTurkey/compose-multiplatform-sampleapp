@@ -34,6 +34,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.MainScreen
+import com.example.moveeapp_compose_kmm.core.StatusBarAppearance
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.repository.LoginState
 import com.example.moveeapp_compose_kmm.ui.components.TextInputItem
@@ -49,6 +50,8 @@ class LoginScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val viewModel: LoginViewModel = viewModel()
         LoginScreen(viewModel = viewModel, navigator = navigator)
+
+        StatusBarAppearance(isBackgroundLight = false)
     }
 }
 
@@ -167,8 +170,10 @@ fun LoginContent(
                 contentColor = Color.Blue
             ),
             onClick = { onLogin() }) {
-            TextItem(text = stringResource(MR.strings.login_title),
-                textColor = MaterialTheme.colorScheme.primary)
+            TextItem(
+                text = stringResource(MR.strings.login_title),
+                textColor = MaterialTheme.colorScheme.primary
+            )
         }
 
         TextItem(
