@@ -112,6 +112,8 @@ kotlin {
                 api("androidx.core:core-ktx:1.10.1")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
                 implementation ("androidx.compose.ui:ui-util:1.5.0")
+                implementation("androidx.compose.ui:ui-tooling:1.5.0")
+                implementation("androidx.compose.ui:ui-tooling-preview:1.5.0")
 
             }
         }
@@ -141,6 +143,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.2"
+    }
+
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")

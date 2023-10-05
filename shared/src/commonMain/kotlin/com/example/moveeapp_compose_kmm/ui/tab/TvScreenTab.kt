@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import cafe.adriel.voyager.transitions.SlideTransition
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.ui.scene.tvscreen.TvScreen
 import dev.icerock.moko.resources.compose.stringResource
@@ -16,7 +17,9 @@ internal class TvScreenTab : Tab {
 
     @Composable
     override fun Content() {
-        Navigator(TvScreen())
+        Navigator(TvScreen()) {
+            SlideTransition(it)
+        }
     }
 
     override val options: TabOptions
@@ -27,7 +30,7 @@ internal class TvScreenTab : Tab {
 
             return remember {
                 TabOptions(
-                    index = 0u,
+                    index = 2u,
                     title = title,
                     icon = icon
                 )
