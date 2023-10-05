@@ -1,6 +1,5 @@
 package com.example.moveeapp_compose_kmm
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
@@ -22,7 +21,6 @@ import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
-import cafe.adriel.voyager.transitions.SlideTransition
 import com.example.moveeapp_compose_kmm.ui.scene.splashscreen.SplashScreen
 import com.example.moveeapp_compose_kmm.ui.tab.AccountTab
 import com.example.moveeapp_compose_kmm.ui.tab.MovieScreenTab
@@ -33,7 +31,6 @@ import com.example.moveeapp_compose_kmm.utils.createStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun App() {
     AppTheme {
