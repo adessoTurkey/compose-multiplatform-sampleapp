@@ -49,6 +49,7 @@ import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.uimodel.CreditUiModel
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
 import com.example.moveeapp_compose_kmm.ui.components.ChipItem
+import com.example.moveeapp_compose_kmm.ui.components.DetailPosterImage
 import com.example.moveeapp_compose_kmm.ui.components.DetailScreensAppBar
 import com.example.moveeapp_compose_kmm.ui.components.ErrorScreen
 import com.example.moveeapp_compose_kmm.ui.components.FavouriteItem
@@ -145,7 +146,7 @@ fun SuccessContent(
                 )
             },
             content = {
-                PosterImageItem(
+                DetailPosterImage(
                     imagePath = uiState.tvDetailData.backdropPath,
                     modifier = Modifier.padding(bottom = 12.dp)
                 )
