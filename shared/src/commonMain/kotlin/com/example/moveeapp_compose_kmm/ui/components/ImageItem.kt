@@ -21,11 +21,10 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.example.moveeapp_compose_kmm.MR
-import com.example.moveeapp_compose_kmm.core.StatusBarAppearance
 import com.example.moveeapp_compose_kmm.core.getDominantColor
+import com.example.moveeapp_compose_kmm.core.setStatusBarAppearanceByColorBehind
 import com.example.moveeapp_compose_kmm.core.toComposeImageBitmap
 import com.example.moveeapp_compose_kmm.core.toImage
-import com.example.moveeapp_compose_kmm.ui.theme.isDark
 import com.example.moveeapp_compose_kmm.utils.Constants
 import com.seiko.imageloader.LocalImageLoader
 import com.seiko.imageloader.asImageBitmap
@@ -63,9 +62,7 @@ fun DetailPosterImage(
     val statusBarHeight = WindowInsets.statusBars.getTop(LocalDensity.current)
 
     var dominantColor by remember { mutableStateOf<Color?>(null) }
-    if (dominantColor != null) {
-        StatusBarAppearance(isBackgroundLight = !dominantColor!!.isDark)
-    }
+    dominantColor?.setStatusBarAppearanceByColorBehind()
 
     Image(
         modifier = modifier.fillMaxSize().onGloballyPositioned {
