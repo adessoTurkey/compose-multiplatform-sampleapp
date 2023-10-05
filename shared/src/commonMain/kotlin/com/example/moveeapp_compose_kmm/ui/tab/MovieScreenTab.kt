@@ -5,6 +5,7 @@ import androidx.compose.runtime.remember
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import cafe.adriel.voyager.transitions.SlideTransition
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.ui.scene.moviescreen.MovieScreen
 import dev.icerock.moko.resources.compose.painterResource
@@ -14,7 +15,9 @@ internal class MovieScreenTab : Tab {
 
     @Composable
     override fun Content() {
-        Navigator(MovieScreen())
+        Navigator(MovieScreen()) {
+            SlideTransition(it)
+        }
     }
 
     override val options: TabOptions
