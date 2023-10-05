@@ -220,18 +220,18 @@ fun MovieDetailContent(
                     shareText = ""
                 }
             })
+
+        Divider(
+            modifier = Modifier.padding(vertical = 10.dp),
+            thickness = 1.dp,
+            color = MaterialTheme.colorScheme.secondaryContainer
+        )
+
+        TextItem(
+            text = uiState.movieDetailData.overview,
+            maxLines = Int.MAX_VALUE
+        )
     }
-
-    Divider(
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
-        thickness = 1.dp,
-        color = MaterialTheme.colorScheme.secondaryContainer
-    )
-
-    TextItem(
-        text = uiState.movieDetailData.overview,
-        maxLines = Int.MAX_VALUE
-    )
 }
 
 @Composable

@@ -212,7 +212,7 @@ fun TvDetailContent(
 
 
         Divider(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
+            modifier = Modifier.padding(vertical = 10.dp),
             thickness = 1.dp,
             color = MaterialTheme.colorScheme.secondaryContainer
         )
@@ -229,12 +229,12 @@ fun TvDetailContent(
             horizontalArrangement = Arrangement.Start
         ) {
             ChipItem(
-                string = stringResource(MR.strings.tv_detail_season) + "${uiState.tvDetailData.numberOfSeasons}",
+                string = stringResource(MR.strings.tv_detail_season) + " ${uiState.tvDetailData.numberOfSeasons}",
                 backgroundColor = MaterialTheme.colorScheme.secondary
             )
             Spacer(modifier = Modifier.padding(8.dp))
             ChipItem(
-                string = stringResource(MR.strings.tv_detail_episode) + "${uiState.tvDetailData.numberOfEpisodes}",
+                string = stringResource(MR.strings.tv_detail_episode) + " ${uiState.tvDetailData.numberOfEpisodes}",
                 backgroundColor = MaterialTheme.colorScheme.secondary
             )
         }
