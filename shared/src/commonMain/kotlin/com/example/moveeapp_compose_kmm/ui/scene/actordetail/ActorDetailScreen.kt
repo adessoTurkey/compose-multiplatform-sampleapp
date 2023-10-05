@@ -29,6 +29,7 @@ import com.example.moveeapp_compose_kmm.core.BackHandler
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.uimodel.ActorCreditUiModel
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
+import com.example.moveeapp_compose_kmm.ui.components.DetailPosterImage
 import com.example.moveeapp_compose_kmm.ui.components.DetailScreensAppBar
 import com.example.moveeapp_compose_kmm.ui.components.ExpandableText
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
@@ -67,14 +68,13 @@ fun SuccessContent(
     onDetailClick: (Pair<Int, String>) -> Unit,
     onBackPressed: () -> Unit
 ) {
-
     val scrollState = rememberScrollState()
 
     Column(modifier = Modifier.verticalScroll(scrollState)) {
         DetailScreensAppBar(
             leadingIcon = { BackPressedItem { onBackPressed() } },
             content = {
-                PosterImageItem(
+                DetailPosterImage(
                     imagePath = uiState.actorDetailData.profilePath
                 )
             }
