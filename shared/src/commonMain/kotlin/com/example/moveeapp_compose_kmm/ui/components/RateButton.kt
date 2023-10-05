@@ -57,6 +57,9 @@ private val spaceBeforeRateButtons = spacerOffsetTarget + dividerWidth + starIte
 private const val starButtonNumber = 5
 private const val rateFactor = 2
 
+private const val minRating = 1
+private const val maxRating = 10
+
 @Composable
 fun RateButton(
     modifier: Modifier = Modifier,
@@ -273,7 +276,7 @@ private fun getRatingByOffset(
 ): Int {
     val xOffsetAdjustedToRatingArea = xOffsetDp - spaceBeforeRateButtons
 
-    if (xOffsetAdjustedToRatingArea < 0.dp) return 0
+    if (xOffsetAdjustedToRatingArea < 0.dp) return minRating
 
     val rateButtonsWidth = getRateButtonsWidth(
         rateButtonWidth = rateButtonWidth,
@@ -284,6 +287,7 @@ private fun getRatingByOffset(
     val rating = (xOffsetAdjustedToRatingArea / rateButtonsWidth) * starButtonNumber
 
     return (rating * rateFactor).roundUpToInt()
+        .coerceIn(minimumValue = minRating, maximumValue = maxRating)
 }
 
 private fun getRateButtonsWidth(

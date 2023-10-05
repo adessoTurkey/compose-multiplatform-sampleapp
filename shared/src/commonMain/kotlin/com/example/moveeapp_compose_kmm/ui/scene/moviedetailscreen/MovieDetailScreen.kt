@@ -49,6 +49,7 @@ import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.uimodel.CreditUiModel
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
 import com.example.moveeapp_compose_kmm.ui.components.DateItem
+import com.example.moveeapp_compose_kmm.ui.components.DetailPosterImage
 import com.example.moveeapp_compose_kmm.ui.components.DetailScreensAppBar
 import com.example.moveeapp_compose_kmm.ui.components.ErrorScreen
 import com.example.moveeapp_compose_kmm.ui.components.FavouriteItem
@@ -118,6 +119,7 @@ class MovieDetailScreen(
     }
 }
 
+@OptIn(ExperimentalStdlibApi::class)
 @Composable
 fun SuccessContent(
     modifier: Modifier = Modifier,
@@ -146,7 +148,7 @@ fun SuccessContent(
                 )
             },
             content = {
-                PosterImageItem(
+                DetailPosterImage(
                     imagePath = uiState.movieDetailData.backdropPath,
                     modifier = Modifier.padding(bottom = 12.dp)
                 )
