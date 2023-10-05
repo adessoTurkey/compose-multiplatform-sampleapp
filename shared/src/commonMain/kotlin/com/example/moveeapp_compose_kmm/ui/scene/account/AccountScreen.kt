@@ -12,24 +12,28 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsTopHeight
-import androidx.compose.material.Button
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.MR
+import com.example.moveeapp_compose_kmm.core.BackHandler
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.ui.scene.account.favoritescreen.FavoriteScreen
@@ -63,6 +67,10 @@ class AccountScreen : Screen {
                 onFavTvClick = { navigator.push(FavoriteScreen(it)) },
                 onLogoutClick = { viewModel.logout() }
             )
+        }
+
+        BackHandler(isEnabled = true) {
+            navigator.pop()
         }
     }
 }
@@ -150,9 +158,21 @@ fun SuccessContent(
                 )
             }
 
-            Button(onClick = onLogoutClick) {
-                TextItem(text = "Logout")
-            }
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth()
+                    .clickable {
+                        onLogoutClick.invoke()
+                    },
+                text = "Logout",
+                color = MaterialTheme.colorScheme.primary,
+                style = TextStyle(textDecoration = TextDecoration.Underline),
+                textAlign = TextAlign.Center,
+                fontSize = 16.sp,
+                fontFamily = fontFamilyResource(MR.fonts.sfpro.regular)
+            )
         }
     }
 }
