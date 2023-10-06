@@ -24,9 +24,9 @@ private val colors = lightColorScheme().copy(
     background = Color(0xFFf4f4f4)
 )
 
-val Color.isDark: Boolean
+val Color.isLight: Boolean
     get() {
-        return luminance() < 0.8
+        return luminance() >= 0.8
     }
 
 @Composable
