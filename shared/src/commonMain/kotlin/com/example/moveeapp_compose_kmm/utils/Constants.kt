@@ -1,17 +1,19 @@
 package com.example.moveeapp_compose_kmm.utils
 
+import com.example.moveeapp_compose_kmm.BuildKonfig
+
 object Constants {
-    const val API_KEY = "f16744ab17a06dd658c0b15fa74cd85d"
-    const val BASE_URL = "https://api.themoviedb.org/3/"
-    const val IMAGE_BASE = "https://image.tmdb.org/t/p/w342"
-    const val REGISTER = "https://www.themoviedb.org/signup"
-    const val FORGOT_PASSWORD = "https://www.themoviedb.org/reset-password"
+    const val API_KEY = BuildKonfig.API_KEY_TMDB
+    const val BASE_URL = BuildKonfig.BASE_URL
+    const val IMAGE_BASE = BuildKonfig.IMAGE_BASE_URL
+    const val REGISTER = BuildKonfig.REGISTER_URL
+    const val FORGOT_PASSWORD = BuildKonfig.RESET_PASSWORD_URL
     const val MOVIE = "movie"
     const val TV = "tv"
     const val PERSON = "person"
 }
 
-object ShadredPrefConstants{
+object ShadredPrefConstants {
     const val KEY_SESSION_ID = "key_session_id"
     const val KEY_ACCOUNT_ID = "key_account_id"
 }

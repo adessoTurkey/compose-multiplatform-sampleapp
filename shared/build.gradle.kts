@@ -1,4 +1,6 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec
 import com.example.moveeapp_compose_kmm.Deps
+import com.example.moveeapp_compose_kmm.util.requireStringProperty
 
 plugins {
     kotlin("multiplatform")
@@ -8,6 +10,44 @@ plugins {
     id("org.jetbrains.compose")
     id("kotlin-parcelize")
     id("dev.icerock.mobile.multiplatform-resources")
+    id("com.codingfeline.buildkonfig")
+}
+
+buildkonfig {
+    packageName = "com.example.moveeapp_compose_kmm"
+
+    defaultConfigs {
+        buildConfigField(
+            FieldSpec.Type.STRING, "API_KEY_TMDB", System.getenv("API_KEY_TMDB"),
+            const = true
+        )
+
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "BASE_URL",
+            rootProject.requireStringProperty("BASE_URL"),
+            const = true
+        )
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "IMAGE_BASE_URL",
+            rootProject.requireStringProperty("IMAGE_BASE_URL"),
+            const = true
+        )
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "REGISTER_URL",
+            rootProject.requireStringProperty("REGISTER_URL"),
+            const = true
+        )
+
+        buildConfigField(
+            FieldSpec.Type.STRING,
+            "RESET_PASSWORD_URL",
+            rootProject.requireStringProperty("RESET_PASSWORD_URL"),
+            const = true
+        )
+    }
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -27,7 +67,8 @@ kotlin {
             baseName = "shared"
             isStatic = true
         }
-        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
+        extraSpecAttributes["resources"] =
+            "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
 
     sourceSets {
@@ -111,7 +152,7 @@ kotlin {
                 api("androidx.appcompat:appcompat:1.6.1")
                 api("androidx.core:core-ktx:1.10.1")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-                implementation ("androidx.compose.ui:ui-util:1.5.0")
+                implementation("androidx.compose.ui:ui-util:1.5.0")
                 implementation("androidx.compose.ui:ui-tooling:1.5.0")
                 implementation("androidx.compose.ui:ui-tooling-preview:1.5.0")
 
