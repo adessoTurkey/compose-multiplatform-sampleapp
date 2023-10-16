@@ -1,9 +1,13 @@
+@file:Suppress("UnstableApiUsage")
+
+rootProject.name = "Movee CMP"
+
 pluginManagement {
     repositories {
         google()
         gradlePluginPortal()
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
@@ -15,6 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "moveeApp-Compose-KMM"
 include(":androidApp")
 include(":shared")
