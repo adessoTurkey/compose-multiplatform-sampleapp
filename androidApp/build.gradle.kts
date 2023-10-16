@@ -1,18 +1,17 @@
-import com.example.moveeapp_compose_kmm.Deps
-
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    id("org.jetbrains.compose")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose)
 }
 
 android {
     namespace = "com.example.moveeapp_compose_kmm.android"
-    compileSdk = 34
+    compileSdk = libs.versions.targetSdk.get().toInt()
+
     defaultConfig {
         applicationId = "com.example.moveeapp_compose_kmm.android"
-        minSdk = 24
-        targetSdk = 34
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
     }
@@ -20,7 +19,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.2"
+        kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
     packaging {
         resources {
@@ -29,24 +28,32 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 }
 
 dependencies {
     implementation(project(":shared"))
-    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation(libs.androidx.activity.compose)
+
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 
     // Koin
-    with(Deps.Koin) {
+    with(libs.koin) {
         implementation(android)
         implementation(core)
     }

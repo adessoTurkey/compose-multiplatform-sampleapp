@@ -1,16 +1,14 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec
-import com.example.moveeapp_compose_kmm.Deps
 import com.example.moveeapp_compose_kmm.util.requireStringProperty
 
 plugins {
-    kotlin("multiplatform")
-    kotlin("native.cocoapods")
-    kotlin("plugin.serialization")
-    id("com.android.library")
-    id("org.jetbrains.compose")
-    id("kotlin-parcelize")
-    id("dev.icerock.mobile.multiplatform-resources")
-    id("com.codingfeline.buildkonfig")
+    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.cocoapods)
+    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.moko.resources)
+    alias(libs.plugins.buildKonfig)
 }
 
 buildkonfig {
@@ -52,7 +50,7 @@ buildkonfig {
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    android()
+    androidTarget()
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -71,6 +69,8 @@ kotlin {
             "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
 
+    jvmToolchain(11)
+
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -85,52 +85,50 @@ kotlin {
                     api(animation)
                 }
 
+                implementation(libs.napier)
+
                 // Coroutines
-                api(Deps.Org.JetBrains.Kotlinx.coroutinesCore)
+                api(libs.kotlinx.coroutines.core)
 
                 // KotlinX Serialization Json
-                api(Deps.Org.JetBrains.Kotlinx.kotlinxSerializationJson)
+                api(libs.kotlinx.serialization.json)
 
                 // Ktor
-                with(Deps.Io.Ktor) {
-                    api(ktorClientCore)
-                    api(ktorSerializationKotlinxJson)
-                    api(ktorClientContentNegotiation)
-                    api(ktorClientLogging)
+                with(libs.ktor) {
+                    api(core)
+                    api(json)
+                    api(contentNegotiation)
+                    api(logging)
+                    api(logging.logback)
                 }
 
                 // Koin
-                with(Deps.Koin) {
+                with(libs.koin) {
                     api(core)
                     api(test)
                     api(compose)
                 }
 
                 //Navigation
-                with(Deps.Navigation.Voyager) {
-                    api(navigation)
-                    api(viewModel)
+                with(libs.voyager) {
+                    api(navigator)
                     api(koin)
-                    api(tabNavigator)
-                    api(transition)
+                    api(tabs)
+                    api(transitions)
                 }
-
-                // Logback for ktor logging
-                api(Deps.Logback.logbackClassic)
 
                 //Image loader
-                api(Deps.Resources.sekio)
+                api(libs.image.loader)
 
                 //KVault
-                api(Deps.Kvault.Kvault)
+                api(libs.settings)
 
                 //Moko
-                with(Deps.Resources.Moko) {
-                    api(moko)
-                    api(compose)
-                }
+                api(libs.moko.resources)
+                api(libs.moko.resources.compose)
             }
         }
+
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
@@ -139,23 +137,25 @@ kotlin {
 
         val androidMain by getting {
             dependsOn(commonMain)
+
             dependencies {
                 // Ktor
-                api(Deps.Io.Ktor.ktorClientAndroid)
+                api(libs.ktor.client.android)
 
                 // Koin
-                api(Deps.Koin.android)
+                api(libs.koin.android)
 
-                api(Deps.Org.JetBrains.Kotlinx.kotlinxSerializationJson)
+                with(libs.androidx) {
+                    api(core)
+                    api(appcompat)
+                    api(activity.compose)
+                }
 
-                api("androidx.activity:activity-compose:1.7.2")
-                api("androidx.appcompat:appcompat:1.6.1")
-                api("androidx.core:core-ktx:1.10.1")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-                implementation("androidx.compose.ui:ui-util:1.5.0")
-                implementation("androidx.compose.ui:ui-tooling:1.5.0")
-                implementation("androidx.compose.ui:ui-tooling-preview:1.5.0")
-
+                with(libs.androidx.compose.ui) {
+                    api(util)
+                    api(tooling)
+                    api(preview)
+                }
             }
         }
         val iosX64Main by getting
@@ -167,8 +167,7 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
-                implementation("io.ktor:ktor-client-darwin:2.3.2")
-                implementation("io.ktor:ktor-client-ios:2.3.1")
+                implementation(libs.ktor.client.darwin)
             }
         }
     }
@@ -176,24 +175,17 @@ kotlin {
 
 android {
     namespace = "com.example.moveeapp_compose_kmm"
-    compileSdk = 34
+    compileSdk = libs.versions.targetSdk.get().toInt()
+
     defaultConfig {
-        minSdk = 24
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        minSdk = libs.versions.minSdk.get().toInt()
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.2"
+        kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
-
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    sourceSets["main"].res.srcDirs("src/androidMain/res")
-    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 }
 
 multiplatformResources {
