@@ -1,24 +1,15 @@
-
 plugins {
-    id("com.android.application").version("8.0.2").apply(false)
-    id("com.android.library").version("8.0.2").apply(false)
-    kotlin("android").version("1.9.0").apply(false)
-    kotlin("multiplatform").version("1.9.0").apply(false)
-    id("org.jetbrains.compose") version "1.5.0" apply false
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.20"
-    id("dev.icerock.mobile.multiplatform-resources") version "0.23.0" apply false
-    id("com.codingfeline.buildkonfig") version "0.14.0" apply false
+    alias(libs.plugins.android.application).apply(false)
+    alias(libs.plugins.android.library).apply(false)
+    alias(libs.plugins.multiplatform).apply(false)
+    alias(libs.plugins.kotlin.android).apply(false)
+    alias(libs.plugins.compose).apply(false)
+    alias(libs.plugins.kotlinx.serialization).apply(false)
+    alias(libs.plugins.moko.resources).apply(false)
+    alias(libs.plugins.buildKonfig).apply(false)
+    alias(libs.plugins.kotlin.cocoapods).apply(false)
 }
 
 tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-        maven(  "https://kotlin.bintray.com/kotlinx")
-    }
+    delete(rootProject.layout.buildDirectory)
 }

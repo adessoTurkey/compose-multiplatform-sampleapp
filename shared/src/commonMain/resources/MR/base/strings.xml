@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
+    <string name="app_name">Movee</string>
     <string name="actor_born">Born:</string>
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
@@ -22,4 +23,3 @@
     <string name="share">Share</string>
     <string name="rate">Rate</string>
 </resources>
-

@@ -1,11 +1,19 @@
 package com.example.moveeapp_compose_kmm
 
 import androidx.compose.ui.window.ComposeUIViewController
-import platform.UIKit.UIViewController
+import com.example.moveeapp_compose_kmm.di.init
 import com.example.moveeapp_compose_kmm.utils.Action
+import org.koin.compose.KoinApplication
+import platform.UIKit.UIViewController
 
-fun MainViewController(): UIViewController {
-    val uiViewController = ComposeUIViewController { App() }
+fun mainViewController(): UIViewController {
+    val uiViewController = ComposeUIViewController {
+        KoinApplication(application = {
+            init()
+        }) {
+            App()
+        }
+    }
     Holder.viewController = uiViewController
     return uiViewController
 }
