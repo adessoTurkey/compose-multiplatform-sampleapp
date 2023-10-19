@@ -38,7 +38,7 @@ voyager-tabs = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.r
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 
-napier = { module = "io.github.aakira:napier", version.ref = "napier" }
+logger = { module = "io.github.aakira:napier", version.ref = "napier" }
 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }

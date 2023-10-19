@@ -85,7 +85,7 @@ kotlin {
                     api(animation)
                 }
 
-                implementation(libs.napier)
+                implementation(libs.logger)
 
                 // Coroutines
                 api(libs.kotlinx.coroutines.core)
