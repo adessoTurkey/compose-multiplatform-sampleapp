@@ -1,16 +1,14 @@
 package com.example.moveeapp_compose_kmm.ui.tab
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Tv
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.ui.scene.tvscreen.TvScreen
+import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 
 internal class TvScreenTab : Tab {
@@ -25,7 +23,7 @@ internal class TvScreenTab : Tab {
     override val options: TabOptions
         @Composable
         get() {
-            val icon = rememberVectorPainter(Icons.Default.Tv) //TODO TvSeries icon will change
+            val icon = painterResource(MR.images.ic_tabbar_tv)
             val title = stringResource(MR.strings.tab_tv)
 
             return remember {
