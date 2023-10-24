@@ -15,6 +15,14 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
+    signingConfigs {
+        getByName("debug") {
+            storeFile = rootProject.file("debug.jks")
+            storePassword = "movee1234"
+            keyAlias = "key0"
+            keyPassword = "movee1234"
+        }
+    }
     buildFeatures {
         compose = true
     }
@@ -34,6 +42,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        getByName("debug") {
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
