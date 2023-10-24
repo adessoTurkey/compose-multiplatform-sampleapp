@@ -36,5 +36,10 @@ interface PermissionState {
      * This behavior varies depending on the System level API.
      */
     public fun launchPermissionRequest(): Unit
+
+    /**
+     * Opens the system settings screen for the application.
+     */
+    fun openSettings()
 }
 

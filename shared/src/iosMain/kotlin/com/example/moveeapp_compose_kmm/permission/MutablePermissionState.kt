@@ -8,6 +8,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import platform.Foundation.NSURL
+import platform.UIKit.UIApplication
+import platform.UIKit.UIApplicationOpenSettingsURLString
 
 @Composable
 internal actual fun rememberMutablePermissionState(
@@ -39,6 +42,11 @@ internal class MutablePermissionState(
         delegate.requestPermission {
             status = it
         }
+    }
+
+    override fun openSettings() {
+        val settingsUrl: NSURL = NSURL.URLWithString(UIApplicationOpenSettingsURLString)!!
+        UIApplication.sharedApplication.openURL(settingsUrl)
     }
 
     private fun getPermissionStatus() {
