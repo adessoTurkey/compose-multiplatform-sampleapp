@@ -4,6 +4,8 @@ import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
 import com.example.moveeapp_compose_kmm.data.KVaultSettingsProvider
 import com.example.moveeapp_compose_kmm.core.AndroidLocationService
 import com.example.moveeapp_compose_kmm.domain.location.LocationService
+import com.example.moveeapp_compose_kmm.core.AndroidLocationService
+import com.example.moveeapp_compose_kmm.domain.location.LocationService
 import com.liftric.kvault.KVault
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
