@@ -21,5 +21,7 @@
     <string name="fav_movie">Favori Filmler</string>
     <string name="share">Paylaş</string>
     <string name="rate">Puan</string>
+    <string name="cinema">Sinema</string>
+    <string name="go">Git!</string>
 </resources>
 

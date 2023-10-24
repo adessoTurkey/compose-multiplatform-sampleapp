@@ -21,4 +21,5 @@ val useCaseModule = module {
     factory { RateTvShowUseCase(get()) }
     factory { RemoveMovieRatingUseCase(get()) }
     factory { RemoveTvShowRatingUseCase(get()) }
+    factory { CinemaSearchUseCase(get()) }
 }

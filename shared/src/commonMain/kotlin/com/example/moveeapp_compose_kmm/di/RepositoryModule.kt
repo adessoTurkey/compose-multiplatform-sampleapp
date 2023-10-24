@@ -23,4 +23,5 @@ val repositoryModule = module {
     single<AccountRepository> { AccountRepositoryImpl(get(), get()) }
     single<RatingRepository> { RatingRepositoryImpl(get(), get()) }
     single<FavoriteRepository> { FavoriteRepositoryImpl(get(), get()) }
+    single { MapRepository(get()) }
 }
