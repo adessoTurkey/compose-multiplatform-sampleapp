@@ -1,6 +1,9 @@
 package com.example.moveeapp_compose_kmm.permission
 
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions
@@ -90,6 +93,15 @@ internal class MutablePermissionState(
 
     override fun launchPermissionRequest() {
         launcher?.launch()
+    }
+
+    override fun openSettings() {
+        activity.startActivity(
+            Intent().apply {
+                action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                data = Uri.fromParts("package", activity.packageName, "")
+            }
+        )
     }
 
     internal fun refreshPermissionStatus() {
