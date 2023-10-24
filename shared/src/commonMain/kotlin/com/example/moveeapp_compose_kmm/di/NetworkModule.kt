@@ -35,9 +35,10 @@ val networkModule = module {
         HttpClient {
             defaultRequest {
                 url {
-                    takeFrom(Constants.BASE_URL)
-                    parameters.append("api_key", Constants.API_KEY)
-
+                    if (this.host.isBlank()) {
+                        takeFrom(Constants.BASE_URL)
+                        parameters.append("api_key", Constants.API_KEY)
+                    }
                 }
             }
             expectSuccess = true
