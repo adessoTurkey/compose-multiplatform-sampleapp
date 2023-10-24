@@ -1,7 +1,9 @@
 package com.example.moveeapp_compose_kmm.ui.scene.movie
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,23 +16,30 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
+import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.ifNotNull
 import com.example.moveeapp_compose_kmm.domain.movie.NowPlayingMovie
 import com.example.moveeapp_compose_kmm.domain.movie.PopularMovie
@@ -41,11 +50,17 @@ import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
+import com.example.moveeapp_compose_kmm.ui.scene.map.MapScreen
+import com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen.MovieDetailScreen
+import dev.icerock.moko.resources.compose.fontFamilyResource
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
 fun MovieScreen(
     viewModel: MovieViewModel,
     onDetailClick: (Int) -> Unit,
+    onMapClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -70,7 +85,8 @@ fun MovieScreen(
             modifier = Modifier.weight(1f),
             popularMovieData = uiState.popularMovieData,
             nowPlayingMovieData = uiState.nowPlayingMovieData,
-            onDetailClick = onDetailClick
+            onDetailClick = onDetailClick,
+            onMapClick = onMapClick
         )
     }
 }
@@ -81,12 +97,13 @@ fun SuccessContent(
     popularMovieData: List<PopularMovie>,
     nowPlayingMovieData: List<NowPlayingMovie>,
     onDetailClick: (Int) -> Unit,
+    onMapClick: () -> Unit
 ) {
     LazyColumn(modifier = modifier) {
         item {
-            HorizontalMoviePager(popularMovieData) { id ->
-                onDetailClick(id)
-            }
+            HorizontalMoviePager(popularMovieData, onMapClick = onMapClick, onDetailClick = {
+                onDetailClick(it)
+            })
         }
         items(nowPlayingMovieData) { nowPlayingMovies ->
             NowPlayingMovieRow(nowPlayingMovies = nowPlayingMovies) { id ->
@@ -142,6 +159,7 @@ fun NowPlayingMovieRow(
 fun HorizontalMoviePager(
     popularMovie: List<PopularMovie>,
     onDetailClick: (Int) -> Unit,
+    onMapClick: () -> Unit
 ) {
     val pagerState = rememberPagerState(
         initialPage = 0,
@@ -155,6 +173,34 @@ fun HorizontalMoviePager(
             modifier = Modifier.fillMaxWidth().height(250.dp),
             color = MaterialTheme.colorScheme.primary
         ) {}
+        Column {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TextItem(
+                    fontSize = 34.sp,
+                    fontFamily = fontFamilyResource(MR.fonts.sfpro.bold),
+                    textColor = MaterialTheme.colorScheme.primaryContainer,
+                    text = stringResource( MR.strings.tab_movies))
+                IconButton(
+                    onClick = onMapClick
+                ) {
+                    Surface(
+                        modifier = Modifier.size(35.dp),
+                        shape = RoundedCornerShape(35.dp)
+                    ) {
+                        Icon(
+                            modifier = Modifier.size(width = 14.dp, height = 19.dp)
+                                .padding(8.dp),
+                            painter = painterResource(MR.images.ic_map),
+                            tint = MaterialTheme.colorScheme.primary,
+                            contentDescription = null
+                        )
+                    }
+                }
+            }
 
         HorizontalPager(
             state = pagerState,
@@ -174,12 +220,13 @@ fun HorizontalMoviePager(
                         }
                     }
                     .fillMaxWidth()
+                    .border(BorderStroke(3.dp, MaterialTheme.colorScheme.error) )
                     .clickable {
                         onDetailClick(popularMovie[page].movieId)
                     }
                     .aspectRatio(0.666f)) {
-
-                PosterImageItem(imagePath = popularMovie[page].posterPath)
+                    PosterImageItem(imagePath = popularMovie[page].posterPath)
+                }
             }
         }
     }

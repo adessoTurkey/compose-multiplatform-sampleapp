@@ -21,5 +21,7 @@
     <string name="fav_movie">Favorite Movies</string>
     <string name="share">Share</string>
     <string name="rate">Rate</string>
+    <string name="cinema">Cinema</string>
+    <string name="go">Go!</string>
 </resources>
 
