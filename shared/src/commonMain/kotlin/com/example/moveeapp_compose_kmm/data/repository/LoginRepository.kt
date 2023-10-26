@@ -1,7 +1,7 @@
 package com.example.moveeapp_compose_kmm.data.repository
 
 
-import com.example.moveeapp_compose_kmm.core.SessionSettings
+import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
 import com.example.moveeapp_compose_kmm.data.remote.ApiInterface
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionRequestModel

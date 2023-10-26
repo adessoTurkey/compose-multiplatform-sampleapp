@@ -1,18 +1,22 @@
 package com.example.moveeapp_compose_kmm.di
 
-import com.example.moveeapp_compose_kmm.data.repository.AccountRepository
+import com.example.moveeapp_compose_kmm.data.account.AccountRepositoryImpl
 import com.example.moveeapp_compose_kmm.data.repository.LoginRepository
 import com.example.moveeapp_compose_kmm.data.repository.MovieRepository
 import com.example.moveeapp_compose_kmm.data.repository.PersonRepository
+import com.example.moveeapp_compose_kmm.data.repository.RatingRepositoryImpl
 import com.example.moveeapp_compose_kmm.data.repository.SearchRepository
 import com.example.moveeapp_compose_kmm.data.repository.TvRepository
+import com.example.moveeapp_compose_kmm.domain.account.AccountRepository
+import com.example.moveeapp_compose_kmm.domain.rating.RatingRepository
 import org.koin.dsl.module
 
-val repositoryModule = module{
+val repositoryModule = module {
     single { MovieRepository(get()) }
     single { LoginRepository(get(), get()) }
     single { TvRepository(get()) }
     single { SearchRepository(get()) }
     single { PersonRepository(get()) }
-    single { AccountRepository(get(), get()) }
+    single<AccountRepository> { AccountRepositoryImpl(get(), get(), get()) }
+    single<RatingRepository> { RatingRepositoryImpl(get(), get()) }
 }

@@ -1,7 +1,7 @@
 package com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen
 
 import cafe.adriel.voyager.core.model.coroutineScope
-import com.example.moveeapp_compose_kmm.core.SessionSettings
+import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
 import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.data.repository.MovieRepository
 import com.example.moveeapp_compose_kmm.data.uimodel.MovieDetailUiModel
@@ -9,8 +9,6 @@ import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.AddFavorit
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.GetMovieStateUseCase
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RateMovieUseCase
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RemoveMovieRatingUseCase
-import com.example.moveeapp_compose_kmm.utils.ShadredPrefConstants
-import kotlin.math.roundToInt
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +18,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 class MovieDetailViewModel(
     private val repository: MovieRepository,
@@ -65,7 +64,7 @@ class MovieDetailViewModel(
 
     fun addFavorite(mediaId: Int, mediaType: String, isFavorite: Boolean) {
         coroutineScope.launch {
-            val accountId = sessionSettings.getInt(ShadredPrefConstants.KEY_ACCOUNT_ID)
+            val accountId = sessionSettings.getAccountId()
 
             val result = addFavoriteUseCase.execute(
                 accountId = accountId ?: 0,
