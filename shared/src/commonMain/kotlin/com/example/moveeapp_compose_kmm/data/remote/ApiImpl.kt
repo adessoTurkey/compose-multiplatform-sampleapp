@@ -2,18 +2,13 @@ package com.example.moveeapp_compose_kmm.data.remote
 
 import com.example.moveeapp_compose_kmm.data.remote.model.CreditsModel
 import com.example.moveeapp_compose_kmm.data.remote.model.SearchModel
-import com.example.moveeapp_compose_kmm.data.remote.model.account.AccountDetailModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AccountStateResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteMovieModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteTvModel
-import com.example.moveeapp_compose_kmm.data.remote.model.account.rate.RateDto
-import com.example.moveeapp_compose_kmm.data.remote.model.account.rate.RateResponse
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseModel
-import com.example.moveeapp_compose_kmm.data.remote.model.login.LogoutRequestModel
-import com.example.moveeapp_compose_kmm.data.remote.model.login.LogoutResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.RequestTokenResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionResponseModel
@@ -27,7 +22,6 @@ import com.example.moveeapp_compose_kmm.data.remote.model.tv.TopRatedTvModel
 import com.example.moveeapp_compose_kmm.data.remote.model.tv.TvDetailModel
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
@@ -122,14 +116,6 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         }.body()
     }
 
-    override suspend fun accountDetails(sessionId: String): AccountDetailModel {
-        return client.get("account") {
-            url {
-                parameters.append(SESSION_ID, sessionId)
-            }
-        }.body()
-    }
-
     override suspend fun getMovieState(sessionId: String, movieId: Int): AccountStateResponseModel {
         return client.get("movie/${movieId}/account_states") {
             contentType(ContentType.Application.Json)
@@ -163,54 +149,6 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
             }
         }.body()
     }
-
-    override suspend fun rateMovie(rating: RateDto, movieId: Int, sessionId: String): RateResponse {
-        return client.post("movie/$movieId/rating") {
-            contentType(ContentType.Application.Json)
-            url {
-                parameters.append(SESSION_ID, sessionId)
-            }
-            setBody(rating)
-        }.body()
-    }
-
-    override suspend fun rateTvShow(
-        rating: RateDto,
-        tvShowId: Int,
-        sessionId: String
-    ): RateResponse {
-        return client.post("tv/$tvShowId/rating") {
-            contentType(ContentType.Application.Json)
-            url {
-                parameters.append(SESSION_ID, sessionId)
-            }
-            setBody(rating)
-        }.body()
-    }
-
-    override suspend fun removeMovieRating(movieId: Int, sessionId: String) {
-        client.delete("movie/$movieId/rating") {
-            url {
-                parameters.append(SESSION_ID, sessionId)
-            }
-        }
-    }
-
-    override suspend fun removeTvShowRating(tvShowId: Int, sessionId: String) {
-        client.delete("tv/$tvShowId/rating") {
-            url {
-                parameters.append(SESSION_ID, sessionId)
-            }
-        }
-    }
-
-    override suspend fun logout(logoutRequestModel: LogoutRequestModel): LogoutResponseModel {
-        return client.delete(LOGOUT) {
-            setBody(logoutRequestModel)
-            contentType(ContentType.Application.Json)
-        }.body()
-    }
-
 
     companion object {
 

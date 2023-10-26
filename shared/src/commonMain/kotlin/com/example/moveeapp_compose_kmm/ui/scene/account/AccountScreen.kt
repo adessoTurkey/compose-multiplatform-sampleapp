@@ -49,6 +49,10 @@ class AccountScreen : Screen {
         val uiState by viewModel.uiState.collectAsState()
         val logoutState by viewModel.logoutState.collectAsState()
 
+        LaunchedEffect(Unit) {
+            viewModel.getAccountDetail()
+        }
+
         LaunchedEffect(logoutState) {
             if (logoutState) {
                 navigator.parent?.parent?.replaceAll(SplashScreen())
@@ -103,7 +107,7 @@ fun SuccessContent(
                 )
                 TextItem(
                     modifier = Modifier.padding(top = 8.dp),
-                    text = uiState.accountData.originalName,
+                    text = uiState.accountData.fullName,
                     fontSize = 25.sp,
                     textColor = MaterialTheme.colorScheme.primaryContainer,
                     fontFamily = fontFamilyResource(MR.fonts.sfpro.bold)

@@ -4,12 +4,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.core.model.coroutineScope
-import com.example.moveeapp_compose_kmm.core.SessionSettings
+import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
 import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.data.repository.LoginRepository
 import com.example.moveeapp_compose_kmm.data.repository.LoginState
-import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.GetAccountDetailUseCase
-import com.example.moveeapp_compose_kmm.utils.ShadredPrefConstants
+import com.example.moveeapp_compose_kmm.domain.account.GetAccountDetailUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -64,10 +63,7 @@ class LoginViewModel(
         coroutineScope.launch {
             val result = getAccountDetailUseCase.execute()
             if (result.isSuccess) {
-                sessionSettings.setInt(
-                    key = ShadredPrefConstants.KEY_ACCOUNT_ID,
-                    value = result.getOrNull()?.id ?: 0
-                )
+                sessionSettings.setAccountId(result.getOrNull()?.id ?: 0)
                 loginUiState = loginUiState.copy(isLoading = false, isSuccessLogin = true)
                 _isLoggedIn.value = LoginState.LOGGED_IN
             }
