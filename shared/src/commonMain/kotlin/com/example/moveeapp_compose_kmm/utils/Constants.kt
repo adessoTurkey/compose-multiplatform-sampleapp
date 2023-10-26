@@ -12,8 +12,3 @@ object Constants {
     const val TV = "tv"
     const val PERSON = "person"
 }
-
-object ShadredPrefConstants {
-    const val KEY_SESSION_ID = "key_session_id"
-    const val KEY_ACCOUNT_ID = "key_account_id"
-}
