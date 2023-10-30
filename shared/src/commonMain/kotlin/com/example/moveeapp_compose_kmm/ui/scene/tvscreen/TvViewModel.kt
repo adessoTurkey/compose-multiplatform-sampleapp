@@ -1,6 +1,6 @@
 package com.example.moveeapp_compose_kmm.ui.scene.tvscreen
 
-import cafe.adriel.voyager.core.model.coroutineScope
+import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.data.repository.TvRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,6 +42,6 @@ class TvViewModel(private val repository: TvRepository) : ViewModel {
                     )
                 }
             }
-        }.launchIn(coroutineScope)
+        }.launchIn(viewModelScope)
     }
 }

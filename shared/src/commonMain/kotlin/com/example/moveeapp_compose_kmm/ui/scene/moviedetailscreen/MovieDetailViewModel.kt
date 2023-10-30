@@ -1,6 +1,6 @@
 package com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen
 
-import cafe.adriel.voyager.core.model.coroutineScope
+import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
 import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.data.repository.MovieRepository
@@ -59,11 +59,11 @@ class MovieDetailViewModel(
                     uiState.copy(isLoading = false, error = "Hata!")
                 }
             }
-        }.launchIn(coroutineScope)
+        }.launchIn(viewModelScope)
     }
 
     fun addFavorite(mediaId: Int, mediaType: String, isFavorite: Boolean) {
-        coroutineScope.launch {
+        viewModelScope.launch {
             val accountId = sessionSettings.getAccountId()
 
             val result = addFavoriteUseCase.execute(
@@ -78,7 +78,7 @@ class MovieDetailViewModel(
     }
 
     fun getMovieState(mediaId: Int) {
-        coroutineScope.launch {
+        viewModelScope.launch {
             val result = getMovieStateUseCase.execute(mediaId)
             if (result.isSuccess) {
                 _isFavorite.value = result.getOrNull()?.isFavorite ?: false
@@ -102,7 +102,7 @@ class MovieDetailViewModel(
 
         if (_rateJob.value?.isActive == true) return
 
-        _rateJob.value = coroutineScope.launch {
+        _rateJob.value = viewModelScope.launch {
             delay(500)
 
             if (_actualRating.value == rating) {

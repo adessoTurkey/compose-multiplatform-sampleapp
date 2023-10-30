@@ -29,53 +29,42 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.MR
-import com.example.moveeapp_compose_kmm.core.BackHandler
-import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import com.example.moveeapp_compose_kmm.ui.scene.account.favoritescreen.FavoriteScreen
-import com.example.moveeapp_compose_kmm.ui.scene.splashscreen.SplashScreen
 import dev.icerock.moko.resources.compose.fontFamilyResource
 import dev.icerock.moko.resources.compose.stringResource
 
-class AccountScreen : Screen {
-    @Composable
-    override fun Content() {
-        val navigator = LocalNavigator.currentOrThrow
-        val viewModel: AccountDetailViewModel = viewModel()
-        val uiState by viewModel.uiState.collectAsState()
-        val logoutState by viewModel.logoutState.collectAsState()
+@Composable
+fun AccountScreen(
+    viewModel: AccountDetailViewModel,
+    navigateToSplash: () -> Unit,
+    navigateToFavorite: (MediaType) -> Unit,
+) {
+    val uiState by viewModel.uiState.collectAsState()
+    val logoutState by viewModel.logoutState.collectAsState()
 
-        LaunchedEffect(Unit) {
-            viewModel.getAccountDetail()
+    LaunchedEffect(Unit) {
+        viewModel.getAccountDetail()
+    }
+
+    LaunchedEffect(logoutState) {
+        if (logoutState) {
+            navigateToSplash()
         }
+    }
 
-        LaunchedEffect(logoutState) {
-            if (logoutState) {
-                navigator.parent?.parent?.replaceAll(SplashScreen())
-            }
-        }
+    Column(modifier = Modifier.background(MaterialTheme.colorScheme.secondaryContainer)) {
+        Spacer(
+            Modifier.fillMaxWidth().windowInsetsTopHeight(WindowInsets.statusBars)
+                .background(MaterialTheme.colorScheme.primary)
+        )
 
-        Column(modifier = Modifier.background(MaterialTheme.colorScheme.secondaryContainer)) {
-            Spacer(
-                Modifier.fillMaxWidth().windowInsetsTopHeight(WindowInsets.statusBars)
-                    .background(MaterialTheme.colorScheme.primary)
-            )
-
-            SuccessContent(
-                uiState = uiState,
-                onFavMovieClick = { navigator.push(FavoriteScreen(it)) },
-                onFavTvClick = { navigator.push(FavoriteScreen(it)) },
-                onLogoutClick = { viewModel.logout() }
-            )
-        }
-
-        BackHandler(isEnabled = true) {
-            navigator.pop()
-        }
+        SuccessContent(
+            uiState = uiState,
+            onFavMovieClick = navigateToFavorite,
+            onFavTvClick = navigateToFavorite,
+            onLogoutClick = { viewModel.logout() }
+        )
     }
 }
 

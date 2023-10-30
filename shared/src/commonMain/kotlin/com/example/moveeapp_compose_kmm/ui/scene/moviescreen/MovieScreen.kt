@@ -31,10 +31,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
-import com.example.moveeapp_compose_kmm.core.viewModel
+import com.example.moveeapp_compose_kmm.core.ifNotNull
 import com.example.moveeapp_compose_kmm.data.uimodel.movie.NowPlayingMovieUiModel
 import com.example.moveeapp_compose_kmm.data.uimodel.movie.PopularMovieUiModel
 import com.example.moveeapp_compose_kmm.ui.components.CardImageItem
@@ -44,24 +41,17 @@ import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen.MovieDetailScreen
-
-class MovieScreen : Screen {
-    @Composable
-    override fun Content() {
-        val navigator = LocalNavigator.currentOrThrow
-        val viewModel: MovieViewModel = viewModel()
-        val uiState by viewModel.uiState.collectAsState()
-
-        MovieContent(uiState = uiState, onDetailClick = { navigator.push(MovieDetailScreen(it)) })
-    }
-}
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 @Composable
-fun MovieContent(
-    uiState: MovieUiState,
-    onDetailClick: (Int) -> Unit
+fun MovieScreen(
+    viewModel: MovieViewModel,
+    onDetailClick: (Int) -> Unit,
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -71,8 +61,8 @@ fun MovieContent(
                 .background(MaterialTheme.colorScheme.primary)
         )
 
-        if (uiState.error != null) {
-            ErrorScreen(uiState.error)
+        uiState.error.ifNotNull {
+            ErrorScreen(it)
         }
 
         if (uiState.isLoading) {
@@ -93,7 +83,7 @@ fun SuccessContent(
     modifier: Modifier = Modifier,
     popularMovieData: List<PopularMovieUiModel>,
     nowPlayingMovieData: List<NowPlayingMovieUiModel>,
-    onDetailClick: (Int) -> Unit
+    onDetailClick: (Int) -> Unit,
 ) {
     LazyColumn(modifier = modifier) {
         item {
@@ -112,7 +102,7 @@ fun SuccessContent(
 @Composable
 fun NowPlayingMovieRow(
     nowPlayingMovies: NowPlayingMovieUiModel,
-    onDetailClick: (Int) -> Unit
+    onDetailClick: (Int) -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -154,7 +144,7 @@ fun NowPlayingMovieRow(
 @Composable
 fun HorizontalMoviePager(
     popularMovie: List<PopularMovieUiModel>,
-    onDetailClick: (Int) -> Unit
+    onDetailClick: (Int) -> Unit,
 ) {
     val pagerState = rememberPagerState(
         initialPage = 0,

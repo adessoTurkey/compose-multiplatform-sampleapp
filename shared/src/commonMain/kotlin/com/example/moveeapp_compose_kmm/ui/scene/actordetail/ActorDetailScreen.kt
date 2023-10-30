@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -21,12 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.MR
-import com.example.moveeapp_compose_kmm.core.BackHandler
-import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.uimodel.ActorCreditUiModel
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
 import com.example.moveeapp_compose_kmm.ui.components.DetailPosterImage
@@ -34,31 +30,27 @@ import com.example.moveeapp_compose_kmm.ui.components.DetailScreensAppBar
 import com.example.moveeapp_compose_kmm.ui.components.ExpandableText
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen.MovieDetailScreen
-import com.example.moveeapp_compose_kmm.ui.scene.tvdetailscreen.TvDetailScreen
 import dev.icerock.moko.resources.compose.stringResource
 
-class ActorDetailScreen(
-    private val actorId: Int
-) : Screen {
+@Composable
+fun ActorDetailScreen(
+    viewModel: ActorDetailViewModel,
+    actorId: Int,
+    navigateToMovie: (Int) -> Unit,
+    navigateToTv: (Int) -> Unit,
+    onBackPressed: () -> Unit,
+) {
+    val uiState by viewModel.uiState.collectAsState()
 
-    @Composable
-    override fun Content() {
-        val navigator = LocalNavigator.currentOrThrow
-        val viewModel: ActorDetailViewModel = viewModel()
-        val uiState by viewModel.uiState.collectAsState()
-
-        viewModel.fetchData(actorId)
-        SuccessContent(uiState, onBackPressed = navigator::pop, onDetailClick = {
-            when (it.second) {
-                "movie" -> navigator.push(MovieDetailScreen(movieId = it.first))
-                "tv" -> navigator.push(TvDetailScreen(tvId = it.first))
-            }
-        })
-
-        BackHandler(isEnabled = true) {
-            navigator.pop()
+    SuccessContent(uiState, onBackPressed = onBackPressed, onDetailClick = {
+        when (it.second) {
+            "movie" -> navigateToMovie(it.first)
+            "tv" -> navigateToTv(it.first)
         }
+    })
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchData(actorId)
     }
 }
 
@@ -66,7 +58,7 @@ class ActorDetailScreen(
 fun SuccessContent(
     uiState: ActorDetailUiState,
     onDetailClick: (Pair<Int, String>) -> Unit,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -113,7 +105,7 @@ fun SuccessContent(
 @Composable
 fun PersonCreditLazyRow(
     uiState: ActorDetailUiState,
-    onDetailClick: (Pair<Int, String>) -> Unit
+    onDetailClick: (Pair<Int, String>) -> Unit,
 ) {
     LazyRow(
         modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
@@ -131,7 +123,7 @@ fun PersonCreditLazyRow(
 @Composable
 fun PersonCreditCardView(
     credit: ActorCreditUiModel,
-    onClick: (Pair<Int, String>) -> Unit
+    onClick: (Pair<Int, String>) -> Unit,
 ) {
     Column(
         modifier = Modifier.width(110.dp),

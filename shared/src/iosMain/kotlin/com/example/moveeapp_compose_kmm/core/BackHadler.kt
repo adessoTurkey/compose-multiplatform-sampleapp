@@ -8,7 +8,7 @@ import com.example.moveeapp_compose_kmm.store
 actual fun BackHandler(isEnabled: Boolean, onBack: () -> Unit) {
     LaunchedEffect(isEnabled) {
         store.events.collect {
-            if(isEnabled) {
+            if (isEnabled) {
                 onBack()
             }
         }
