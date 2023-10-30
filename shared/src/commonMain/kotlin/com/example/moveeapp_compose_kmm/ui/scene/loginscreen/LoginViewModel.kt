@@ -3,7 +3,7 @@ package com.example.moveeapp_compose_kmm.ui.scene.loginscreen
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import cafe.adriel.voyager.core.model.coroutineScope
+import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
 import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.data.repository.LoginRepository
@@ -39,7 +39,7 @@ class LoginViewModel(
 
 
     fun login() {
-        coroutineScope.launch {
+        viewModelScope.launch {
             if (!validateLoginForm()) {
                 loginUiState = loginUiState.copy(loginError = "Email and password can not be empty")
                 return@launch
@@ -60,7 +60,7 @@ class LoginViewModel(
     }
 
     private fun getAccountDetail() {
-        coroutineScope.launch {
+        viewModelScope.launch {
             val result = getAccountDetailUseCase.execute()
             if (result.isSuccess) {
                 sessionSettings.setAccountId(result.getOrNull()?.id ?: 0)

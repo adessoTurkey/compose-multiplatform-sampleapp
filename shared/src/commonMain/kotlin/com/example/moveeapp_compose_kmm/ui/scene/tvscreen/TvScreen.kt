@@ -30,11 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.navigator.currentOrThrow
-import com.example.moveeapp_compose_kmm.core.viewModel
+import com.example.moveeapp_compose_kmm.core.ifNotNull
 import com.example.moveeapp_compose_kmm.data.uimodel.tv.PopularTvUiModel
 import com.example.moveeapp_compose_kmm.data.uimodel.tv.TopRatedTvUiModel
 import com.example.moveeapp_compose_kmm.ui.components.ErrorScreen
@@ -42,24 +38,14 @@ import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import com.example.moveeapp_compose_kmm.ui.scene.tvdetailscreen.TvDetailScreen
-
-class TvScreen : Screen {
-    @Composable
-    override fun Content() {
-        val navigator = LocalNavigator.currentOrThrow
-        val viewModel: TvViewModel = viewModel()
-        val uiState by viewModel.uiState.collectAsState()
-
-        TvContent(navigator = navigator, uiState = uiState)
-    }
-}
 
 @Composable
-fun TvContent(
-    navigator: Navigator,
-    uiState: TvUiState
+fun TvScreen(
+    viewModel: TvViewModel,
+    navigateToDetail: (Int) -> Unit,
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(
             Modifier.fillMaxWidth()
@@ -67,8 +53,8 @@ fun TvContent(
                 .background(MaterialTheme.colorScheme.primary)
         )
 
-        if (uiState.error != null) {
-            ErrorScreen(uiState.error)
+        uiState.error.ifNotNull {
+            ErrorScreen(it)
         }
 
         if (uiState.isLoading) {
@@ -77,9 +63,9 @@ fun TvContent(
 
         SuccessContent(
             modifier = Modifier.weight(1f),
-            navigator = navigator,
             popularTv = uiState.popularTvData,
-            topRatedTv = uiState.topRatedTvData
+            topRatedTv = uiState.topRatedTvData,
+            navigateToDetail,
         )
     }
 }
@@ -87,13 +73,16 @@ fun TvContent(
 @Composable
 fun SuccessContent(
     modifier: Modifier = Modifier,
-    navigator: Navigator,
     popularTv: List<PopularTvUiModel>,
-    topRatedTv: List<TopRatedTvUiModel>
+    topRatedTv: List<TopRatedTvUiModel>,
+    navigateToDetail: (Int) -> Unit,
 ) {
-    TvLazyVerticalGrid(modifier = modifier, topRatedTv = topRatedTv, popularTv = popularTv) {
-        navigator.push(TvDetailScreen(it))
-    }
+    TvLazyVerticalGrid(
+        modifier = modifier,
+        topRatedTv = topRatedTv,
+        popularTv = popularTv,
+        onclick = navigateToDetail
+    )
 }
 
 @Composable
@@ -101,7 +90,7 @@ fun TvLazyVerticalGrid(
     modifier: Modifier = Modifier,
     topRatedTv: List<TopRatedTvUiModel>,
     popularTv: List<PopularTvUiModel>,
-    onclick: (Int) -> Unit
+    onclick: (Int) -> Unit,
 ) {
     LazyVerticalGrid(modifier = modifier, columns = GridCells.Fixed(2),
         content = {
@@ -150,7 +139,7 @@ fun TvLazyVerticalGrid(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HorizontalMoviePager(
-    popularTv: List<PopularTvUiModel>, onclick: (Int) -> Unit
+    popularTv: List<PopularTvUiModel>, onclick: (Int) -> Unit,
 ) {
     val pagerState = rememberPagerState(
         initialPage = 0, initialPageOffsetFraction = 0f

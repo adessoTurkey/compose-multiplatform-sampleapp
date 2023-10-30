@@ -1,6 +1,6 @@
 package com.example.moveeapp_compose_kmm.ui.scene.account.favoritescreen
 
-import cafe.adriel.voyager.core.model.coroutineScope
+import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
 import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.domain.account.AccountRepository
@@ -24,7 +24,7 @@ class FavoriteViewModel(
 
 
     fun getPopularMovie() {
-        coroutineScope.launch {
+        viewModelScope.launch {
             val result = repository.getFavoriteMovie(
                 accountId = sessionSettings.getAccountId() ?: 0,
                 sessionId = sessionSettings.getSessionId() ?: ""
@@ -42,7 +42,7 @@ class FavoriteViewModel(
     }
 
     fun getPopularTv() {
-        coroutineScope.launch {
+        viewModelScope.launch {
             val result = repository.getFavoriteTv(
                 accountId = sessionSettings.getAccountId() ?: 0,
                 sessionId = sessionSettings.getSessionId() ?: ""

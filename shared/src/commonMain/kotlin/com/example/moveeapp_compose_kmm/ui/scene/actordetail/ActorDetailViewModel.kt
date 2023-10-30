@@ -1,6 +1,6 @@
 package com.example.moveeapp_compose_kmm.ui.scene.actordetail
 
-import cafe.adriel.voyager.core.model.coroutineScope
+import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.data.repository.PersonRepository
 import com.example.moveeapp_compose_kmm.data.uimodel.ActorDetailUiModel
@@ -38,6 +38,6 @@ class ActorDetailViewModel(
                 }
             }
 
-        }.launchIn(coroutineScope)
+        }.launchIn(viewModelScope)
     }
 }
