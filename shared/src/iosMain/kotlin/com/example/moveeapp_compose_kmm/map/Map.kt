@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.interop.UIKitView
-import com.example.moveeapp_compose_kmm.domain.location.OSMObject
+import com.example.moveeapp_compose_kmm.ui.scene.map.Cinema
 import com.example.moveeapp_compose_kmm.ui.scene.map.MapUiState
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.CoreLocation.CLLocationCoordinate2DMake
@@ -19,7 +19,7 @@ import platform.darwin.NSObject
 actual fun Map(
     modifier: Modifier,
     uiState: MapUiState,
-    onMarkerClick: (OSMObject?) -> Unit
+    onMarkerClick: (Cinema?) -> Unit
 ) {
     val mkMapView = remember { MKMapView().apply {
         setUserInteractionEnabled(true)

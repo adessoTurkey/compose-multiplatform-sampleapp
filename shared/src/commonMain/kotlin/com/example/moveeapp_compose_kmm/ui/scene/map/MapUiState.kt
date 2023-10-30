@@ -1,12 +1,17 @@
 package com.example.moveeapp_compose_kmm.ui.scene.map
 
 import com.example.moveeapp_compose_kmm.domain.location.DeviceLocation
-import com.example.moveeapp_compose_kmm.domain.location.OSMObject
 
 data class MapUiState(
     val lastLocation: DeviceLocation? = null,
-    val cinemaList: List<OSMObject>? = null,
-    val selectedCinema: OSMObject? = null,
+    val cinemaList: List<Cinema> = emptyList(),
+    val selectedCinema: Cinema? = null,
     val dialogVisibility: Boolean = false,
     val searchVisibility: Boolean = false,
+)
+
+data class Cinema(
+    val name: String,
+    val description: String,
+    val location: DeviceLocation
 )

@@ -1,7 +1,7 @@
 package com.example.moveeapp_compose_kmm.core
 
 import com.example.moveeapp_compose_kmm.domain.location.DeviceLocation
-import com.example.moveeapp_compose_kmm.domain.location.LocationService
+import com.example.moveeapp_compose_kmm.domain.location.LocationRepository
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.useContents
 import platform.CoreLocation.CLLocation
@@ -16,7 +16,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-internal class IosLocationService : LocationService {
+internal class IosLocationRepository : LocationRepository {
 
     private val locationManager = CLLocationManager()
     private val latestLocation = AtomicReference<DeviceLocation?>(null)

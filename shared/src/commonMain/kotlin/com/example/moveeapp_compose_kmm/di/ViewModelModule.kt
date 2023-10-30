@@ -26,5 +26,5 @@ val viewModelModule = module {
     factory { SearchViewModel(get()) }
     factory { ActorDetailViewModel(get()) }
     factory { FavoriteViewModel(get(), get()) }
-    factory { MapViewModel(get()) }
+    factory { MapViewModel(get(), get()) }
 }

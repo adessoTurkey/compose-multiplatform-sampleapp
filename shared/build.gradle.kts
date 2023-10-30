@@ -126,6 +126,10 @@ kotlin {
                 //Moko
                 api(libs.moko.resources)
                 api(libs.moko.resources.compose)
+
+                //Location
+                api(libs.play.services.location)
+                api (libs.play.services.maps)
             }
         }
 
@@ -157,6 +161,11 @@ kotlin {
                     api(tooling)
                     api(preview)
                 }
+                api (libs.maps.compose)
+
+                //Location
+                api(libs.play.services.location)
+                api (libs.play.services.maps)
             }
         }
         val iosX64Main by getting
