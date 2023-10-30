@@ -6,6 +6,9 @@ import com.example.moveeapp_compose_kmm.core.AndroidLocationService
 import com.example.moveeapp_compose_kmm.domain.location.LocationService
 import com.example.moveeapp_compose_kmm.core.AndroidLocationService
 import com.example.moveeapp_compose_kmm.domain.location.LocationService
+import com.example.moveeapp_compose_kmm.core.AndroidLocationRepository
+import com.example.moveeapp_compose_kmm.domain.location.LocationRepository
+
 import com.liftric.kvault.KVault
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -18,5 +21,8 @@ actual val settingsModule = module {
             )
         )
     }
-    factory <LocationService> { AndroidLocationService(context = androidContext()) }
+}
+
+actual val locationModule = module {
+    factory <LocationRepository> { AndroidLocationRepository(context = androidContext()) }
 }

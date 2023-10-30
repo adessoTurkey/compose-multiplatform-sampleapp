@@ -16,8 +16,8 @@ import com.example.moveeapp_compose_kmm.R
 import com.example.moveeapp_compose_kmm.core.CurrentLocationMarker
 import com.example.moveeapp_compose_kmm.core.GoogleMapsComponent
 import com.example.moveeapp_compose_kmm.core.MapsMarker
-import com.example.moveeapp_compose_kmm.domain.location.OSMObject
 import com.example.moveeapp_compose_kmm.ui.components.MapsMarkerDialog
+import com.example.moveeapp_compose_kmm.ui.scene.map.Cinema
 import com.example.moveeapp_compose_kmm.ui.scene.map.MapUiState
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
@@ -26,14 +26,25 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
 
 @Composable
-actual fun Map(modifier: Modifier, uiState: MapUiState, onMarkerClick: (OSMObject?) -> Unit) {
+actual fun Map(modifier: Modifier, uiState: MapUiState, onMarkerClick: (Cinema?) -> Unit) {
     val coroutineScope = rememberCoroutineScope()
     val cameraPositionState = rememberCameraPositionState()
 
     LaunchedEffect(uiState.lastLocation) {
         uiState.lastLocation?.let {
-            cameraPositionState.position =
-                CameraPosition.fromLatLngZoom(LatLng(it.latitude, it.longitude), 10f)
+            cameraPositionState.animate(
+                update = CameraUpdateFactory.newCameraPosition(
+                    CameraPosition(
+                        LatLng(it.latitude, it.longitude),
+                        12f,
+                        0f,
+                        0f
+                    )
+                )
+//                CameraUpdateFactory.newCameraPosition(
+//                    CameraPosition.fromLatLngZoom(LatLng(it.latitude, it.longitude), it.zoom)
+//                )
+            )
         }
     }
 
@@ -45,9 +56,9 @@ actual fun Map(modifier: Modifier, uiState: MapUiState, onMarkerClick: (OSMObjec
                 onMarkerClick.invoke(null)
             }) {
 
-            uiState.lastLocation?.let { deviceLocation ->
+            if (uiState.lastLocation != null) {
                 CurrentLocationMarker(
-                    position = LatLng(deviceLocation.latitude, deviceLocation.longitude),
+                    position = LatLng(uiState.lastLocation.latitude, uiState.lastLocation.longitude),
                     iconRes = R.drawable.ic_maps_marker_user
                 ) {
                     coroutineScope.launch {
@@ -61,24 +72,24 @@ actual fun Map(modifier: Modifier, uiState: MapUiState, onMarkerClick: (OSMObjec
                 }
             }
 
-            uiState.cinemaList?.forEach { cinema ->
+            uiState.cinemaList.forEach { cinema ->
                 MapsMarker(
-                    position = LatLng(cinema.lat, cinema.lon),
+                    position = LatLng(cinema.location.latitude, cinema.location.longitude),
                     title = cinema.name,
                     iconRes = R.drawable.ic_maps_marker
                 ) {
-                    coroutineScope.launch {
-                        cameraPositionState.animate(
-                            update = CameraUpdateFactory.newCameraPosition(
-                                CameraPosition(
-                                    it.position,
-                                    12f,
-                                    0f,
-                                    0f
-                                )
-                            ), durationMs = 400
-                        )
-                    }
+//                    coroutineScope.launch {
+//                        cameraPositionState.animate(
+//                            update = CameraUpdateFactory.newCameraPosition(
+//                                CameraPosition(
+//                                    it.position,
+//                                    12f,
+//                                    0f,
+//                                    0f
+//                                )
+//                            ), durationMs = 400
+//                        )
+//                    }
                     onMarkerClick.invoke(cinema)
                 }
 
@@ -95,7 +106,7 @@ actual fun Map(modifier: Modifier, uiState: MapUiState, onMarkerClick: (OSMObjec
                     .padding(horizontal = 20.dp, vertical = 18.dp)
                     .align(Alignment.TopCenter),
                 title = uiState.selectedCinema?.name ?: "",
-                subTitle = uiState.selectedCinema?.displayName ?: ""
+                subTitle = uiState.selectedCinema?.description ?: ""
             )
         }
     }

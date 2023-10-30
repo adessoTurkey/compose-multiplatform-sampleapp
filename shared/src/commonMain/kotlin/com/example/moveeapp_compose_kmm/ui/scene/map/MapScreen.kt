@@ -18,6 +18,9 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.map.Map
+import com.example.moveeapp_compose_kmm.permission.Permission
+import com.example.moveeapp_compose_kmm.permission.isGranted
+import com.example.moveeapp_compose_kmm.permission.rememberPermissionState
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import dev.icerock.moko.resources.compose.fontFamilyResource
@@ -31,8 +34,17 @@ class MapScreen : Screen {
         val viewModel: MapViewModel = viewModel()
         val uiState by viewModel.uiState.collectAsState()
 
+        val permissionState = rememberPermissionState(Permission.LOCATION)
         LaunchedEffect(Unit) {
-            viewModel.loadForecastWithLocation()
+            permissionState.launchPermissionRequest()
+        }
+
+        val isGranted = permissionState.status.isGranted
+
+        LaunchedEffect(isGranted) {
+            if (isGranted){
+                viewModel.loadForecastWithLocation()
+            }
         }
 
         Scaffold(topBar = {

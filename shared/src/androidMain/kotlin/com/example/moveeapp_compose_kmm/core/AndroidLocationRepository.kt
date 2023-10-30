@@ -3,15 +3,16 @@ package com.example.moveeapp_compose_kmm.core
 import android.annotation.SuppressLint
 import android.content.Context
 import com.example.moveeapp_compose_kmm.domain.location.DeviceLocation
-import com.example.moveeapp_compose_kmm.domain.location.LocationService
+import com.example.moveeapp_compose_kmm.domain.location.LocationRepository
 import com.google.android.gms.location.LocationServices
+import kotlinx.coroutines.flow.Flow
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-internal class AndroidLocationService(
+internal class AndroidLocationRepository(
     private val context: Context,
-) : LocationService {
+) : LocationRepository {
 
     private val fusedLocationClient by lazy {
         LocationServices.getFusedLocationProviderClient(context)
@@ -19,7 +20,7 @@ internal class AndroidLocationService(
 
     @SuppressLint("MissingPermission")
     override suspend fun getCurrentLocation(): DeviceLocation = suspendCoroutine { continuation ->
-        fusedLocationClient.lastLocation
+        fusedLocationClient.lastLocation //todo requestLoc
             .addOnSuccessListener { location ->
                 if (location == null) return@addOnSuccessListener
                 continuation.resume(
@@ -31,5 +32,9 @@ internal class AndroidLocationService(
             }.addOnFailureListener { exception ->
                 continuation.resumeWithException(exception)
             }
+    }
+
+    override fun getLocationUpdates(): Flow<DeviceLocation> {
+        TODO("Not yet implemented")
     }
 }
