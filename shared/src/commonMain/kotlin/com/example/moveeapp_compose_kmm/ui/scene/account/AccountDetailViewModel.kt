@@ -1,7 +1,7 @@
 package com.example.moveeapp_compose_kmm.ui.scene.account
 
-import cafe.adriel.voyager.core.model.coroutineScope
 import com.example.moveeapp_compose_kmm.core.ViewModel
+import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.domain.account.GetAccountDetailUseCase
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.LogoutUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +22,7 @@ class AccountDetailViewModel(
     val logoutState = _logoutState.asStateFlow()
 
     fun getAccountDetail() {
-        coroutineScope.launch {
+        viewModelScope.launch {
             getAccountDetailUseCase.execute()
                 .onSuccess {
                     _uiState.update { uiState ->
@@ -41,7 +41,7 @@ class AccountDetailViewModel(
     }
 
     fun logout() {
-        coroutineScope.launch {
+        viewModelScope.launch {
             val result = logoutUseCase.execute()
             if (result.isSuccess) {
                 _logoutState.value = result.getOrNull() ?: false

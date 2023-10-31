@@ -27,12 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.MR
-import com.example.moveeapp_compose_kmm.core.BackHandler
-import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.uimodel.account.favorite.FavoriteMovieUiModel
 import com.example.moveeapp_compose_kmm.data.uimodel.account.favorite.FavoriteTvUiModel
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
@@ -43,89 +38,80 @@ import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.ui.scene.account.FavoriteMovieUiState
 import com.example.moveeapp_compose_kmm.ui.scene.account.FavoriteTvUiState
 import com.example.moveeapp_compose_kmm.ui.scene.account.MediaType
-import com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen.MovieDetailScreen
-import com.example.moveeapp_compose_kmm.ui.scene.tvdetailscreen.TvDetailScreen
 import dev.icerock.moko.resources.compose.fontFamilyResource
 import dev.icerock.moko.resources.compose.stringResource
 
-class FavoriteScreen(private val mediaType: MediaType) : Screen {
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+fun FavoriteScreen(
+    viewModel: FavoriteViewModel,
+    mediaType: MediaType,
+    navigateToMovie: (Int) -> Unit,
+    navigateToTv: (Int) -> Unit,
+    navigateBack: () -> Unit,
+) {
+    val favoriteMovieUiState by viewModel.favoriteMovieUiState.collectAsState()
+    val favoriteTvUiState by viewModel.favoriteTvUiState.collectAsState()
 
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    override fun Content() {
-        val navigator = LocalNavigator.currentOrThrow
-        val viewModel: FavoriteViewModel = viewModel()
-        val favoriteMovieUiState by viewModel.favoriteMovieUiState.collectAsState()
-        val favoriteTvUiState by viewModel.favoriteTvUiState.collectAsState()
+    when (mediaType) {
+        MediaType.MOVIE -> {
+            viewModel.getPopularMovie()
 
-        when (mediaType) {
-            MediaType.MOVIE -> {
-                viewModel.getPopularMovie()
-
-                Scaffold(topBar = {
-                    TopAppBar(
-                        title = {
-                            TextItem(
-                                text = stringResource(MR.strings.fav_movie),
-                                fontSize = 20.sp,
-                                fontFamily = fontFamilyResource(MR.fonts.sfpro.bold),
-                                textColor = MaterialTheme.colorScheme.primaryContainer
-                            )
-                        },
-                        colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.primary),
-                        navigationIcon = {
-                            BackPressedItem { navigator.pop() }
-                        }
-                    )
-                }) { contentPadding ->
-                    Box(modifier = Modifier.padding(top = contentPadding.calculateTopPadding())) {
-                        Spacer(
-                            modifier = Modifier.height(190.dp).fillMaxWidth()
-                                .align(Alignment.TopCenter)
-                                .background(MaterialTheme.colorScheme.primary)
+            Scaffold(topBar = {
+                TopAppBar(
+                    title = {
+                        TextItem(
+                            text = stringResource(MR.strings.fav_movie),
+                            fontSize = 20.sp,
+                            fontFamily = fontFamilyResource(MR.fonts.sfpro.bold),
+                            textColor = MaterialTheme.colorScheme.primaryContainer
                         )
-                        FavoriteMovieContent(favoriteMovieUiState = favoriteMovieUiState) {
-                            navigator.push(MovieDetailScreen(it))
-                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.primary),
+                    navigationIcon = {
+                        BackPressedItem(onBackPressed = navigateBack)
                     }
-                }
-            }
-
-            MediaType.TV -> {
-                viewModel.getPopularTv()
-
-                Scaffold(topBar = {
-                    TopAppBar(
-                        title = {
-                            TextItem(
-                                text = stringResource(MR.strings.fav_tv),
-                                fontSize = 20.sp,
-                                fontFamily = fontFamilyResource(MR.fonts.sfpro.bold),
-                                textColor = MaterialTheme.colorScheme.primaryContainer
-                            )
-                        },
-                        colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.primary),
-                        navigationIcon = {
-                            BackPressedItem { navigator.pop() }
-                        }
+                )
+            }) { contentPadding ->
+                Box(modifier = Modifier.padding(top = contentPadding.calculateTopPadding())) {
+                    Spacer(
+                        modifier = Modifier.height(190.dp).fillMaxWidth()
+                            .align(Alignment.TopCenter)
+                            .background(MaterialTheme.colorScheme.primary)
                     )
-                }) { contentPadding ->
-                    Box(modifier = Modifier.padding(top = contentPadding.calculateTopPadding())) {
-                        Spacer(
-                            modifier = Modifier.height(190.dp).fillMaxWidth()
-                                .align(Alignment.TopCenter)
-                                .background(MaterialTheme.colorScheme.primary)
-                        )
-                        FavoriteTvContent(favoriteTvUiState = favoriteTvUiState) {
-                            navigator.push(TvDetailScreen(it))
-                        }
-                    }
+                    FavoriteMovieContent(favoriteMovieUiState, navigateToMovie)
                 }
             }
         }
 
-        BackHandler(isEnabled = true) {
-            navigator.pop()
+        MediaType.TV -> {
+            viewModel.getPopularTv()
+
+            Scaffold(topBar = {
+                TopAppBar(
+                    title = {
+                        TextItem(
+                            text = stringResource(MR.strings.fav_tv),
+                            fontSize = 20.sp,
+                            fontFamily = fontFamilyResource(MR.fonts.sfpro.bold),
+                            textColor = MaterialTheme.colorScheme.primaryContainer
+                        )
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.primary),
+                    navigationIcon = {
+                        BackPressedItem(onBackPressed = navigateBack)
+                    }
+                )
+            }) { contentPadding ->
+                Box(modifier = Modifier.padding(top = contentPadding.calculateTopPadding())) {
+                    Spacer(
+                        modifier = Modifier.height(190.dp).fillMaxWidth()
+                            .align(Alignment.TopCenter)
+                            .background(MaterialTheme.colorScheme.primary)
+                    )
+                    FavoriteTvContent(favoriteTvUiState, navigateToTv)
+                }
+            }
         }
     }
 }
@@ -133,7 +119,7 @@ class FavoriteScreen(private val mediaType: MediaType) : Screen {
 @Composable
 fun FavoriteTvContent(
     favoriteTvUiState: FavoriteTvUiState,
-    onTvDetailClick: (Int) -> Unit
+    onTvDetailClick: (Int) -> Unit,
 ) {
     LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
         items(favoriteTvUiState.favoriteTvData) {
@@ -147,7 +133,7 @@ fun FavoriteTvContent(
 @Composable
 fun FavoriteMovieContent(
     favoriteMovieUiState: FavoriteMovieUiState,
-    onMovieDetailClick: (Int) -> Unit
+    onMovieDetailClick: (Int) -> Unit,
 ) {
     LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
         items(favoriteMovieUiState.favoriteMovieData) {
@@ -161,7 +147,7 @@ fun FavoriteMovieContent(
 @Composable
 fun FavoriteMovieRow(
     favoriteMovie: FavoriteMovieUiModel,
-    onDetailClick: (Int) -> Unit
+    onDetailClick: (Int) -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -200,7 +186,7 @@ fun FavoriteMovieRow(
 @Composable
 fun FavoriteTvRow(
     favoriteTv: FavoriteTvUiModel,
-    onDetailClick: (Int) -> Unit
+    onDetailClick: (Int) -> Unit,
 ) {
     Card(
         modifier = Modifier

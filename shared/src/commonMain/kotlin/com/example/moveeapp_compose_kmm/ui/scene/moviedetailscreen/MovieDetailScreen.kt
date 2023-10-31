@@ -39,13 +39,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.MR
-import com.example.moveeapp_compose_kmm.core.BackHandler
 import com.example.moveeapp_compose_kmm.core.Share
-import com.example.moveeapp_compose_kmm.core.viewModel
+import com.example.moveeapp_compose_kmm.core.ifNotNull
 import com.example.moveeapp_compose_kmm.data.uimodel.CreditUiModel
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
 import com.example.moveeapp_compose_kmm.ui.components.DateItem
@@ -60,62 +56,53 @@ import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.RateRow
 import com.example.moveeapp_compose_kmm.ui.components.RuntimeItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import com.example.moveeapp_compose_kmm.ui.scene.actordetail.ActorDetailScreen
 import com.example.moveeapp_compose_kmm.utils.Constants
 import dev.icerock.moko.resources.compose.stringResource
 import kotlin.math.round
 
-class MovieDetailScreen(
-    private val movieId: Int
-) : Screen {
+@Composable
+fun MovieDetailScreen(
+    viewModel: MovieDetailViewModel,
+    movieId: Int,
+    navigateToActor: (Int) -> Unit,
+    onBackPressed: () -> Unit,
+) {
+    val uiState by viewModel.uiState.collectAsState()
+    val isFavorite by viewModel.isFavorite.collectAsState()
+    val ratingValue = viewModel.rating.collectAsState()
 
-    @Composable
-    override fun Content() {
-        val navigator = LocalNavigator.currentOrThrow
-        val viewModel: MovieDetailViewModel = viewModel()
-        val uiState by viewModel.uiState.collectAsState()
-        val isFavorite by viewModel.isFavorite.collectAsState()
-        val ratingValue = viewModel.rating.collectAsState()
+    LaunchedEffect(Unit) {
+        viewModel.fetchData(movieId)
+        viewModel.getMovieState(movieId)
+    }
 
-        LaunchedEffect(Unit) {
-            viewModel.fetchData(movieId)
-            viewModel.getMovieState(movieId)
+    Box(
+        modifier = Modifier.fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.primaryContainer)
+    ) {
+        uiState.error.ifNotNull {
+            ErrorScreen(it)
         }
 
-        Box(
-            modifier = Modifier.fillMaxSize()
-                .background(color = MaterialTheme.colorScheme.primaryContainer)
-        ) {
-            if (uiState.error != null) {
-                ErrorScreen(uiState.error!!)
-            }
-
-            if (uiState.isLoading) {
-                LoadingScreen()
-            }
-
-            SuccessContent(
-                uiState = uiState,
-                onDetailClick = {
-                    navigator.push(ActorDetailScreen(it))
-                },
-                onFavouriteClicked = { isFav, movieId ->
-                    viewModel.addFavorite(
-                        mediaType = Constants.MOVIE,
-                        mediaId = movieId,
-                        isFavorite = isFav
-                    )
-                },
-                onBackPressed = navigator::pop,
-                isFavorite = isFavorite,
-                ratingValue = ratingValue,
-                onRateMovie = viewModel::rateMovie
-            )
+        if (uiState.isLoading) {
+            LoadingScreen()
         }
 
-        BackHandler(isEnabled = true) {
-            navigator.pop()
-        }
+        SuccessContent(
+            uiState = uiState,
+            onDetailClick = navigateToActor,
+            onFavouriteClicked = { isFav, movieId ->
+                viewModel.addFavorite(
+                    mediaType = Constants.MOVIE,
+                    mediaId = movieId,
+                    isFavorite = isFav
+                )
+            },
+            onBackPressed = onBackPressed,
+            isFavorite = isFavorite,
+            ratingValue = ratingValue,
+            onRateMovie = viewModel::rateMovie
+        )
     }
 }
 
@@ -238,7 +225,7 @@ fun MovieDetailContent(
 @Composable
 fun MovieCreditLazyRow(
     uiState: MovieDetailUiState,
-    onDetailClick: (Int) -> Unit
+    onDetailClick: (Int) -> Unit,
 ) {
     TextItem(
         text = stringResource(MR.strings.movie_detail_cast),
@@ -262,7 +249,7 @@ fun MovieCreditLazyRow(
 @Composable
 fun MovieCreditCardView(
     credit: CreditUiModel,
-    onClick: (Int) -> Unit
+    onClick: (Int) -> Unit,
 ) {
     Column(
         modifier = Modifier.width(110.dp),

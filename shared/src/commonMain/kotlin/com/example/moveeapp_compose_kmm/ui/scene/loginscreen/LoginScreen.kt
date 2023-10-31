@@ -28,33 +28,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.MR
-import com.example.moveeapp_compose_kmm.MainScreen
-import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.data.repository.LoginState
 import com.example.moveeapp_compose_kmm.ui.components.TextInputItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import com.example.moveeapp_compose_kmm.ui.scene.webviewscreen.WebViewScreen
 import com.example.moveeapp_compose_kmm.utils.Constants
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 
-class LoginScreen : Screen {
-    @Composable
-    override fun Content() {
-        val navigator = LocalNavigator.currentOrThrow
-        val viewModel: LoginViewModel = viewModel()
-        LoginScreen(viewModel = viewModel, navigator = navigator)
-    }
-}
-
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel, navigator: Navigator
+    viewModel: LoginViewModel,
+    navigateToWebViewScreen: (String) -> Unit,
+    navigateToMainScreen: () -> Unit,
 ) {
     val isLoggedState by viewModel.isLoggedIn.collectAsState()
 
@@ -84,8 +70,9 @@ fun LoginScreen(
                 onUserNameChange = viewModel::onUserNameChange,
                 onPasswordChange = viewModel::onPasswordChange,
                 onLogin = viewModel::login,
-                navigator = navigator,
-                isLoggedIn = isLoggedState
+                isLoggedIn = isLoggedState,
+                navigateToWebViewScreen = navigateToWebViewScreen,
+                navigateToMainScreen = navigateToMainScreen,
             )
         }
     }
@@ -97,8 +84,9 @@ fun LoginContent(
     onUserNameChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onLogin: () -> Unit,
-    navigator: Navigator,
-    isLoggedIn: LoginState
+    isLoggedIn: LoginState,
+    navigateToWebViewScreen: (String) -> Unit,
+    navigateToMainScreen: () -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -153,7 +141,7 @@ fun LoginContent(
             TextItem(
                 text = stringResource(MR.strings.login_forgot_password),
                 modifier = Modifier.clickable {
-                    navigateToWebViewScreen(url = Constants.FORGOT_PASSWORD, navigator = navigator)
+                    navigateToWebViewScreen(Constants.FORGOT_PASSWORD)
                 },
                 textColor = MaterialTheme.colorScheme.primaryContainer
             )
@@ -176,19 +164,15 @@ fun LoginContent(
         TextItem(
             text = stringResource(MR.strings.login_register),
             modifier = Modifier.clickable {
-                navigateToWebViewScreen(url = Constants.REGISTER, navigator = navigator)
+                navigateToWebViewScreen(Constants.REGISTER)
             },
             textColor = MaterialTheme.colorScheme.primaryContainer
         )
 
         LaunchedEffect(key1 = isLoggedIn) {
             if (isLoggedIn == LoginState.LOGGED_IN) {
-                navigator.replace(MainScreen())
+                navigateToMainScreen()
             }
         }
     }
-}
-
-fun navigateToWebViewScreen(url: String, navigator: Navigator) {
-    navigator.push(WebViewScreen(url))
 }

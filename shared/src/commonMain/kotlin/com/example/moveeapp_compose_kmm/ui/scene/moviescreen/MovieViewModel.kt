@@ -1,6 +1,6 @@
 package com.example.moveeapp_compose_kmm.ui.scene.moviescreen
 
-import cafe.adriel.voyager.core.model.coroutineScope
+import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.data.repository.MovieRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,6 +39,6 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel {
                     uiState.copy(isLoading = false, error = "Hata!")
                 }
             }
-        }.launchIn(coroutineScope)
+        }.launchIn(viewModelScope)
     }
 }
