@@ -10,7 +10,7 @@ data class PersonDetailModel(
     @SerialName("also_known_as") val alsoKnownAs: List<String>,
     @SerialName("adult") val adult: Boolean,
     @SerialName("biography") val biography: String,
-    @SerialName("birthday") val birthday: String,
+    @SerialName("birthday") val birthday: String?,
     @SerialName("gender") val gender: Int,
     @SerialName("id") val id: Int,
     @SerialName("imdb_id") val imdbId: String,
@@ -23,7 +23,7 @@ data class PersonDetailModel(
     fun toUiModel(credit: List<PersonCreditsModel.Cast>) = ActorDetailUiModel(
         name = name,
         biography = biography,
-        birthday = birthday,
+        birthday = birthday.orEmpty(),
         placeOfBirth = placeOfBirth,
         profilePath = profilePath,
         credit = credit.map { it.toUiModel() }

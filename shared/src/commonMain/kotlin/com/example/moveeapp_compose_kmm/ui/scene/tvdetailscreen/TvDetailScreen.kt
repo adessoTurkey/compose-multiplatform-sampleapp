@@ -40,13 +40,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.MR
-import com.example.moveeapp_compose_kmm.core.BackHandler
 import com.example.moveeapp_compose_kmm.core.Share
-import com.example.moveeapp_compose_kmm.core.viewModel
+import com.example.moveeapp_compose_kmm.core.ifNotNull
 import com.example.moveeapp_compose_kmm.data.uimodel.CreditUiModel
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
 import com.example.moveeapp_compose_kmm.ui.components.ChipItem
@@ -60,60 +56,52 @@ import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.RateRow
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import com.example.moveeapp_compose_kmm.ui.scene.actordetail.ActorDetailScreen
 import com.example.moveeapp_compose_kmm.utils.Constants
 import dev.icerock.moko.resources.compose.stringResource
 import kotlin.math.round
 
-class TvDetailScreen(private val tvId: Int) : Screen {
+@Composable
+fun TvDetailScreen(
+    viewModel: TvDetailViewModel, tvId: Int,
+    navigateToActor: (Int) -> Unit,
+    onBackPressed: () -> Unit,
+) {
+    val uiState by viewModel.uiState.collectAsState()
+    val isFavorite by viewModel.isFavorite.collectAsState()
+    val rating = viewModel.rating.collectAsState()
 
-    @Composable
-    override fun Content() {
-        val navigator = LocalNavigator.currentOrThrow
-        val viewModel: TvDetailViewModel = viewModel()
-        val uiState by viewModel.uiState.collectAsState()
-        val isFavorite by viewModel.isFavorite.collectAsState()
-        val rating = viewModel.rating.collectAsState()
+    LaunchedEffect(Unit) {
+        viewModel.fetchData(tvId)
+        viewModel.getTvState(tvId)
+    }
 
-        LaunchedEffect(Unit) {
-            viewModel.fetchData(tvId)
-            viewModel.getTvState(tvId)
+    Box(
+        modifier = Modifier.fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.primaryContainer)
+    ) {
+        uiState.error.ifNotNull {
+            ErrorScreen(it)
         }
 
-        Box(
-            modifier = Modifier.fillMaxSize()
-                .background(color = MaterialTheme.colorScheme.primaryContainer)
-        ) {
-            if (uiState.error != null) {
-                ErrorScreen(uiState.error!!)
-            }
-
-            if (uiState.isLoading) {
-                LoadingScreen()
-            }
-
-            SuccessContent(
-                uiState = uiState,
-                onDetailClick = {
-                    navigator.push(ActorDetailScreen(it))
-                },
-                onFavouriteClicked = { isFav, tvId ->
-                    viewModel.addFavorite(
-                        mediaId = tvId,
-                        mediaType = Constants.TV,
-                        isFavorite = isFav
-                    )
-                },
-                onBackPressed = navigator::pop,
-                isFavorite = isFavorite,
-                ratingValue = rating,
-                onRateTvShow = viewModel::rateTvShow
-            )
+        if (uiState.isLoading) {
+            LoadingScreen()
         }
 
-        BackHandler(isEnabled = true) {
-            navigator.pop()
-        }
+        SuccessContent(
+            uiState = uiState,
+            onDetailClick = navigateToActor,
+            onFavouriteClicked = { isFav, tvId ->
+                viewModel.addFavorite(
+                    mediaId = tvId,
+                    mediaType = Constants.TV,
+                    isFavorite = isFav
+                )
+            },
+            onBackPressed = onBackPressed,
+            isFavorite = isFavorite,
+            ratingValue = rating,
+            onRateTvShow = viewModel::rateTvShow
+        )
     }
 }
 
@@ -125,7 +113,7 @@ fun SuccessContent(
     onRateTvShow: (rate: Int, tvShowId: Int) -> Unit,
     onDetailClick: (Int) -> Unit,
     onBackPressed: () -> Unit,
-    onFavouriteClicked: (isFav: Boolean, movieId: Int) -> Unit
+    onFavouriteClicked: (isFav: Boolean, movieId: Int) -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -245,7 +233,7 @@ fun TvDetailContent(
 @Composable
 fun TvCreditLazyRow(
     uiState: TvDetailUiState,
-    onDetailClick: (Int) -> Unit
+    onDetailClick: (Int) -> Unit,
 ) {
     TextItem(
         text = stringResource(MR.strings.movie_detail_cast),
@@ -269,7 +257,7 @@ fun TvCreditLazyRow(
 @Composable
 fun TvCreditCardView(
     credit: CreditUiModel,
-    onClick: (Int) -> Unit
+    onClick: (Int) -> Unit,
 ) {
     Column(
         modifier = Modifier.width(110.dp),

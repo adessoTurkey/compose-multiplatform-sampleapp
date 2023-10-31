@@ -1,7 +1,7 @@
 package com.example.moveeapp_compose_kmm.ui.scene.searchscreen
 
-import cafe.adriel.voyager.core.model.coroutineScope
 import com.example.moveeapp_compose_kmm.core.ViewModel
+import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.data.repository.SearchRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -26,7 +26,7 @@ class SearchViewModel(
 
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     private fun makeSearch() {
-        coroutineScope.launch {
+        viewModelScope.launch {
             query.debounce(500).filter { str ->
                 if (str.isEmpty() || str.length < 3) {
                     _uiState.update {

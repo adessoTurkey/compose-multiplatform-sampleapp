@@ -32,68 +32,49 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.MR
-import com.example.moveeapp_compose_kmm.core.BackHandler
-import com.example.moveeapp_compose_kmm.core.viewModel
+import com.example.moveeapp_compose_kmm.core.ifNotNull
 import com.example.moveeapp_compose_kmm.data.uimodel.SearchUiModel
 import com.example.moveeapp_compose_kmm.ui.components.CardImageItem
 import com.example.moveeapp_compose_kmm.ui.components.ErrorScreen
 import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.SearchTextField
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import com.example.moveeapp_compose_kmm.ui.scene.actordetail.ActorDetailScreen
-import com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen.MovieDetailScreen
-import com.example.moveeapp_compose_kmm.ui.scene.tvdetailscreen.TvDetailScreen
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 
-class SearchScreen : Screen {
+@Composable
+fun SearchScreen(
+    viewModel: SearchViewModel,
+    navigateToMovie: (Int) -> Unit,
+    navigateToTv: (Int) -> Unit,
+    navigateToActor: (Int) -> Unit,
+) {
+    val uiState by viewModel.uiState.collectAsState()
+    val queryState by viewModel.query.collectAsState()
 
-    @Composable
-    override fun Content() {
+    Column(modifier = Modifier.background(MaterialTheme.colorScheme.secondaryContainer)) {
+        Spacer(
+            Modifier.fillMaxWidth().windowInsetsTopHeight(WindowInsets.statusBars)
+                .background(MaterialTheme.colorScheme.primary)
+        )
 
-        val navigator = LocalNavigator.currentOrThrow
-        val viewModel: SearchViewModel = viewModel()
-
-        val uiState by viewModel.uiState.collectAsState()
-        val queryState by viewModel.query.collectAsState()
-
-        Column(modifier = Modifier.background(MaterialTheme.colorScheme.secondaryContainer)) {
-            Spacer(
-                Modifier.fillMaxWidth().windowInsetsTopHeight(WindowInsets.statusBars)
-                    .background(MaterialTheme.colorScheme.primary)
-            )
-
-            if (uiState.error != null) {
-                ErrorScreen(uiState.error!!)
-            }
-
-            SearchContent(uiState = uiState,
-                query = queryState,
-                handleQueryState = viewModel::handleQueryChange,
-                onDetailClick = { id, mediaType ->
-                    when (mediaType) {
-                        "Movie" -> {
-                            navigator.push(MovieDetailScreen(id))
-                        }
-
-                        "TV Series" -> {
-                            navigator.push(TvDetailScreen(id))
-                        }
-
-                        "Person" -> {
-                            navigator.push(ActorDetailScreen(id))
-                        }
-                    }
-                })
+        uiState.error.ifNotNull {
+            ErrorScreen(it)
         }
 
-        BackHandler(isEnabled = true) {
-            navigator.pop()
-        }
+        SearchContent(uiState = uiState,
+            query = queryState,
+            handleQueryState = viewModel::handleQueryChange,
+            onDetailClick = { id, mediaType ->
+                when (mediaType) {
+                    "Movie" -> navigateToMovie(id)
+
+                    "TV Series" -> navigateToTv(id)
+
+                    "Person" -> navigateToActor(id)
+                }
+            })
     }
 }
 
@@ -102,7 +83,7 @@ fun SearchContent(
     uiState: SearchUiState,
     query: String,
     handleQueryState: (String) -> Unit,
-    onDetailClick: (Int, String) -> Unit
+    onDetailClick: (Int, String) -> Unit,
 ) {
     Column {
         Box(
