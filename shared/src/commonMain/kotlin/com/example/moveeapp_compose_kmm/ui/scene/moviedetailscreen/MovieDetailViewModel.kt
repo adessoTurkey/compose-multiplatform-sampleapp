@@ -1,10 +1,10 @@
 package com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen
 
 import com.example.moveeapp_compose_kmm.core.viewModelScope
-import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
 import com.example.moveeapp_compose_kmm.core.ViewModel
-import com.example.moveeapp_compose_kmm.data.repository.MovieRepository
-import com.example.moveeapp_compose_kmm.data.uimodel.MovieDetailUiModel
+import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
+import com.example.moveeapp_compose_kmm.domain.movie.MovieDetail
+import com.example.moveeapp_compose_kmm.domain.movie.MovieRepository
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.AddFavoriteUseCase
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.GetMovieStateUseCase
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RateMovieUseCase
@@ -49,9 +49,8 @@ class MovieDetailViewModel(
                 _uiState.update { uiState ->
                     uiState.copy(
                         isLoading = false,
-                        movieDetailData = movieDetailResult.getOrNull()
-                            ?.toUiModel(movieCreditResult.getOrNull()?.cast ?: listOf())
-                            ?: MovieDetailUiModel()
+                        movieDetailData = movieDetailResult.getOrDefault(MovieDetail())
+                            .toUiModel(movieCreditResult.getOrDefault(listOf()))
                     )
                 }
             } else {

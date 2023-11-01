@@ -1,7 +1,6 @@
-package com.example.moveeapp_compose_kmm.data.remote.model.movie
+package com.example.moveeapp_compose_kmm.data.movie
 
-import com.example.moveeapp_compose_kmm.data.remote.model.CreditsModel
-import com.example.moveeapp_compose_kmm.data.uimodel.MovieDetailUiModel
+import com.example.moveeapp_compose_kmm.domain.movie.MovieDetail
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -68,7 +67,7 @@ data class MovieDetailModel(
         @SerialName("name") val name: String
     )
 
-    fun toUiModel(credit: List<CreditsModel.Cast>) = MovieDetailUiModel(
+    fun toDomain() = MovieDetail(
         movieId = movieId,
         runtime = runtime,
         title = title,
@@ -79,7 +78,6 @@ data class MovieDetailModel(
         genre = getFormattedGenres(genres),
         voteCount = voteCount,
         backdropPath = backdropPath ?: "",
-        credit = credit.map { it.toUiModel() },
         homepage = homepage
     )
 
