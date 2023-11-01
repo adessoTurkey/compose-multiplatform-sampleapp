@@ -10,7 +10,7 @@ import com.example.moveeapp_compose_kmm.ui.scene.moviescreen.MovieViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.searchscreen.SearchViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.splashscreen.SplashViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.tvdetailscreen.TvDetailViewModel
-import com.example.moveeapp_compose_kmm.ui.scene.tvscreen.TvViewModel
+import com.example.moveeapp_compose_kmm.ui.scene.tv.TvViewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {

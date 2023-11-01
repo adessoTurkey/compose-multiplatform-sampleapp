@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.ui.scene.tvscreen
+package com.example.moveeapp_compose_kmm.ui.scene.tv
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -31,8 +31,8 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.example.moveeapp_compose_kmm.core.ifNotNull
-import com.example.moveeapp_compose_kmm.data.uimodel.tv.PopularTvUiModel
-import com.example.moveeapp_compose_kmm.data.uimodel.tv.TopRatedTvUiModel
+import com.example.moveeapp_compose_kmm.domain.tv.PopularTv
+import com.example.moveeapp_compose_kmm.domain.tv.TopRatedTv
 import com.example.moveeapp_compose_kmm.ui.components.ErrorScreen
 import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
@@ -73,8 +73,8 @@ fun TvScreen(
 @Composable
 fun SuccessContent(
     modifier: Modifier = Modifier,
-    popularTv: List<PopularTvUiModel>,
-    topRatedTv: List<TopRatedTvUiModel>,
+    popularTv: List<PopularTv>,
+    topRatedTv: List<TopRatedTv>,
     navigateToDetail: (Int) -> Unit,
 ) {
     TvLazyVerticalGrid(
@@ -88,8 +88,8 @@ fun SuccessContent(
 @Composable
 fun TvLazyVerticalGrid(
     modifier: Modifier = Modifier,
-    topRatedTv: List<TopRatedTvUiModel>,
-    popularTv: List<PopularTvUiModel>,
+    topRatedTv: List<TopRatedTv>,
+    popularTv: List<PopularTv>,
     onclick: (Int) -> Unit,
 ) {
     LazyVerticalGrid(modifier = modifier, columns = GridCells.Fixed(2),
@@ -139,7 +139,7 @@ fun TvLazyVerticalGrid(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HorizontalMoviePager(
-    popularTv: List<PopularTvUiModel>, onclick: (Int) -> Unit,
+    popularTv: List<PopularTv>, onclick: (Int) -> Unit,
 ) {
     val pagerState = rememberPagerState(
         initialPage = 0, initialPageOffsetFraction = 0f

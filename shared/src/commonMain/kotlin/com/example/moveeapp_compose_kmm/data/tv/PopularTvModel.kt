@@ -1,6 +1,6 @@
-package com.example.moveeapp_compose_kmm.data.remote.model.tv
+package com.example.moveeapp_compose_kmm.data.tv
 
-import com.example.moveeapp_compose_kmm.data.uimodel.tv.PopularTvUiModel
+import com.example.moveeapp_compose_kmm.domain.tv.PopularTv
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -27,7 +27,7 @@ data class PopularTvModel(
         @SerialName("vote_average") val voteAverage: Double,
         @SerialName("vote_count") val voteCount: Int
     ) {
-        fun toUiModel() = PopularTvUiModel(
+        fun toDomain() = PopularTv(
             tvId = tvSeriesId,
             title = title,
             posterPath = posterPath

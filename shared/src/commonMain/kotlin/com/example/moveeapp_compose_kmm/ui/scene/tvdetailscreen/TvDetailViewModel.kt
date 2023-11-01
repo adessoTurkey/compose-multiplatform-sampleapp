@@ -1,10 +1,10 @@
 package com.example.moveeapp_compose_kmm.ui.scene.tvdetailscreen
 
-import com.example.moveeapp_compose_kmm.core.viewModelScope
-import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
 import com.example.moveeapp_compose_kmm.core.ViewModel
-import com.example.moveeapp_compose_kmm.data.repository.TvRepository
-import com.example.moveeapp_compose_kmm.data.uimodel.tv.TvDetailUiModel
+import com.example.moveeapp_compose_kmm.core.viewModelScope
+import com.example.moveeapp_compose_kmm.data.tv.TvRepositoryImpl
+import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
+import com.example.moveeapp_compose_kmm.domain.tv.TvDetail
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.AddFavoriteUseCase
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.GetTvStateUseCase
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RateTvShowUseCase
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 class TvDetailViewModel(
-    private val repository: TvRepository,
+    private val repository: TvRepositoryImpl,
     private val sessionSettings: SessionSettings,
     private val addFavoriteUseCase: AddFavoriteUseCase,
     private val getTvStateUseCase: GetTvStateUseCase,
@@ -42,16 +42,15 @@ class TvDetailViewModel(
     fun fetchData(tvId: Int) {
         combine(
             repository.getTvDetail(tvId),
-            repository.getTvCredit(tvId)
+            repository.getTvCredits(tvId)
         ) { tvDetailResult, tvCreditResult ->
 
             if (tvDetailResult.isSuccess && tvCreditResult.isSuccess) {
                 _uiState.update { uiState ->
                     uiState.copy(
                         isLoading = false,
-                        tvDetailData = tvDetailResult.getOrNull()
-                            ?.toUiModel(tvCreditResult.getOrNull()?.cast ?: listOf())
-                            ?: TvDetailUiModel()
+                        tvDetailData = tvDetailResult.getOrDefault(TvDetail())
+                            .toUiModel(tvCreditResult.getOrDefault(listOf()))
                     )
                 }
             } else {

@@ -6,7 +6,7 @@ import com.example.moveeapp_compose_kmm.data.repository.LoginRepository
 import com.example.moveeapp_compose_kmm.data.repository.PersonRepository
 import com.example.moveeapp_compose_kmm.data.repository.RatingRepositoryImpl
 import com.example.moveeapp_compose_kmm.data.repository.SearchRepository
-import com.example.moveeapp_compose_kmm.data.repository.TvRepository
+import com.example.moveeapp_compose_kmm.data.tv.TvRepositoryImpl
 import com.example.moveeapp_compose_kmm.domain.account.AccountRepository
 import com.example.moveeapp_compose_kmm.domain.movie.MovieRepository
 import com.example.moveeapp_compose_kmm.domain.rating.RatingRepository
@@ -15,7 +15,7 @@ import org.koin.dsl.module
 val repositoryModule = module {
     single<MovieRepository> { MovieRepositoryImpl(get()) }
     single { LoginRepository(get(), get()) }
-    single { TvRepository(get()) }
+    single { TvRepositoryImpl(get()) }
     single { SearchRepository(get()) }
     single { PersonRepository(get()) }
     single<AccountRepository> { AccountRepositoryImpl(get(), get(), get()) }

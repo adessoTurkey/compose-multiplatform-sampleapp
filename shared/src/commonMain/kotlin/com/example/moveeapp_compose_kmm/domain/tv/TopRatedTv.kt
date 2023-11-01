@@ -1,6 +1,6 @@
-package com.example.moveeapp_compose_kmm.data.uimodel.tv
+package com.example.moveeapp_compose_kmm.domain.tv
 
-data class TopRatedTvUiModel(
+data class TopRatedTv(
     val tvId: Int,
     val voteAverage: Double,
     val title: String,

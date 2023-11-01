@@ -1,7 +1,6 @@
-package com.example.moveeapp_compose_kmm.data.remote.model.tv
+package com.example.moveeapp_compose_kmm.data.tv
 
-import com.example.moveeapp_compose_kmm.data.remote.model.CreditsModel
-import com.example.moveeapp_compose_kmm.data.uimodel.tv.TvDetailUiModel
+import com.example.moveeapp_compose_kmm.domain.tv.TvDetail
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -110,7 +109,7 @@ data class TvDetailModel(
         @SerialName("name") val name: String
     )
 
-    fun toUiModel(credit: List<CreditsModel.Cast>) = TvDetailUiModel(
+    fun toDomain() = TvDetail(
         tvSeriesId = tvSeriesId,
         title = title,
         posterPath = posterPath,
@@ -122,9 +121,9 @@ data class TvDetailModel(
         genre = getFormattedGenres(genres),
         voteCount = voteCount,
         backdropPath = backdropPath,
-        credit = credit.map { it.toDomain() },
         homepage = homepage
     )
+
     private fun getFormattedGenres(list: List<Genre>): String {
         val filteredGenres = list.filter { it.name.isNotEmpty() }.map { it.name }
         return filteredGenres.joinToString(", ")

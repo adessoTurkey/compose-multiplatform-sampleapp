@@ -8,6 +8,8 @@ import com.example.moveeapp_compose_kmm.data.remote.ApiImpl
 import com.example.moveeapp_compose_kmm.data.remote.ApiInterface
 import com.example.moveeapp_compose_kmm.data.remote.RatingService
 import com.example.moveeapp_compose_kmm.data.remote.RatingServiceImpl
+import com.example.moveeapp_compose_kmm.data.tv.TvService
+import com.example.moveeapp_compose_kmm.data.tv.TvServiceImpl
 import com.example.moveeapp_compose_kmm.utils.Constants
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
@@ -55,4 +57,5 @@ val networkModule = module {
     single<RatingService> { RatingServiceImpl(get()) }
     single<AccountService> { AccountServiceImpl(get()) }
     single<MovieService> { MovieServiceImpl(get()) }
+    single<TvService> { TvServiceImpl(get()) }
 }

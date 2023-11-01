@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.data.uimodel.tv
+package com.example.moveeapp_compose_kmm.ui.scene.tvdetailscreen.model
 
 import com.example.moveeapp_compose_kmm.domain.movie.Credits
 
