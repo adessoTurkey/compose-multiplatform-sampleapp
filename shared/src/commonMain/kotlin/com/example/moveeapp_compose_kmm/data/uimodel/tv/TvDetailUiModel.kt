@@ -1,6 +1,6 @@
 package com.example.moveeapp_compose_kmm.data.uimodel.tv
 
-import com.example.moveeapp_compose_kmm.data.uimodel.CreditUiModel
+import com.example.moveeapp_compose_kmm.domain.movie.Credits
 
 data class TvDetailUiModel(
     val tvSeriesId: Int = 0,
@@ -14,6 +14,6 @@ data class TvDetailUiModel(
     val originalLanguage: String = "",
     val voteCount: Int = 0,
     val backdropPath: String = "",
-    val credit: List<CreditUiModel> = listOf(),
+    val credit: List<Credits> = listOf(),
     val homepage: String = ""
 )

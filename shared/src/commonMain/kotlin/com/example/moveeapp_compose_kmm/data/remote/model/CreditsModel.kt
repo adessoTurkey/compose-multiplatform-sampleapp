@@ -1,6 +1,6 @@
 package com.example.moveeapp_compose_kmm.data.remote.model
 
-import com.example.moveeapp_compose_kmm.data.uimodel.CreditUiModel
+import com.example.moveeapp_compose_kmm.domain.movie.Credits
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -25,7 +25,7 @@ data class CreditsModel(
         @SerialName("popularity") val popularity: Double,
         @SerialName("profile_path") val profilePath: String?
     ) {
-        fun toUiModel() = CreditUiModel(
+        fun toDomain() = Credits(
             castId = castId,
             originalName = originalName,
             profilePath = profilePath ?: ""

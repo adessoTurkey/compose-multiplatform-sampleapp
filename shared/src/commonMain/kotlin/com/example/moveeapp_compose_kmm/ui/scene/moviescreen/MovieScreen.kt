@@ -32,8 +32,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.example.moveeapp_compose_kmm.core.ifNotNull
-import com.example.moveeapp_compose_kmm.data.uimodel.movie.NowPlayingMovieUiModel
-import com.example.moveeapp_compose_kmm.data.uimodel.movie.PopularMovieUiModel
+import com.example.moveeapp_compose_kmm.domain.movie.NowPlayingMovie
+import com.example.moveeapp_compose_kmm.domain.movie.PopularMovie
 import com.example.moveeapp_compose_kmm.ui.components.CardImageItem
 import com.example.moveeapp_compose_kmm.ui.components.DateItem
 import com.example.moveeapp_compose_kmm.ui.components.ErrorScreen
@@ -41,9 +41,6 @@ import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 @Composable
 fun MovieScreen(
@@ -81,8 +78,8 @@ fun MovieScreen(
 @Composable
 fun SuccessContent(
     modifier: Modifier = Modifier,
-    popularMovieData: List<PopularMovieUiModel>,
-    nowPlayingMovieData: List<NowPlayingMovieUiModel>,
+    popularMovieData: List<PopularMovie>,
+    nowPlayingMovieData: List<NowPlayingMovie>,
     onDetailClick: (Int) -> Unit,
 ) {
     LazyColumn(modifier = modifier) {
@@ -101,7 +98,7 @@ fun SuccessContent(
 
 @Composable
 fun NowPlayingMovieRow(
-    nowPlayingMovies: NowPlayingMovieUiModel,
+    nowPlayingMovies: NowPlayingMovie,
     onDetailClick: (Int) -> Unit,
 ) {
     Card(
@@ -143,7 +140,7 @@ fun NowPlayingMovieRow(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HorizontalMoviePager(
-    popularMovie: List<PopularMovieUiModel>,
+    popularMovie: List<PopularMovie>,
     onDetailClick: (Int) -> Unit,
 ) {
     val pagerState = rememberPagerState(

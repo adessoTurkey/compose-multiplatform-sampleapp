@@ -12,9 +12,6 @@ import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseMod
 import com.example.moveeapp_compose_kmm.data.remote.model.login.RequestTokenResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionResponseModel
-import com.example.moveeapp_compose_kmm.data.remote.model.movie.MovieDetailModel
-import com.example.moveeapp_compose_kmm.data.remote.model.movie.NowPlayingMovieModel
-import com.example.moveeapp_compose_kmm.data.remote.model.movie.PopularMovieModel
 import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonCreditsModel
 import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonDetailModel
 import com.example.moveeapp_compose_kmm.data.remote.model.tv.PopularTvModel
@@ -22,15 +19,6 @@ import com.example.moveeapp_compose_kmm.data.remote.model.tv.TopRatedTvModel
 import com.example.moveeapp_compose_kmm.data.remote.model.tv.TvDetailModel
 
 interface ApiInterface {
-
-    //Movie
-    suspend fun popularMovie(): PopularMovieModel
-
-    suspend fun nowPlayingMovie(): NowPlayingMovieModel
-
-    suspend fun movieDetail(movieId: Int): MovieDetailModel
-
-    suspend fun movieCredit(movieId: Int): CreditsModel
 
     //Tv
     suspend fun popularTv(): PopularTvModel
@@ -57,7 +45,11 @@ interface ApiInterface {
     suspend fun createSession(requestModel: SessionRequestModel): SessionResponseModel
 
     //Account
-    suspend fun addFavorite(accountId: Int, addFavoriteRequestModel: AddFavoriteRequestModel, sessionId: String): AddFavoriteResponseModel
+    suspend fun addFavorite(
+        accountId: Int,
+        addFavoriteRequestModel: AddFavoriteRequestModel,
+        sessionId: String
+    ): AddFavoriteResponseModel
 
     //Favorite
     suspend fun getMovieState(sessionId: String, movieId: Int): AccountStateResponseModel

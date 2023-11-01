@@ -2,6 +2,8 @@ package com.example.moveeapp_compose_kmm.di
 
 import com.example.moveeapp_compose_kmm.data.account.AccountService
 import com.example.moveeapp_compose_kmm.data.account.AccountServiceImpl
+import com.example.moveeapp_compose_kmm.data.movie.MovieService
+import com.example.moveeapp_compose_kmm.data.movie.MovieServiceImpl
 import com.example.moveeapp_compose_kmm.data.remote.ApiImpl
 import com.example.moveeapp_compose_kmm.data.remote.ApiInterface
 import com.example.moveeapp_compose_kmm.data.remote.RatingService
@@ -52,4 +54,5 @@ val networkModule = module {
     single<ApiInterface> { ApiImpl(get()) }
     single<RatingService> { RatingServiceImpl(get()) }
     single<AccountService> { AccountServiceImpl(get()) }
+    single<MovieService> { MovieServiceImpl(get()) }
 }

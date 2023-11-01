@@ -14,9 +14,9 @@ class AccountServiceImpl(
 ) : AccountService {
 
     override suspend fun accountDetails(sessionId: String): AccountDetailModel {
-        return client.get("account") {
+        return client.get(ACCOUNT) {
             url {
-                parameters.append(ApiImpl.SESSION_ID, sessionId)
+                parameters.append(SESSION_ID, sessionId)
             }
         }.body()
     }
@@ -26,5 +26,10 @@ class AccountServiceImpl(
             setBody(logoutRequestModel)
             contentType(ContentType.Application.Json)
         }.body()
+    }
+
+    companion object {
+        const val ACCOUNT = "account"
+        const val SESSION_ID = "session_id"
     }
 }

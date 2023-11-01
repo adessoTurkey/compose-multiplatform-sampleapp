@@ -2,7 +2,7 @@ package com.example.moveeapp_compose_kmm.ui.scene.moviescreen
 
 import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.core.ViewModel
-import com.example.moveeapp_compose_kmm.data.repository.MovieRepository
+import com.example.moveeapp_compose_kmm.domain.movie.MovieRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -19,7 +19,6 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel {
     }
 
     private fun fetchData() {
-
         combine(
             repository.getPopularMovie(),
             repository.getNowPlayingMovie()
@@ -28,10 +27,8 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel {
                 _uiState.update { uiState ->
                     uiState.copy(
                         isLoading = false,
-                        popularMovieData = popularMovieResult.getOrNull()?.movies?.map { it.toUiModel() }
-                            ?: listOf(),
-                        nowPlayingMovieData = nowPlayingMovieResult.getOrNull()?.movies?.map { it.toUiModel() }
-                            ?: listOf()
+                        popularMovieData = popularMovieResult.getOrDefault(listOf()),
+                        nowPlayingMovieData = nowPlayingMovieResult.getOrDefault(listOf())
                     )
                 }
             } else {
