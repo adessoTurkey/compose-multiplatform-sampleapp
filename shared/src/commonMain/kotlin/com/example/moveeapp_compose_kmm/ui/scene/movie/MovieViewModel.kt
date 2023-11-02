@@ -1,13 +1,12 @@
-package com.example.moveeapp_compose_kmm.ui.scene.moviescreen
+package com.example.moveeapp_compose_kmm.ui.scene.movie
 
-import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.core.ViewModel
+import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.domain.movie.MovieRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class MovieViewModel(private val repository: MovieRepository) : ViewModel {
 
@@ -19,10 +18,10 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel {
     }
 
     private fun fetchData() {
-        combine(
-            repository.getPopularMovie(),
-            repository.getNowPlayingMovie()
-        ) { popularMovieResult, nowPlayingMovieResult ->
+        viewModelScope.launch {
+            val popularMovieResult = repository.getPopularMovie()
+            val nowPlayingMovieResult = repository.getNowPlayingMovie()
+
             if (popularMovieResult.isSuccess && nowPlayingMovieResult.isSuccess) {
                 _uiState.update { uiState ->
                     uiState.copy(
@@ -36,6 +35,6 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel {
                     uiState.copy(isLoading = false, error = "Hata!")
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 }

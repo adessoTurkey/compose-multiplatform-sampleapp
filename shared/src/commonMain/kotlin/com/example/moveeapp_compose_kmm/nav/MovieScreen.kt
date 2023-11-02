@@ -5,8 +5,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.core.viewModel
-import com.example.moveeapp_compose_kmm.ui.scene.moviescreen.MovieScreen
-import com.example.moveeapp_compose_kmm.ui.scene.moviescreen.MovieViewModel
+import com.example.moveeapp_compose_kmm.ui.scene.movie.MovieScreen
+import com.example.moveeapp_compose_kmm.ui.scene.movie.MovieViewModel
 
 class MovieScreen : Screen {
     @Composable
