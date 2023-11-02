@@ -122,7 +122,7 @@ data class TvDetailModel(
         genre = getFormattedGenres(genres),
         voteCount = voteCount,
         backdropPath = backdropPath,
-        credit = credit.map { it.toUiModel() },
+        credit = credit.map { it.toDomain() },
         homepage = homepage
     )
     private fun getFormattedGenres(list: List<Genre>): String {

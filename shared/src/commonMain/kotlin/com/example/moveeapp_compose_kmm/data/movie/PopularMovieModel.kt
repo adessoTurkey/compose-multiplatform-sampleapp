@@ -1,6 +1,6 @@
-package com.example.moveeapp_compose_kmm.data.remote.model.movie
+package com.example.moveeapp_compose_kmm.data.movie
 
-import com.example.moveeapp_compose_kmm.data.uimodel.movie.PopularMovieUiModel
+import com.example.moveeapp_compose_kmm.domain.movie.PopularMovie
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -9,7 +9,7 @@ data class PopularMovieModel(
     @SerialName("page") val page: Int,
     @SerialName("results") val movies: List<PopularMovies>,
     @SerialName("total_pages") val totalPages: Int,
-    @SerialName("total_results") val total_results: Int
+    @SerialName("total_results") val totalResults: Int
 ) {
     @Serializable
     data class PopularMovies(
@@ -28,7 +28,7 @@ data class PopularMovieModel(
         @SerialName("vote_average") val voteAverage: Double?,
         @SerialName("vote_count") val voteCount: Int
     ) {
-        fun toUiModel() = PopularMovieUiModel(
+        fun toDomain() = PopularMovie(
             movieId = movieId,
             title = title,
             posterPath = posterPath,

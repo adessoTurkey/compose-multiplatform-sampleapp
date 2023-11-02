@@ -1,6 +1,6 @@
-package com.example.moveeapp_compose_kmm.data.remote.model.movie
+package com.example.moveeapp_compose_kmm.data.movie
 
-import com.example.moveeapp_compose_kmm.data.uimodel.movie.NowPlayingMovieUiModel
+import com.example.moveeapp_compose_kmm.domain.movie.NowPlayingMovie
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -34,7 +34,7 @@ data class NowPlayingMovieModel(
         @SerialName("vote_average") val voteAverage: Double,
         @SerialName("vote_count") val voteCount: Int
     ) {
-        fun toUiModel() = NowPlayingMovieUiModel(
+        fun toDomain() = NowPlayingMovie(
             movieId = movieId,
             title = title,
             posterPath = posterPath,
