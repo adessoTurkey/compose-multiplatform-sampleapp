@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.sp
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.Share
 import com.example.moveeapp_compose_kmm.core.ifNotNull
-import com.example.moveeapp_compose_kmm.data.uimodel.CreditUiModel
+import com.example.moveeapp_compose_kmm.domain.movie.Credits
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
 import com.example.moveeapp_compose_kmm.ui.components.ChipItem
 import com.example.moveeapp_compose_kmm.ui.components.DetailPosterImage
@@ -256,7 +256,7 @@ fun TvCreditLazyRow(
 
 @Composable
 fun TvCreditCardView(
-    credit: CreditUiModel,
+    credit: Credits,
     onClick: (Int) -> Unit,
 ) {
     Column(

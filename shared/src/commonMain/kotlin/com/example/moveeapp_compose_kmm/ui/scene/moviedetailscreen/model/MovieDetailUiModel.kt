@@ -1,4 +1,6 @@
-package com.example.moveeapp_compose_kmm.data.uimodel
+package com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen.model
+
+import com.example.moveeapp_compose_kmm.domain.movie.Credits
 
 data class MovieDetailUiModel(
     val movieId: Int = 0,
@@ -11,6 +13,6 @@ data class MovieDetailUiModel(
     val genre: String = "",
     val voteCount: Int = 0,
     val backdropPath: String = "",
-    val credit: List<CreditUiModel> = listOf(),
+    val credit: List<Credits> = listOf(),
     val homepage: String = ""
 )

@@ -1,6 +1,6 @@
-package com.example.moveeapp_compose_kmm.data.uimodel
+package com.example.moveeapp_compose_kmm.domain.movie
 
-data class CreditUiModel(
+data class Credits(
     val castId: Int,
     val originalName: String,
     val profilePath: String

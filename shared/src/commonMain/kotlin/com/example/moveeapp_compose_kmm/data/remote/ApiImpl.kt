@@ -12,9 +12,6 @@ import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseMod
 import com.example.moveeapp_compose_kmm.data.remote.model.login.RequestTokenResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionResponseModel
-import com.example.moveeapp_compose_kmm.data.remote.model.movie.MovieDetailModel
-import com.example.moveeapp_compose_kmm.data.remote.model.movie.NowPlayingMovieModel
-import com.example.moveeapp_compose_kmm.data.remote.model.movie.PopularMovieModel
 import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonCreditsModel
 import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonDetailModel
 import com.example.moveeapp_compose_kmm.data.remote.model.tv.PopularTvModel
@@ -29,23 +26,6 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 
 class ApiImpl(private val client: HttpClient) : ApiInterface {
-
-    //Movie
-    override suspend fun popularMovie(): PopularMovieModel {
-        return client.get(POPULAR_MOVIE).body()
-    }
-
-    override suspend fun nowPlayingMovie(): NowPlayingMovieModel {
-        return client.get(NOW_PLAYING_MOVIE).body()
-    }
-
-    override suspend fun movieDetail(movieId: Int): MovieDetailModel {
-        return client.get("movie/$movieId").body()
-    }
-
-    override suspend fun movieCredit(movieId: Int): CreditsModel {
-        return client.get("movie/$movieId/credits").body()
-    }
 
     //Tv
     override suspend fun popularTv(): PopularTvModel {
@@ -151,10 +131,6 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
     }
 
     companion object {
-
-        //Movie
-        const val POPULAR_MOVIE = "movie/popular"
-        const val NOW_PLAYING_MOVIE = "movie/now_playing"
 
         //Tv
         const val POPULAR_TV = "tv/popular"
