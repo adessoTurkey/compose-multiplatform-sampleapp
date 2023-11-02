@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.ui.scene.moviescreen
+package com.example.moveeapp_compose_kmm.ui.scene.movie
 
 import com.example.moveeapp_compose_kmm.domain.movie.NowPlayingMovie
 import com.example.moveeapp_compose_kmm.domain.movie.PopularMovie

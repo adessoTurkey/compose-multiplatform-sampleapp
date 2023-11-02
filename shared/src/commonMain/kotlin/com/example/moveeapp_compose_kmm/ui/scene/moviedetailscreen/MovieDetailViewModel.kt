@@ -1,7 +1,7 @@
 package com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen
 
-import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.core.ViewModel
+import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
 import com.example.moveeapp_compose_kmm.domain.movie.MovieDetail
 import com.example.moveeapp_compose_kmm.domain.movie.MovieRepository
@@ -14,8 +14,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -40,10 +38,9 @@ class MovieDetailViewModel(
     val rating = _uiRating.asStateFlow()
 
     fun fetchData(movieId: Int) {
-        combine(
-            repository.getMovieDetail(movieId),
-            repository.getMovieCredits(movieId)
-        ) { movieDetailResult, movieCreditResult ->
+        viewModelScope.launch {
+            val movieDetailResult = repository.getMovieDetail(movieId)
+            val movieCreditResult = repository.getMovieCredits(movieId)
 
             if (movieDetailResult.isSuccess && movieCreditResult.isSuccess) {
                 _uiState.update { uiState ->
@@ -58,7 +55,7 @@ class MovieDetailViewModel(
                     uiState.copy(isLoading = false, error = "Hata!")
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     fun addFavorite(mediaId: Int, mediaType: String, isFavorite: Boolean) {

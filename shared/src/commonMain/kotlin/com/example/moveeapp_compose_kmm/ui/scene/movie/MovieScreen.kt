@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.ui.scene.moviescreen
+package com.example.moveeapp_compose_kmm.ui.scene.movie
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background

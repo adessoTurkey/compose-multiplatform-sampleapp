@@ -1,11 +1,12 @@
 package com.example.moveeapp_compose_kmm.domain.movie
 
-import kotlinx.coroutines.flow.Flow
-
 interface MovieRepository {
 
-    fun getPopularMovie(): Flow<Result<List<PopularMovie>>>
-    fun getNowPlayingMovie(): Flow<Result<List<NowPlayingMovie>>>
-    fun getMovieDetail(movieId: Int): Flow<Result<MovieDetail>>
-    fun getMovieCredits(movieId: Int): Flow<Result<List<Credits>>>
+    suspend fun getPopularMovie(): Result<List<PopularMovie>>
+
+    suspend fun getNowPlayingMovie(): Result<List<NowPlayingMovie>>
+
+    suspend fun getMovieDetail(movieId: Int): Result<MovieDetail>
+
+    suspend fun getMovieCredits(movieId: Int): Result<List<Credits>>
 }
