@@ -5,12 +5,12 @@ import com.example.moveeapp_compose_kmm.ui.scene.account.favoritescreen.Favorite
 import com.example.moveeapp_compose_kmm.ui.scene.actordetail.ActorDetailViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.loginscreen.LoginViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.main.MainViewModel
-import com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen.MovieDetailViewModel
+import com.example.moveeapp_compose_kmm.ui.scene.moviedetail.MovieDetailViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.movie.MovieViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.searchscreen.SearchViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.splashscreen.SplashViewModel
-import com.example.moveeapp_compose_kmm.ui.scene.tvdetailscreen.TvDetailViewModel
-import com.example.moveeapp_compose_kmm.ui.scene.tvscreen.TvViewModel
+import com.example.moveeapp_compose_kmm.ui.scene.tvdetail.TvDetailViewModel
+import com.example.moveeapp_compose_kmm.ui.scene.tv.TvViewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {

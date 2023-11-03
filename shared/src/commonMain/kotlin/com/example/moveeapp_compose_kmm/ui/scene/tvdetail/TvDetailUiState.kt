@@ -1,6 +1,6 @@
-package com.example.moveeapp_compose_kmm.ui.scene.tvdetailscreen
+package com.example.moveeapp_compose_kmm.ui.scene.tvdetail
 
-import com.example.moveeapp_compose_kmm.data.uimodel.tv.TvDetailUiModel
+import com.example.moveeapp_compose_kmm.ui.scene.tvdetail.model.TvDetailUiModel
 
 data class TvDetailUiState(
     val isLoading: Boolean = true,

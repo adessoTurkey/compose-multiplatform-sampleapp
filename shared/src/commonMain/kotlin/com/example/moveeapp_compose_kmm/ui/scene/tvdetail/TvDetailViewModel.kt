@@ -1,21 +1,20 @@
-package com.example.moveeapp_compose_kmm.ui.scene.tvdetailscreen
+package com.example.moveeapp_compose_kmm.ui.scene.tvdetail
 
+import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
-import com.example.moveeapp_compose_kmm.core.ViewModel
-import com.example.moveeapp_compose_kmm.data.repository.TvRepository
-import com.example.moveeapp_compose_kmm.data.uimodel.tv.TvDetailUiModel
+import com.example.moveeapp_compose_kmm.domain.tv.TvDetail
+import com.example.moveeapp_compose_kmm.domain.tv.TvRepository
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.AddFavoriteUseCase
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.GetTvStateUseCase
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RateTvShowUseCase
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RemoveTvShowRatingUseCase
+import com.example.moveeapp_compose_kmm.ui.scene.tvdetail.model.mapper.TvDetailToUiModelMapper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -39,19 +38,20 @@ class TvDetailViewModel(
     private val _actualRating = MutableStateFlow<Int?>(null)
     val rating = _uiRating.asStateFlow()
 
-    fun fetchData(tvId: Int) {
-        combine(
-            repository.getTvDetail(tvId),
-            repository.getTvCredit(tvId)
-        ) { tvDetailResult, tvCreditResult ->
+    private val mapper = TvDetailToUiModelMapper()
 
+    fun fetchData(tvId: Int) {
+        viewModelScope.launch {
+            val tvDetailResult = repository.getTvDetail(tvId)
+            val tvCreditResult = repository.getTvCredits(tvId)
             if (tvDetailResult.isSuccess && tvCreditResult.isSuccess) {
                 _uiState.update { uiState ->
                     uiState.copy(
                         isLoading = false,
-                        tvDetailData = tvDetailResult.getOrNull()
-                            ?.toUiModel(tvCreditResult.getOrNull()?.cast ?: listOf())
-                            ?: TvDetailUiModel()
+                        tvDetailData = mapper.map(
+                            from = tvDetailResult.getOrDefault(TvDetail()),
+                            credit = tvCreditResult.getOrDefault(listOf())
+                        )
                     )
                 }
             } else {
@@ -59,8 +59,9 @@ class TvDetailViewModel(
                     uiState.copy(isLoading = false, error = "Hata!")
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
+
 
     fun addFavorite(mediaId: Int, mediaType: String, isFavorite: Boolean) {
         viewModelScope.launch {

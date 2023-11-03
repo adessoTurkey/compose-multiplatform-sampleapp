@@ -1,6 +1,6 @@
-package com.example.moveeapp_compose_kmm.data.uimodel.tv
+package com.example.moveeapp_compose_kmm.ui.scene.tvdetail.model
 
-import com.example.moveeapp_compose_kmm.domain.movie.Credits
+import com.example.moveeapp_compose_kmm.domain.artist.Credits
 
 data class TvDetailUiModel(
     val tvSeriesId: Int = 0,

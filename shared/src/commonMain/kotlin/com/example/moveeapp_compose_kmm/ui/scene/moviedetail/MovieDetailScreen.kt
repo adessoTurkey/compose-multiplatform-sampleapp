@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen
+package com.example.moveeapp_compose_kmm.ui.scene.moviedetail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.sp
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.Share
 import com.example.moveeapp_compose_kmm.core.ifNotNull
-import com.example.moveeapp_compose_kmm.domain.movie.Credits
+import com.example.moveeapp_compose_kmm.domain.artist.Credits
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
 import com.example.moveeapp_compose_kmm.ui.components.DateItem
 import com.example.moveeapp_compose_kmm.ui.components.DetailPosterImage

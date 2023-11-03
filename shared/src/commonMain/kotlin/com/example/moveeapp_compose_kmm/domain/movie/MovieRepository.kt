@@ -1,5 +1,7 @@
 package com.example.moveeapp_compose_kmm.domain.movie
 
+import com.example.moveeapp_compose_kmm.domain.artist.Credits
+
 interface MovieRepository {
 
     suspend fun getPopularMovie(): Result<List<PopularMovie>>

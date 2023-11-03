@@ -13,6 +13,7 @@ import cafe.adriel.voyager.transitions.SlideTransition
 import com.example.moveeapp_compose_kmm.ui.tab.TabItem
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
+import kotlin.jvm.Transient
 
 @Composable
 fun CurrentTab() {
@@ -37,7 +38,7 @@ private val TabItem.tabContent: Screen
         }
     }
 
-private class TabData(private val tab: TabItem, private val screen: Screen) : Tab {
+private class TabData(@Transient private val tab: TabItem, private val screen: Screen) : Tab {
     override val key: ScreenKey
         get() = tab.key
 
