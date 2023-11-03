@@ -1,6 +1,6 @@
-package com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen.model
+package com.example.moveeapp_compose_kmm.ui.scene.moviedetail.model
 
-import com.example.moveeapp_compose_kmm.domain.movie.Credits
+import com.example.moveeapp_compose_kmm.domain.artist.Credits
 
 data class MovieDetailUiModel(
     val movieId: Int = 0,

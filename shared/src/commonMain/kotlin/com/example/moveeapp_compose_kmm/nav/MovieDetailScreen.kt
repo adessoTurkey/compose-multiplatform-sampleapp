@@ -6,8 +6,8 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.core.BackHandler
 import com.example.moveeapp_compose_kmm.core.viewModel
-import com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen.MovieDetailScreen
-import com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen.MovieDetailViewModel
+import com.example.moveeapp_compose_kmm.ui.scene.moviedetail.MovieDetailScreen
+import com.example.moveeapp_compose_kmm.ui.scene.moviedetail.MovieDetailViewModel
 
 class MovieDetailScreen(
     private val movieId: Int,

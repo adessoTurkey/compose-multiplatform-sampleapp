@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.ui.scene.moviedetailscreen
+package com.example.moveeapp_compose_kmm.ui.scene.moviedetail
 
 import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.core.viewModelScope
@@ -9,6 +9,7 @@ import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.AddFavorit
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.GetMovieStateUseCase
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RateMovieUseCase
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RemoveMovieRatingUseCase
+import com.example.moveeapp_compose_kmm.ui.scene.moviedetail.model.mapper.MovieDetailToUiModelMapper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,6 +38,8 @@ class MovieDetailViewModel(
     private val _actualRating = MutableStateFlow<Int?>(null)
     val rating = _uiRating.asStateFlow()
 
+    private val mapper = MovieDetailToUiModelMapper()
+
     fun fetchData(movieId: Int) {
         viewModelScope.launch {
             val movieDetailResult = repository.getMovieDetail(movieId)
@@ -46,8 +49,10 @@ class MovieDetailViewModel(
                 _uiState.update { uiState ->
                     uiState.copy(
                         isLoading = false,
-                        movieDetailData = movieDetailResult.getOrDefault(MovieDetail())
-                            .toUiModel(movieCreditResult.getOrDefault(listOf()))
+                        movieDetailData = mapper.map(
+                            from = movieDetailResult.getOrDefault(MovieDetail()),
+                            credit = movieCreditResult.getOrDefault(listOf())
+                        )
                     )
                 }
             } else {
