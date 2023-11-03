@@ -11,7 +11,6 @@ import platform.CoreLocation.kCLDistanceFilterNone
 import platform.CoreLocation.kCLLocationAccuracyBest
 import platform.Foundation.NSError
 import platform.darwin.NSObject
-import kotlin.concurrent.AtomicReference
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -19,7 +18,6 @@ import kotlin.coroutines.suspendCoroutine
 internal class IosLocationRepository : LocationRepository {
 
     private val locationManager = CLLocationManager()
-    private val latestLocation = AtomicReference<DeviceLocation?>(null)
 
     @OptIn(ExperimentalForeignApi::class)
     private class LocationDelegate : NSObject(), CLLocationManagerDelegateProtocol {
@@ -53,7 +51,6 @@ internal class IosLocationRepository : LocationRepository {
         val locationDelegate = LocationDelegate()
         locationDelegate.onLocationUpdate = { location ->
             locationManager.stopUpdatingLocation()
-            latestLocation.value = location
             if (location != null) {
                 continuation.resume(location)
             } else {
