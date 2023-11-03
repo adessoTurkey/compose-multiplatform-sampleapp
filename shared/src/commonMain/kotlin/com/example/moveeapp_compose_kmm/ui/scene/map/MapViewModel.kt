@@ -5,6 +5,8 @@ import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.domain.location.DeviceLocation
 import com.example.moveeapp_compose_kmm.domain.location.LocationRepository
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.map.CinemaSearchUseCase
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -18,6 +20,8 @@ class MapViewModel(
     private val _uiState = MutableStateFlow(MapUiState())
     val uiState: StateFlow<MapUiState> = _uiState
 
+    var job : Job? = null
+
     fun loadForecastWithLocation() {
         coroutineScope.launch {
             val location = locationService.getCurrentLocation()
@@ -26,10 +30,17 @@ class MapViewModel(
         }
     }
 
-    private fun getCinemasOnLocation(coordinates: DeviceLocation?) {
-        if (coordinates == null) return
+    fun getUpdates(location: DeviceLocation) {
+        job?.cancel()
+        job = coroutineScope.launch {
+            delay(1000)
+            getCinemasOnLocation(location)
+            job = null
+        }
+    }
 
-        coroutineScope.launch {
+    private suspend fun getCinemasOnLocation(coordinates: DeviceLocation?) {
+        if (coordinates == null) return
             val result = cinemaSearchUseCase.execute(
                 latitude = coordinates.latitude,
                 longitude = coordinates.longitude
@@ -39,7 +50,6 @@ class MapViewModel(
                     it.copy(cinemaList = list)
                 }
             }
-        }
     }
 
     fun setSelectedCinema(cinema: Cinema?) {

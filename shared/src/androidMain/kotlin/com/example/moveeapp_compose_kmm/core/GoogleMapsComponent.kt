@@ -28,6 +28,7 @@ fun GoogleMapsComponent(
             MapProperties(
                 maxZoomPreference = 18f,
                 minZoomPreference = 5f,
+                isMyLocationEnabled = true,
                 mapStyleOptions = MapStyleOptions.loadRawResourceStyle(
                     context,
                     R.raw.google_map_style
@@ -39,7 +40,6 @@ fun GoogleMapsComponent(
         mutableStateOf(
             MapUiSettings(
                 mapToolbarEnabled = true,
-                compassEnabled = true,
                 zoomControlsEnabled = true,
                 myLocationButtonEnabled = true
             )

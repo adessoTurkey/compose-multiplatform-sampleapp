@@ -220,7 +220,6 @@ fun HorizontalMoviePager(
                         }
                     }
                     .fillMaxWidth()
-                    .border(BorderStroke(3.dp, MaterialTheme.colorScheme.error) )
                     .clickable {
                         onDetailClick(popularMovie[page].movieId)
                     }

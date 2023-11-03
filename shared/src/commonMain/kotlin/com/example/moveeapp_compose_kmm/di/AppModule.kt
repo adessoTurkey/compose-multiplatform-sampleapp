@@ -8,5 +8,6 @@ fun KoinApplication.init() {
 }
 
 expect val settingsModule: Module
+expect val locationModule: Module
 
 const val NameSessionSettings = "session-settings"
