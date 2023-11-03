@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.domain.movie
+package com.example.moveeapp_compose_kmm.domain.artist
 
 data class Credits(
     val castId: Int,

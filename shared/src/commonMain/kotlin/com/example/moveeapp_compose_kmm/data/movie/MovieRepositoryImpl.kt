@@ -1,6 +1,6 @@
 package com.example.moveeapp_compose_kmm.data.movie
 
-import com.example.moveeapp_compose_kmm.domain.movie.Credits
+import com.example.moveeapp_compose_kmm.domain.artist.Credits
 import com.example.moveeapp_compose_kmm.domain.movie.MovieDetail
 import com.example.moveeapp_compose_kmm.domain.movie.MovieRepository
 import com.example.moveeapp_compose_kmm.domain.movie.NowPlayingMovie

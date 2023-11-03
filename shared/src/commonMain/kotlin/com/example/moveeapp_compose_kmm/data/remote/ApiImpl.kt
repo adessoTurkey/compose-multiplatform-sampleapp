@@ -1,6 +1,5 @@
 package com.example.moveeapp_compose_kmm.data.remote
 
-import com.example.moveeapp_compose_kmm.data.remote.model.CreditsModel
 import com.example.moveeapp_compose_kmm.data.remote.model.SearchModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AccountStateResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteRequestModel
@@ -14,9 +13,6 @@ import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionRequestMo
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonCreditsModel
 import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonDetailModel
-import com.example.moveeapp_compose_kmm.data.remote.model.tv.PopularTvModel
-import com.example.moveeapp_compose_kmm.data.remote.model.tv.TopRatedTvModel
-import com.example.moveeapp_compose_kmm.data.remote.model.tv.TvDetailModel
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -26,23 +22,6 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 
 class ApiImpl(private val client: HttpClient) : ApiInterface {
-
-    //Tv
-    override suspend fun popularTv(): PopularTvModel {
-        return client.get(POPULAR_TV).body()
-    }
-
-    override suspend fun topRatedTv(): TopRatedTvModel {
-        return client.get(TOP_RATED_TV).body()
-    }
-
-    override suspend fun tvDetail(tvId: Int): TvDetailModel {
-        return client.get("tv/$tvId").body()
-    }
-
-    override suspend fun tvCredit(tvId: Int): CreditsModel {
-        return client.get("tv/$tvId/credits").body()
-    }
 
     //Search
     override suspend fun search(query: String): SearchModel {
@@ -131,10 +110,6 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
     }
 
     companion object {
-
-        //Tv
-        const val POPULAR_TV = "tv/popular"
-        const val TOP_RATED_TV = "tv/top_rated"
 
         //Search
         const val SEARCH = "search/multi"

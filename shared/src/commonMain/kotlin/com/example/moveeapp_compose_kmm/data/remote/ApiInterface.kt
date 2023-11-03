@@ -1,6 +1,5 @@
 package com.example.moveeapp_compose_kmm.data.remote
 
-import com.example.moveeapp_compose_kmm.data.remote.model.CreditsModel
 import com.example.moveeapp_compose_kmm.data.remote.model.SearchModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AccountStateResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteRequestModel
@@ -14,20 +13,8 @@ import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionRequestMo
 import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonCreditsModel
 import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonDetailModel
-import com.example.moveeapp_compose_kmm.data.remote.model.tv.PopularTvModel
-import com.example.moveeapp_compose_kmm.data.remote.model.tv.TopRatedTvModel
-import com.example.moveeapp_compose_kmm.data.remote.model.tv.TvDetailModel
 
 interface ApiInterface {
-
-    //Tv
-    suspend fun popularTv(): PopularTvModel
-
-    suspend fun topRatedTv(): TopRatedTvModel
-
-    suspend fun tvDetail(tvId: Int): TvDetailModel
-
-    suspend fun tvCredit(tvId: Int): CreditsModel
 
     //Search
     suspend fun search(query: String): SearchModel
@@ -58,6 +45,4 @@ interface ApiInterface {
 
     suspend fun getFavoriteMovie(accountId: Int, sessionId: String): FavoriteMovieModel
     suspend fun getFavoriteTv(accountId: Int, sessionId: String): FavoriteTvModel
-
-    //Logout
 }

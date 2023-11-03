@@ -6,8 +6,8 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.core.BackHandler
 import com.example.moveeapp_compose_kmm.core.viewModel
-import com.example.moveeapp_compose_kmm.ui.scene.tvdetailscreen.TvDetailScreen
-import com.example.moveeapp_compose_kmm.ui.scene.tvdetailscreen.TvDetailViewModel
+import com.example.moveeapp_compose_kmm.ui.scene.tvdetail.TvDetailScreen
+import com.example.moveeapp_compose_kmm.ui.scene.tvdetail.TvDetailViewModel
 
 class TvDetailScreen(private val tvId: Int) : Screen {
 

@@ -1,13 +1,12 @@
-package com.example.moveeapp_compose_kmm.ui.scene.tvscreen
+package com.example.moveeapp_compose_kmm.ui.scene.tv
 
-import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.core.ViewModel
-import com.example.moveeapp_compose_kmm.data.repository.TvRepository
+import com.example.moveeapp_compose_kmm.core.viewModelScope
+import com.example.moveeapp_compose_kmm.domain.tv.TvRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class TvViewModel(private val repository: TvRepository) : ViewModel {
 
@@ -20,18 +19,15 @@ class TvViewModel(private val repository: TvRepository) : ViewModel {
     }
 
     private fun fetchData() {
-        combine(
-            repository.getPopularTv(),
-            repository.getTopRatedTv()
-        ) { popularTvResult, topRatedTvResult ->
+        viewModelScope.launch {
+            val popularTvResult = repository.getPopularTv()
+            val topRatedTvResult = repository.getTopRatedTv()
             if (popularTvResult.isSuccess && topRatedTvResult.isSuccess) {
                 _uiState.update { uiState ->
                     uiState.copy(
                         isLoading = false,
-                        popularTvData = popularTvResult.getOrNull()?.tvSeries?.map { it.toUiModel() }
-                            ?: listOf(),
-                        topRatedTvData = topRatedTvResult.getOrNull()?.tvSeries?.map { it.toUiModel() }
-                            ?: listOf()
+                        popularTvData = popularTvResult.getOrDefault(listOf()),
+                        topRatedTvData = topRatedTvResult.getOrDefault(listOf())
                     )
                 }
             } else {
@@ -42,6 +38,6 @@ class TvViewModel(private val repository: TvRepository) : ViewModel {
                     )
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 }
