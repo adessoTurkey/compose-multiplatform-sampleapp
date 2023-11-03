@@ -1,6 +1,6 @@
-package com.example.moveeapp_compose_kmm.data.remote.model
+package com.example.moveeapp_compose_kmm.data.artist
 
-import com.example.moveeapp_compose_kmm.domain.movie.Credits
+import com.example.moveeapp_compose_kmm.domain.artist.Credits
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

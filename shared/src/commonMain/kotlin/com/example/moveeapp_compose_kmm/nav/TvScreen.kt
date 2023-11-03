@@ -5,8 +5,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.core.viewModel
-import com.example.moveeapp_compose_kmm.ui.scene.tvscreen.TvScreen
-import com.example.moveeapp_compose_kmm.ui.scene.tvscreen.TvViewModel
+import com.example.moveeapp_compose_kmm.ui.scene.tv.TvScreen
+import com.example.moveeapp_compose_kmm.ui.scene.tv.TvViewModel
 
 class TvScreen : Screen {
 
