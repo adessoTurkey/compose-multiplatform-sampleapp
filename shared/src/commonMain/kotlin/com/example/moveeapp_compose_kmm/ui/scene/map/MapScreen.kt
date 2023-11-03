@@ -1,5 +1,9 @@
 package com.example.moveeapp_compose_kmm.ui.scene.map
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -10,18 +14,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.MR
+import com.example.moveeapp_compose_kmm.core.NavigateToMap
 import com.example.moveeapp_compose_kmm.core.viewModel
+import com.example.moveeapp_compose_kmm.domain.location.DeviceLocation
 import com.example.moveeapp_compose_kmm.map.Map
 import com.example.moveeapp_compose_kmm.permission.Permission
 import com.example.moveeapp_compose_kmm.permission.isGranted
 import com.example.moveeapp_compose_kmm.permission.rememberPermissionState
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
+import com.example.moveeapp_compose_kmm.ui.components.MapsMarkerDialog
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import dev.icerock.moko.resources.compose.fontFamilyResource
 import dev.icerock.moko.resources.compose.stringResource
@@ -42,7 +54,7 @@ class MapScreen : Screen {
         val isGranted = permissionState.status.isGranted
 
         LaunchedEffect(isGranted) {
-            if (isGranted){
+            if (isGranted) {
                 viewModel.loadForecastWithLocation()
             }
         }
@@ -64,11 +76,28 @@ class MapScreen : Screen {
             )
         }) { paddingValues ->
 
-            Map(
-                modifier = Modifier.padding(paddingValues),
-                uiState = uiState,
-                onMarkerClick = viewModel::setSelectedCinema
-            )
+            Box(modifier = Modifier.padding(top = paddingValues.calculateTopPadding())) {
+                Map(
+                    modifier = Modifier,
+                    uiState = uiState,
+                    onMarkerClick = viewModel::setSelectedCinema,
+                    onPositionChange = viewModel::getUpdates
+                )
+
+                AnimatedVisibility(
+                    visible = uiState.selectedCinema != null,
+                    enter = expandVertically(),
+                    exit = shrinkVertically(),
+                ) {
+                    MapsMarkerDialog(
+                        modifier = Modifier
+                            .padding(horizontal = 20.dp, vertical = 18.dp)
+                            .align(Alignment.TopCenter),
+                        title = uiState.selectedCinema?.name ?: "",
+                        subTitle = uiState.selectedCinema?.description ?: ""
+                    )
+                }
+            }
         }
     }
 }

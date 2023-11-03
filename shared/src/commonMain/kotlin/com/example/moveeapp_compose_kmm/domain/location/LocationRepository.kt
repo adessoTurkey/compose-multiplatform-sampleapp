@@ -4,6 +4,4 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocationRepository {
     suspend fun getCurrentLocation(): DeviceLocation
-
-    fun getLocationUpdates() : Flow<DeviceLocation>
 }
