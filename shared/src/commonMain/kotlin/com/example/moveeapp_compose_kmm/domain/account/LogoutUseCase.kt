@@ -1,7 +1,4 @@
-package com.example.moveeapp_compose_kmm.domain.usecase.accountusecase
-
-import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
-import com.example.moveeapp_compose_kmm.domain.account.AccountRepository
+package com.example.moveeapp_compose_kmm.domain.account
 
 class LogoutUseCase(
     private val repository: AccountRepository,

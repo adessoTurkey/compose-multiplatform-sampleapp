@@ -28,8 +28,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.moveeapp_compose_kmm.MR
-import com.example.moveeapp_compose_kmm.data.uimodel.account.favorite.FavoriteMovieUiModel
-import com.example.moveeapp_compose_kmm.data.uimodel.account.favorite.FavoriteTvUiModel
+import com.example.moveeapp_compose_kmm.domain.account.favorite.FavoriteMovie
+import com.example.moveeapp_compose_kmm.domain.account.favorite.FavoriteTv
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
 import com.example.moveeapp_compose_kmm.ui.components.CardImageItem
 import com.example.moveeapp_compose_kmm.ui.components.DateItem
@@ -146,7 +146,7 @@ fun FavoriteMovieContent(
 
 @Composable
 fun FavoriteMovieRow(
-    favoriteMovie: FavoriteMovieUiModel,
+    favoriteMovie: FavoriteMovie,
     onDetailClick: (Int) -> Unit,
 ) {
     Card(
@@ -185,7 +185,7 @@ fun FavoriteMovieRow(
 
 @Composable
 fun FavoriteTvRow(
-    favoriteTv: FavoriteTvUiModel,
+    favoriteTv: FavoriteTv,
     onDetailClick: (Int) -> Unit,
 ) {
     Card(

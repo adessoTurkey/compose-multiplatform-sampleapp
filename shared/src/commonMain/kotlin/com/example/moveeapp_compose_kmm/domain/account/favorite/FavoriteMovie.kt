@@ -1,6 +1,6 @@
-package com.example.moveeapp_compose_kmm.data.uimodel.account.favorite
+package com.example.moveeapp_compose_kmm.domain.account.favorite
 
-data class FavoriteMovieUiModel(
+data class FavoriteMovie(
     val movieId: Int = 0,
     val releaseDate: String = "",
     val voteAverage: Double = 0.0,

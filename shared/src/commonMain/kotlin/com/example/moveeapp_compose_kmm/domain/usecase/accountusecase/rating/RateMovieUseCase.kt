@@ -1,6 +1,6 @@
 package com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating
 
-import com.example.moveeapp_compose_kmm.domain.model.IsRateSuccess
+import com.example.moveeapp_compose_kmm.domain.account.favorite.IsRateSuccess
 import com.example.moveeapp_compose_kmm.domain.rating.RatingRepository
 
 class RateMovieUseCase(private val repository: RatingRepository) {
