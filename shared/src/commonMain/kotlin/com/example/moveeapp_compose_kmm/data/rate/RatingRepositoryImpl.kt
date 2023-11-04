@@ -1,8 +1,6 @@
-package com.example.moveeapp_compose_kmm.data.repository
+package com.example.moveeapp_compose_kmm.data.rate
 
 import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
-import com.example.moveeapp_compose_kmm.data.remote.RatingService
-import com.example.moveeapp_compose_kmm.data.remote.model.account.rate.RateDto
 import com.example.moveeapp_compose_kmm.domain.rating.RatingRepository
 import com.example.moveeapp_compose_kmm.utils.resultOf
 

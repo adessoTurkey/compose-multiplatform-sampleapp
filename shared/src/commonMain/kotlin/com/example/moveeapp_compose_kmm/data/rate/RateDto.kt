@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.data.remote.model.account.rate
+package com.example.moveeapp_compose_kmm.data.rate
 
 import kotlinx.serialization.Serializable
 
