@@ -7,8 +7,8 @@ import com.example.moveeapp_compose_kmm.domain.movie.MovieDetail
 import com.example.moveeapp_compose_kmm.domain.movie.MovieRepository
 import com.example.moveeapp_compose_kmm.domain.account.favorite.AddFavoriteUseCase
 import com.example.moveeapp_compose_kmm.domain.account.favorite.GetMovieStateUseCase
-import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RateMovieUseCase
-import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RemoveMovieRatingUseCase
+import com.example.moveeapp_compose_kmm.domain.rating.RateMovieUseCase
+import com.example.moveeapp_compose_kmm.domain.rating.RemoveMovieRatingUseCase
 import com.example.moveeapp_compose_kmm.ui.scene.moviedetail.model.mapper.MovieDetailToUiModelMapper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
