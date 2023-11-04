@@ -1,8 +1,8 @@
-package com.example.moveeapp_compose_kmm.ui.scene.searchscreen
+package com.example.moveeapp_compose_kmm.ui.scene.search
 
 import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.core.viewModelScope
-import com.example.moveeapp_compose_kmm.data.repository.SearchRepository
+import com.example.moveeapp_compose_kmm.domain.search.SearchRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,8 +47,7 @@ class SearchViewModel(
                 }
             }.collect { list ->
                 _uiState.update {
-                    it.updateData(list = list.getOrNull()?.results?.map { it.toUiModel() }
-                        ?: listOf())
+                    it.updateData(list = list.getOrDefault(listOf()))
                 }
             }
         }

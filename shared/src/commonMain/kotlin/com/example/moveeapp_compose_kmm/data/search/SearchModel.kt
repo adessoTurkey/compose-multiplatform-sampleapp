@@ -1,7 +1,7 @@
-package com.example.moveeapp_compose_kmm.data.remote.model
+package com.example.moveeapp_compose_kmm.data.search
 
 import com.example.moveeapp_compose_kmm.MR
-import com.example.moveeapp_compose_kmm.data.uimodel.SearchUiModel
+import com.example.moveeapp_compose_kmm.domain.search.Search
 import com.example.moveeapp_compose_kmm.utils.Constants
 import dev.icerock.moko.resources.ImageResource
 import kotlinx.serialization.SerialName
@@ -39,7 +39,7 @@ data class SearchModel(
         @SerialName("vote_count") val voteCount: Int? = null
     ) {
 
-        fun toUiModel() = SearchUiModel(
+        fun toDomain() = Search(
             name = getDisplayName(),
             imagePath = getImagePath(),
             type = getIconType(),
@@ -47,7 +47,7 @@ data class SearchModel(
             id = id ?: 0
         )
 
-        private fun getNameType() : String =
+        private fun getNameType(): String =
             when (this.mediaType) {
                 Constants.MOVIE -> {
                     "Movie"
@@ -59,7 +59,9 @@ data class SearchModel(
 
                 Constants.PERSON -> {
                     "Person"
-                } else -> ""
+                }
+
+                else -> ""
             }
 
         private fun getIconType(): ImageResource =

@@ -1,10 +1,10 @@
-package com.example.moveeapp_compose_kmm.ui.scene.searchscreen
+package com.example.moveeapp_compose_kmm.ui.scene.search
 
-import com.example.moveeapp_compose_kmm.data.uimodel.SearchUiModel
+import com.example.moveeapp_compose_kmm.domain.search.Search
 
 data class SearchUiState(
     val isLoading: Boolean = false,
-    val data: List<SearchUiModel> = emptyList(),
+    val data: List<Search> = emptyList(),
     val error: String? = null,
     val emptyState: Boolean = false
 ) {
@@ -15,7 +15,7 @@ data class SearchUiState(
         emptyState = false
     )
 
-    fun updateData(list: List<SearchUiModel>) = copy(
+    fun updateData(list: List<Search>) = copy(
         data = list,
         isLoading = false,
         emptyState = list.isEmpty()
