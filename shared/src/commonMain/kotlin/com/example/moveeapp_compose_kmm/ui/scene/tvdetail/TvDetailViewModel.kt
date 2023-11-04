@@ -7,8 +7,8 @@ import com.example.moveeapp_compose_kmm.domain.tv.TvDetail
 import com.example.moveeapp_compose_kmm.domain.tv.TvRepository
 import com.example.moveeapp_compose_kmm.domain.account.favorite.AddFavoriteUseCase
 import com.example.moveeapp_compose_kmm.domain.account.favorite.GetTvStateUseCase
-import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RateTvShowUseCase
-import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RemoveTvShowRatingUseCase
+import com.example.moveeapp_compose_kmm.domain.rating.RateTvShowUseCase
+import com.example.moveeapp_compose_kmm.domain.rating.RemoveTvShowRatingUseCase
 import com.example.moveeapp_compose_kmm.ui.scene.tvdetail.model.mapper.TvDetailToUiModelMapper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

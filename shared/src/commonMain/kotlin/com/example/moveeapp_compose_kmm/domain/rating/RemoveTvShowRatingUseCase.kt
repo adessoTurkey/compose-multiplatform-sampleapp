@@ -1,6 +1,4 @@
-package com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating
-
-import com.example.moveeapp_compose_kmm.domain.rating.RatingRepository
+package com.example.moveeapp_compose_kmm.domain.rating
 
 class RemoveTvShowRatingUseCase(private val repository: RatingRepository) {
     suspend fun execute(tvShowId: Int): Result<Unit> {

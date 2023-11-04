@@ -5,10 +5,10 @@ import com.example.moveeapp_compose_kmm.domain.account.favorite.AddFavoriteUseCa
 import com.example.moveeapp_compose_kmm.domain.account.favorite.GetMovieStateUseCase
 import com.example.moveeapp_compose_kmm.domain.account.favorite.GetTvStateUseCase
 import com.example.moveeapp_compose_kmm.domain.account.LogoutUseCase
-import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RateMovieUseCase
-import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RateTvShowUseCase
-import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RemoveMovieRatingUseCase
-import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RemoveTvShowRatingUseCase
+import com.example.moveeapp_compose_kmm.domain.rating.RateMovieUseCase
+import com.example.moveeapp_compose_kmm.domain.rating.RateTvShowUseCase
+import com.example.moveeapp_compose_kmm.domain.rating.RemoveMovieRatingUseCase
+import com.example.moveeapp_compose_kmm.domain.rating.RemoveTvShowRatingUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {

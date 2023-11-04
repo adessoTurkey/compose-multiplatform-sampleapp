@@ -1,7 +1,4 @@
-package com.example.moveeapp_compose_kmm.data.remote
-
-import com.example.moveeapp_compose_kmm.data.remote.model.account.rate.RateDto
-import com.example.moveeapp_compose_kmm.data.remote.model.account.rate.RateResponse
+package com.example.moveeapp_compose_kmm.data.rate
 
 interface RatingService {
     suspend fun rateMovie(rating: RateDto, movieId: Int, sessionId: String): RateResponse
