@@ -1,13 +1,12 @@
 package com.example.moveeapp_compose_kmm.ui.scene.account
 
 import com.example.moveeapp_compose_kmm.CoroutineTest
-import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
-import com.example.moveeapp_compose_kmm.data.account.LogoutResponseModel
+import com.example.moveeapp_compose_kmm.TestSettingsProvider
 import com.example.moveeapp_compose_kmm.data.repository.FakeAccountRepository
 import com.example.moveeapp_compose_kmm.domain.account.AccountDetail
 import com.example.moveeapp_compose_kmm.domain.account.GetAccountDetailUseCase
-import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.LogoutUseCase
-import com.example.moveeapp_compose_kmm.TestSettingsProvider
+import com.example.moveeapp_compose_kmm.domain.account.LogoutUseCase
+import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -65,7 +64,7 @@ class AccountDetailViewModelTest : CoroutineTest() {
     @Test
     fun `successful logout should return true`() = runTest {
         // Given
-        repository.logoutResponseModel = LogoutResponseModel(true)
+        repository.logoutResponseModel = true
 
         // When
         viewModel.logout()

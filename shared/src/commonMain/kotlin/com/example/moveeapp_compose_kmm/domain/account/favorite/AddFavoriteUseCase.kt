@@ -1,6 +1,6 @@
-package com.example.moveeapp_compose_kmm.domain.usecase.accountusecase
+package com.example.moveeapp_compose_kmm.domain.account.favorite
 
-import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteRequestModel
+import com.example.moveeapp_compose_kmm.data.account.favorite.AddFavoriteRequestModel
 import com.example.moveeapp_compose_kmm.domain.account.AccountRepository
 
 class AddFavoriteUseCase(private val repository: AccountRepository) {

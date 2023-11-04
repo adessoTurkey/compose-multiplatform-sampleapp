@@ -3,7 +3,7 @@ package com.example.moveeapp_compose_kmm.ui.scene.account
 import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.domain.account.GetAccountDetailUseCase
-import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.LogoutUseCase
+import com.example.moveeapp_compose_kmm.domain.account.LogoutUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

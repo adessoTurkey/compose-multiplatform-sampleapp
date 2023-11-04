@@ -1,7 +1,6 @@
-package com.example.moveeapp_compose_kmm.domain.usecase.accountusecase
+package com.example.moveeapp_compose_kmm.domain.account.favorite
 
 import com.example.moveeapp_compose_kmm.domain.account.AccountRepository
-import com.example.moveeapp_compose_kmm.domain.model.MovieAccountState
 
 class GetMovieStateUseCase(private val repository: AccountRepository) {
 
