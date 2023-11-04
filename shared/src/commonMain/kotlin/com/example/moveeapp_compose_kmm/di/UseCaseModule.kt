@@ -1,10 +1,10 @@
 package com.example.moveeapp_compose_kmm.di
 
 import com.example.moveeapp_compose_kmm.domain.account.GetAccountDetailUseCase
-import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.AddFavoriteUseCase
-import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.GetMovieStateUseCase
-import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.GetTvStateUseCase
-import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.LogoutUseCase
+import com.example.moveeapp_compose_kmm.domain.account.favorite.AddFavoriteUseCase
+import com.example.moveeapp_compose_kmm.domain.account.favorite.GetMovieStateUseCase
+import com.example.moveeapp_compose_kmm.domain.account.favorite.GetTvStateUseCase
+import com.example.moveeapp_compose_kmm.domain.account.LogoutUseCase
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RateMovieUseCase
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RateTvShowUseCase
 import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.rating.RemoveMovieRatingUseCase

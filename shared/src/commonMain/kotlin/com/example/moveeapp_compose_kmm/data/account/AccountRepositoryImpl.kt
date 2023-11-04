@@ -1,26 +1,24 @@
 package com.example.moveeapp_compose_kmm.data.account
 
-import com.example.moveeapp_compose_kmm.data.remote.ApiInterface
-import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteRequestModel
-import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteResponseModel
-import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteMovieModel
-import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteTvModel
+import com.example.moveeapp_compose_kmm.data.account.favorite.AddFavoriteRequestModel
+import com.example.moveeapp_compose_kmm.data.account.favorite.AddFavoriteResponseModel
 import com.example.moveeapp_compose_kmm.domain.account.AccountDetail
 import com.example.moveeapp_compose_kmm.domain.account.AccountRepository
 import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
-import com.example.moveeapp_compose_kmm.domain.model.MovieAccountState
-import com.example.moveeapp_compose_kmm.domain.model.TvAccountState
+import com.example.moveeapp_compose_kmm.domain.account.favorite.FavoriteMovie
+import com.example.moveeapp_compose_kmm.domain.account.favorite.FavoriteTv
+import com.example.moveeapp_compose_kmm.domain.account.favorite.MovieAccountState
+import com.example.moveeapp_compose_kmm.domain.account.favorite.TvAccountState
 import com.example.moveeapp_compose_kmm.utils.resultOf
 
 class AccountRepositoryImpl(
-    private val api: ApiInterface,
-    private val accountService: AccountService,
+    private val service: AccountService,
     private val sessionSettings: SessionSettings,
 ) : AccountRepository {
 
     override suspend fun getAccountDetail(): Result<AccountDetail> {
         return resultOf {
-            accountService.accountDetails(sessionSettings.getSessionId()!!)
+            service.accountDetails(sessionSettings.getSessionId()!!)
                 .run {
                     AccountDetail(id, name, username, country)
                 }
@@ -32,7 +30,7 @@ class AccountRepositoryImpl(
         addFavoriteRequestModel: AddFavoriteRequestModel
     ): Result<AddFavoriteResponseModel> {
         return resultOf {
-            api.addFavorite(
+            service.addFavorite(
                 accountId,
                 addFavoriteRequestModel,
                 sessionSettings.getSessionId() ?: ""
@@ -42,7 +40,7 @@ class AccountRepositoryImpl(
 
     override suspend fun getMovieAccountState(movieId: Int): Result<MovieAccountState> {
         return resultOf {
-            val response = api.getMovieState(
+            val response = service.getMovieState(
                 sessionId = sessionSettings.getSessionId() ?: "",
                 movieId
             )
@@ -52,7 +50,7 @@ class AccountRepositoryImpl(
 
     override suspend fun getTvAccountState(tvId: Int): Result<TvAccountState> {
         return resultOf {
-            val response = api.getTvState(
+            val response = service.getTvState(
                 sessionId = sessionSettings.getSessionId() ?: "", tvId
             )
             TvAccountState(response.favorite ?: false, response.rated?.value)
@@ -62,21 +60,30 @@ class AccountRepositoryImpl(
     override suspend fun getFavoriteMovie(
         accountId: Int,
         sessionId: String
-    ): Result<FavoriteMovieModel> {
+    ): Result<List<FavoriteMovie>> {
         return resultOf {
-            api.getFavoriteMovie(accountId = accountId, sessionId = sessionId)
+            service.getFavoriteMovie(
+                accountId = accountId,
+                sessionId = sessionId
+            ).favMovies.map { it.toDomain() }
         }
     }
 
-    override suspend fun getFavoriteTv(accountId: Int, sessionId: String): Result<FavoriteTvModel> {
+    override suspend fun getFavoriteTv(
+        accountId: Int,
+        sessionId: String
+    ): Result<List<FavoriteTv>> {
         return resultOf {
-            api.getFavoriteTv(accountId = accountId, sessionId = sessionId)
+            service.getFavoriteTv(
+                accountId = accountId,
+                sessionId = sessionId
+            ).favTv.map { it.toDomain() }
         }
     }
 
     override suspend fun logout(sessionId: String?): Result<Boolean> {
         return resultOf {
-            accountService.logout(LogoutRequestModel(sessionId!!)).success
+            service.logout(LogoutRequestModel(sessionId!!)).success
         }
     }
 }

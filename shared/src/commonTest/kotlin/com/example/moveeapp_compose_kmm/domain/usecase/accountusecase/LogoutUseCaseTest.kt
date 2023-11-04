@@ -2,6 +2,7 @@ package com.example.moveeapp_compose_kmm.domain.usecase.accountusecase
 
 import com.example.moveeapp_compose_kmm.TestSettingsProvider
 import com.example.moveeapp_compose_kmm.data.repository.FakeAccountRepository
+import com.example.moveeapp_compose_kmm.domain.account.LogoutUseCase
 import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
