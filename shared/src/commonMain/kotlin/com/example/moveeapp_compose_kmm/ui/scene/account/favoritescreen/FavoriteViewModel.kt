@@ -1,9 +1,9 @@
 package com.example.moveeapp_compose_kmm.ui.scene.account.favoritescreen
 
-import com.example.moveeapp_compose_kmm.core.viewModelScope
-import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
 import com.example.moveeapp_compose_kmm.core.ViewModel
+import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.domain.account.AccountRepository
+import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
 import com.example.moveeapp_compose_kmm.ui.scene.account.FavoriteMovieUiState
 import com.example.moveeapp_compose_kmm.ui.scene.account.FavoriteTvUiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,8 +33,7 @@ class FavoriteViewModel(
                 _favoriteMovieUiState.update { favoriteMovie ->
                     favoriteMovie.copy(
                         isLoading = false,
-                        favoriteMovieData = result.getOrNull()?.favMovies?.map { it.toUiModel() }
-                            ?: listOf()
+                        favoriteMovieData = result.getOrDefault(listOf())
                     )
                 }
             }
@@ -51,8 +50,7 @@ class FavoriteViewModel(
                 _favoriteTvUiState.update { favoriteMovie ->
                     favoriteMovie.copy(
                         isLoading = false,
-                        favoriteTvData = result.getOrNull()?.favTv?.map { it.toUiModel() }
-                            ?: listOf()
+                        favoriteTvData = result.getOrDefault(listOf())
                     )
                 }
             }

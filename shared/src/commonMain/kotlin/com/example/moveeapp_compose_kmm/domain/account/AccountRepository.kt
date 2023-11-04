@@ -1,15 +1,16 @@
 package com.example.moveeapp_compose_kmm.domain.account
 
-import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteRequestModel
-import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.AddFavoriteResponseModel
-import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteMovieModel
-import com.example.moveeapp_compose_kmm.data.remote.model.account.favorite.FavoriteTvModel
-import com.example.moveeapp_compose_kmm.domain.model.MovieAccountState
-import com.example.moveeapp_compose_kmm.domain.model.TvAccountState
+import com.example.moveeapp_compose_kmm.data.account.favorite.AddFavoriteRequestModel
+import com.example.moveeapp_compose_kmm.data.account.favorite.AddFavoriteResponseModel
+import com.example.moveeapp_compose_kmm.domain.account.favorite.FavoriteMovie
+import com.example.moveeapp_compose_kmm.domain.account.favorite.FavoriteTv
+import com.example.moveeapp_compose_kmm.domain.account.favorite.MovieAccountState
+import com.example.moveeapp_compose_kmm.domain.account.favorite.TvAccountState
 
 interface AccountRepository {
     suspend fun getAccountDetail(): Result<AccountDetail>
 
+    //favorite
     suspend fun addFavorite(
         accountId: Int,
         addFavoriteRequestModel: AddFavoriteRequestModel
@@ -19,9 +20,10 @@ interface AccountRepository {
 
     suspend fun getTvAccountState(tvId: Int): Result<TvAccountState>
 
-    suspend fun getFavoriteMovie(accountId: Int, sessionId: String): Result<FavoriteMovieModel>
+    suspend fun getFavoriteMovie(accountId: Int, sessionId: String): Result<List<FavoriteMovie>>
 
-    suspend fun getFavoriteTv(accountId: Int, sessionId: String): Result<FavoriteTvModel>
+    suspend fun getFavoriteTv(accountId: Int, sessionId: String): Result<List<FavoriteTv>>
 
+    //logout
     suspend fun logout(sessionId: String?): Result<Boolean>
 }
