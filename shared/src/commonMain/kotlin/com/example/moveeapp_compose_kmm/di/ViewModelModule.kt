@@ -7,7 +7,7 @@ import com.example.moveeapp_compose_kmm.ui.scene.loginscreen.LoginViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.main.MainViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.moviedetail.MovieDetailViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.movie.MovieViewModel
-import com.example.moveeapp_compose_kmm.ui.scene.searchscreen.SearchViewModel
+import com.example.moveeapp_compose_kmm.ui.scene.search.SearchViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.splashscreen.SplashViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.tvdetail.TvDetailViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.tv.TvViewModel

@@ -4,10 +4,12 @@ import com.example.moveeapp_compose_kmm.data.account.AccountService
 import com.example.moveeapp_compose_kmm.data.account.AccountServiceImpl
 import com.example.moveeapp_compose_kmm.data.movie.MovieService
 import com.example.moveeapp_compose_kmm.data.movie.MovieServiceImpl
-import com.example.moveeapp_compose_kmm.data.remote.ApiImpl
-import com.example.moveeapp_compose_kmm.data.remote.ApiInterface
 import com.example.moveeapp_compose_kmm.data.rate.RatingService
 import com.example.moveeapp_compose_kmm.data.rate.RatingServiceImpl
+import com.example.moveeapp_compose_kmm.data.remote.ApiImpl
+import com.example.moveeapp_compose_kmm.data.remote.ApiInterface
+import com.example.moveeapp_compose_kmm.data.search.SearchService
+import com.example.moveeapp_compose_kmm.data.search.SearchServiceImpl
 import com.example.moveeapp_compose_kmm.data.tv.TvService
 import com.example.moveeapp_compose_kmm.data.tv.TvServiceImpl
 import com.example.moveeapp_compose_kmm.utils.Constants
@@ -58,4 +60,5 @@ val networkModule = module {
     single<AccountService> { AccountServiceImpl(get()) }
     single<MovieService> { MovieServiceImpl(get()) }
     single<TvService> { TvServiceImpl(get()) }
+    single<SearchService> { SearchServiceImpl(get()) }
 }

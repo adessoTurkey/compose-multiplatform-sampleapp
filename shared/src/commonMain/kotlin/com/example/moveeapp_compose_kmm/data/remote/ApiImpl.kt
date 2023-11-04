@@ -1,6 +1,5 @@
 package com.example.moveeapp_compose_kmm.data.remote
 
-import com.example.moveeapp_compose_kmm.data.remote.model.SearchModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.RequestTokenResponseModel
@@ -17,15 +16,6 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 
 class ApiImpl(private val client: HttpClient) : ApiInterface {
-
-    //Search
-    override suspend fun search(query: String): SearchModel {
-        return client.get(SEARCH) {
-            url {
-                parameters.append("query", query)
-            }
-        }.body()
-    }
 
     //Login
     override suspend fun createRequestToken(): RequestTokenResponseModel {
@@ -55,14 +45,7 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         return client.get("person/$personId/combined_credits").body()
     }
 
-    //Account
-
-
     companion object {
-
-        //Search
-        const val SEARCH = "search/multi"
-
         //Login
         const val REQUEST_TOKEN = "authentication/token/new"
         const val LOGIN = "authentication/token/validate_with_login"

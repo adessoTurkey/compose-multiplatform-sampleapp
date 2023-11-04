@@ -6,8 +6,8 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.core.BackHandler
 import com.example.moveeapp_compose_kmm.core.viewModel
-import com.example.moveeapp_compose_kmm.ui.scene.searchscreen.SearchScreen
-import com.example.moveeapp_compose_kmm.ui.scene.searchscreen.SearchViewModel
+import com.example.moveeapp_compose_kmm.ui.scene.search.SearchScreen
+import com.example.moveeapp_compose_kmm.ui.scene.search.SearchViewModel
 
 class SearchScreen : Screen {
 

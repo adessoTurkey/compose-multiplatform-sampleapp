@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.ui.scene.searchscreen
+package com.example.moveeapp_compose_kmm.ui.scene.search
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.ifNotNull
-import com.example.moveeapp_compose_kmm.data.uimodel.SearchUiModel
+import com.example.moveeapp_compose_kmm.domain.search.Search
 import com.example.moveeapp_compose_kmm.ui.components.CardImageItem
 import com.example.moveeapp_compose_kmm.ui.components.ErrorScreen
 import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
@@ -146,7 +146,7 @@ fun SearchContent(
 }
 
 @Composable
-fun SearchRow(search: SearchUiModel, onDetailClick: (Int, String) -> Unit) {
+fun SearchRow(search: Search, onDetailClick: (Int, String) -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp)
             .clickable { onDetailClick(search.id, search.mediaType) },
