@@ -1,5 +1,6 @@
 package com.example.moveeapp_compose_kmm.data.remote
 
+import com.example.moveeapp_compose_kmm.data.remote.model.SearchModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.login.RequestTokenResponseModel
@@ -17,24 +18,6 @@ import io.ktor.http.contentType
 
 class ApiImpl(private val client: HttpClient) : ApiInterface {
 
-    //Login
-    override suspend fun createRequestToken(): RequestTokenResponseModel {
-        return client.get(REQUEST_TOKEN).body()
-    }
-
-    override suspend fun createRequestTokenWithLogin(requestModel: LoginRequestModel): LoginResponseModel {
-        return client.post(LOGIN) {
-            contentType(ContentType.Application.Json)
-            setBody(requestModel)
-        }.body()
-    }
-
-    override suspend fun createSession(requestModel: SessionRequestModel): SessionResponseModel {
-        return client.post(SESSION) {
-            contentType(ContentType.Application.Json)
-            setBody(requestModel)
-        }.body()
-    }
 
     //Person
     override suspend fun personDetail(personId: Int): PersonDetailModel {
@@ -45,13 +28,12 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         return client.get("person/$personId/combined_credits").body()
     }
 
-    companion object {
-        //Login
-        const val REQUEST_TOKEN = "authentication/token/new"
-        const val LOGIN = "authentication/token/validate_with_login"
-        const val SESSION = "authentication/session/new"
+    //Account
 
-        //Logout
+
+    companion object {
+
+
         const val LOGOUT = "authentication/session"
 
         const val SESSION_ID = "session_id"

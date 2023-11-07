@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.data.account.favorite
+package com.example.moveeapp_compose_kmm.data.favorite
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

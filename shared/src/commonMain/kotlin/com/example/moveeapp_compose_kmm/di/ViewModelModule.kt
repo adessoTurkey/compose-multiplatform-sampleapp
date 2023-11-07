@@ -3,7 +3,7 @@ package com.example.moveeapp_compose_kmm.di
 import com.example.moveeapp_compose_kmm.ui.scene.account.AccountDetailViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.account.favoritescreen.FavoriteViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.actordetail.ActorDetailViewModel
-import com.example.moveeapp_compose_kmm.ui.scene.loginscreen.LoginViewModel
+import com.example.moveeapp_compose_kmm.ui.scene.login.LoginViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.main.MainViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.moviedetail.MovieDetailViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.movie.MovieViewModel
