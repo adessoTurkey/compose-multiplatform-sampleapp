@@ -1,0 +1,75 @@
+on:
+  pull_request:
+    branches:
+      - 'develop'
+  push:
+    branches:
+      - 'develop'
+
+jobs:
+  build-checks-and-tests:
+    name: Build platform apps and run tests.
+    runs-on: macOS-latest
+
+    env:
+      JAVA_HOME: '/Users/runner/hostedtoolcache/Java_Oracle_jdk/17.0.5/x64/Contents/Home'
+      JAVA_HOME_17_X64: '/Users/runner/hostedtoolcache/Java_Oracle_jdk/17.0.5/x64/Contents/Home'
+      API_KEY_TMDB: ''
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Cache JDK
+        id: cache-jdk
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.JAVA_HOME_17_X64 }}
+          key: ${{ runner.os }}-jdk-17
+          restore-keys: ${{ runner.os }}-jdk-
+
+      - name: Set up JDK
+        if: ${{ steps.cache-jdk.outputs.cache-hit != 'true' }}
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'oracle'
+          java-version: '17.0.5'
+
+      - name: Set installed/cached Java path [${{ env.JAVA_HOME_17_X64 }}]
+        run: echo "${{ env.JAVA_HOME_17_X64 }}/bin" >> $GITHUB_PATH
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Build androidApp
+        shell: bash
+        run: ./gradlew :androidApp:assembleDebug
+
+      - name: Run Unit Tests
+        shell: bash
+        run: ./gradlew testDebugUnitTest
+
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - shell: bash
+        run: ./gradlew :shared:generateDummyFramework
+
+      - name: Set up cocoapods
+        uses: maxim-lobanov/setup-cocoapods@v1
+        with:
+          version: latest
+
+      - shell: bash
+        name: Build xcworkspace
+        run: ./gradlew podInstall
+
+      - name: Build iosApp
+        run: xcodebuild clean build -workspace iosApp/iosApp.xcworkspace -scheme iosApp -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.2' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+
+      #- name: Run Ios tests
+      #  run: bash xcodebuild test -workspace iosApp/iosApp.xcworkspace -scheme iosApp -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
