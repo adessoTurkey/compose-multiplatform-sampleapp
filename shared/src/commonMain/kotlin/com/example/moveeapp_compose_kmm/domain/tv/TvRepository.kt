@@ -1,5 +1,6 @@
 package com.example.moveeapp_compose_kmm.domain.tv
 
+import com.example.moveeapp_compose_kmm.domain.favorite.TvAccountState
 import com.example.moveeapp_compose_kmm.domain.artist.Credits
 
 interface TvRepository {
@@ -11,4 +12,7 @@ interface TvRepository {
     suspend fun getTvDetail(tvId: Int): Result<TvDetail>
 
     suspend fun getTvCredits(tvId: Int): Result<List<Credits>>
+
+    suspend fun getTvAccountState(tvId: Int): Result<TvAccountState>
+
 }

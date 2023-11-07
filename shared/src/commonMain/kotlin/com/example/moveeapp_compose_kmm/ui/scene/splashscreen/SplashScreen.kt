@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.example.moveeapp_compose_kmm.data.repository.LoginState
+import com.example.moveeapp_compose_kmm.data.account.LoginState
 
 @Composable
 fun SplashScreen(

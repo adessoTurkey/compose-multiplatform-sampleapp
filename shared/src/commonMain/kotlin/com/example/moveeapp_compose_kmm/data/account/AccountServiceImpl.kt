@@ -1,8 +1,11 @@
 package com.example.moveeapp_compose_kmm.data.account
 
+import com.example.moveeapp_compose_kmm.data.account.login.LoginRequestModel
+import com.example.moveeapp_compose_kmm.data.account.login.LoginResponseModel
+import com.example.moveeapp_compose_kmm.data.account.login.RequestTokenResponseModel
+import com.example.moveeapp_compose_kmm.data.account.login.SessionRequestModel
+import com.example.moveeapp_compose_kmm.data.account.login.SessionResponseModel
 import com.example.moveeapp_compose_kmm.data.account.favorite.AccountStateResponse
-import com.example.moveeapp_compose_kmm.data.account.favorite.AddFavoriteRequestModel
-import com.example.moveeapp_compose_kmm.data.account.favorite.AddFavoriteResponseModel
 import com.example.moveeapp_compose_kmm.data.account.favorite.FavoriteMovieModel
 import com.example.moveeapp_compose_kmm.data.account.favorite.FavoriteTvModel
 import com.example.moveeapp_compose_kmm.data.remote.ApiImpl
@@ -27,42 +30,23 @@ class AccountServiceImpl(
         }.body()
     }
 
-    override suspend fun logout(logoutRequestModel: LogoutRequestModel): LogoutResponseModel {
-        return client.delete(ApiImpl.LOGOUT) {
-            setBody(logoutRequestModel)
+    //login
+
+    override suspend fun createRequestToken(): RequestTokenResponseModel {
+        return client.get(REQUEST_TOKEN).body()
+    }
+
+    override suspend fun createRequestTokenWithLogin(requestModel: LoginRequestModel): LoginResponseModel {
+        return client.post(LOGIN) {
             contentType(ContentType.Application.Json)
+            setBody(requestModel)
         }.body()
     }
 
-    override suspend fun addFavorite(
-        accountId: Int,
-        addFavoriteRequestModel: AddFavoriteRequestModel,
-        sessionId: String
-    ): AddFavoriteResponseModel {
-        return client.post("account/$accountId/favorite") {
+    override suspend fun createSession(requestModel: SessionRequestModel): SessionResponseModel {
+        return client.post(SESSION) {
             contentType(ContentType.Application.Json)
-            url {
-                parameters.append(ApiImpl.SESSION_ID, sessionId)
-            }
-            setBody(addFavoriteRequestModel)
-        }.body()
-    }
-
-    override suspend fun getMovieState(sessionId: String, movieId: Int): AccountStateResponse {
-        return client.get("movie/${movieId}/account_states") {
-            contentType(ContentType.Application.Json)
-            url {
-                parameters.append(ApiImpl.SESSION_ID, sessionId)
-            }
-        }.body()
-    }
-
-    override suspend fun getTvState(sessionId: String, tvId: Int): AccountStateResponse {
-        return client.get("tv/${tvId}/account_states") {
-            contentType(ContentType.Application.Json)
-            url {
-                parameters.append(ApiImpl.SESSION_ID, sessionId)
-            }
+            setBody(requestModel)
         }.body()
     }
 
@@ -82,8 +66,18 @@ class AccountServiceImpl(
         }.body()
     }
 
+    override suspend fun logout(logoutRequestModel: LogoutRequestModel): LogoutResponseModel {
+        return client.delete(ApiImpl.LOGOUT) {
+            setBody(logoutRequestModel)
+            contentType(ContentType.Application.Json)
+        }.body()
+    }
+
     companion object {
         const val ACCOUNT = "account"
         const val SESSION_ID = "session_id"
+        const val REQUEST_TOKEN = "authentication/token/new"
+        const val LOGIN = "authentication/token/validate_with_login"
+        const val SESSION = "authentication/session/new"
     }
 }
