@@ -23,9 +23,11 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.takeFrom
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
+@OptIn(ExperimentalSerializationApi::class)
 val networkModule = module {
     single {
         HttpClient {
@@ -50,6 +52,7 @@ val networkModule = module {
             install(ContentNegotiation) {
                 json(Json {
                     ignoreUnknownKeys = true
+                    explicitNulls = false
                 })
             }
         }
