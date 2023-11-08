@@ -8,7 +8,7 @@ import kotlinx.serialization.json.Json
 class AccountStateResponseTest {
 
     @Test
-    fun `value property should be deserialized as null when rated property is a boolean`() {
+    fun `rated property should be deserialized as null when rated property is a boolean`() {
         val input = """
             {
                 "favorite": true,
@@ -28,7 +28,7 @@ class AccountStateResponseTest {
     }
 
     @Test
-    fun `value property should be deserialized as float when rated property is a number`() {
+    fun `rated property should be deserialized as float when rated property is a number`() {
         val input = """
             {
                 "favorite": true,
