@@ -44,7 +44,7 @@ class AccountRepositoryImpl(
                 sessionId = sessionSettings.getSessionId() ?: "",
                 movieId
             )
-            MovieAccountState(response.favorite ?: false, response.rated?.value)
+            MovieAccountState(response.favorite ?: false, response.rated)
         }
     }
 
@@ -53,7 +53,7 @@ class AccountRepositoryImpl(
             val response = service.getTvState(
                 sessionId = sessionSettings.getSessionId() ?: "", tvId
             )
-            TvAccountState(response.favorite ?: false, response.rated?.value)
+            TvAccountState(response.favorite ?: false, response.rated)
         }
     }
 

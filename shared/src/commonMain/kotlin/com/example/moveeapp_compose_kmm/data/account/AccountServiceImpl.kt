@@ -1,6 +1,6 @@
 package com.example.moveeapp_compose_kmm.data.account
 
-import com.example.moveeapp_compose_kmm.data.account.favorite.AccountStateResponseModel
+import com.example.moveeapp_compose_kmm.data.account.favorite.AccountStateResponse
 import com.example.moveeapp_compose_kmm.data.account.favorite.AddFavoriteRequestModel
 import com.example.moveeapp_compose_kmm.data.account.favorite.AddFavoriteResponseModel
 import com.example.moveeapp_compose_kmm.data.account.favorite.FavoriteMovieModel
@@ -48,7 +48,7 @@ class AccountServiceImpl(
         }.body()
     }
 
-    override suspend fun getMovieState(sessionId: String, movieId: Int): AccountStateResponseModel {
+    override suspend fun getMovieState(sessionId: String, movieId: Int): AccountStateResponse {
         return client.get("movie/${movieId}/account_states") {
             contentType(ContentType.Application.Json)
             url {
@@ -57,7 +57,7 @@ class AccountServiceImpl(
         }.body()
     }
 
-    override suspend fun getTvState(sessionId: String, tvId: Int): AccountStateResponseModel {
+    override suspend fun getTvState(sessionId: String, tvId: Int): AccountStateResponse {
         return client.get("tv/${tvId}/account_states") {
             contentType(ContentType.Application.Json)
             url {
