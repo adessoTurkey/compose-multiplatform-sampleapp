@@ -96,7 +96,7 @@ private fun AccountStateResponse.mapToDataModel(): AccountStateDataModel {
             id = id,
             isRated = true,
             userRate = rated?.value,
-            watchList = watchList
+            watchlist = watchlist
         )
 
         is AccountStateResponse.NotRatedAccountStateResponse -> AccountStateDataModel(
@@ -104,7 +104,7 @@ private fun AccountStateResponse.mapToDataModel(): AccountStateDataModel {
             id = id,
             isRated = rated,
             userRate = null,
-            watchList = watchList
+            watchlist = watchlist
         )
     }
 }

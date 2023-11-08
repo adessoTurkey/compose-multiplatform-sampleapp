@@ -5,5 +5,5 @@ data class AccountStateDataModel(
     val id: Int?,
     val isRated: Boolean?,
     val userRate: Double?,
-    val watchList: Boolean?
+    val watchlist: Boolean?
 )

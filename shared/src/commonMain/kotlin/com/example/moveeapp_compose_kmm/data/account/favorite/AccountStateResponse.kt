@@ -1,7 +1,6 @@
 package com.example.moveeapp_compose_kmm.data.account.favorite
 
 import kotlinx.serialization.DeserializationStrategy
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonContentPolymorphicSerializer
 import kotlinx.serialization.json.JsonElement
@@ -12,24 +11,24 @@ import kotlinx.serialization.json.jsonPrimitive
 sealed class AccountStateResponse {
     @Serializable
     data class RatedAccountStateResponse(
-        @SerialName("favorite") val favorite: Boolean?,
-        @SerialName("id") val id: Int?,
-        @SerialName("rated") val rated: Rated?,
-        @SerialName("watchlist") val watchList: Boolean?
+        val favorite: Boolean?,
+        val id: Int?,
+        val rated: Rated?,
+        val watchlist: Boolean?
     ) : AccountStateResponse()
 
     @Serializable
     data class NotRatedAccountStateResponse(
-        @SerialName("favorite") val favorite: Boolean?,
-        @SerialName("id") val id: Int?,
-        @SerialName("rated") val rated: Boolean?,
-        @SerialName("watchlist") val watchList: Boolean?
+        val favorite: Boolean?,
+        val id: Int?,
+        val rated: Boolean?,
+        val watchlist: Boolean?
     ) : AccountStateResponse()
 }
 
 @Serializable
 data class Rated(
-    @SerialName("value") val value: Double? = null
+    val value: Double?
 )
 
 object AccountStateResponseDeserializer :
