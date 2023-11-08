@@ -4,10 +4,10 @@ import com.example.moveeapp_compose_kmm.data.account.AccountService
 import com.example.moveeapp_compose_kmm.data.account.AccountServiceImpl
 import com.example.moveeapp_compose_kmm.data.movie.MovieService
 import com.example.moveeapp_compose_kmm.data.movie.MovieServiceImpl
-import com.example.moveeapp_compose_kmm.data.remote.ApiImpl
-import com.example.moveeapp_compose_kmm.data.remote.ApiInterface
 import com.example.moveeapp_compose_kmm.data.rate.RatingService
 import com.example.moveeapp_compose_kmm.data.rate.RatingServiceImpl
+import com.example.moveeapp_compose_kmm.data.remote.ApiImpl
+import com.example.moveeapp_compose_kmm.data.remote.ApiInterface
 import com.example.moveeapp_compose_kmm.data.tv.TvService
 import com.example.moveeapp_compose_kmm.data.tv.TvServiceImpl
 import com.example.moveeapp_compose_kmm.utils.Constants
@@ -21,9 +21,11 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.takeFrom
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
+@OptIn(ExperimentalSerializationApi::class)
 val networkModule = module {
     single {
         HttpClient {
@@ -48,6 +50,7 @@ val networkModule = module {
             install(ContentNegotiation) {
                 json(Json {
                     ignoreUnknownKeys = true
+                    explicitNulls = false
                 })
             }
         }
