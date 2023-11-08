@@ -1,6 +1,5 @@
 package com.example.moveeapp_compose_kmm.data.account
 
-import com.example.moveeapp_compose_kmm.data.account.favorite.AccountStateDataModel
 import com.example.moveeapp_compose_kmm.data.account.favorite.AccountStateResponse
 import com.example.moveeapp_compose_kmm.data.account.favorite.AddFavoriteRequestModel
 import com.example.moveeapp_compose_kmm.data.account.favorite.AddFavoriteResponseModel
@@ -49,22 +48,22 @@ class AccountServiceImpl(
         }.body()
     }
 
-    override suspend fun getMovieState(sessionId: String, movieId: Int): AccountStateDataModel {
+    override suspend fun getMovieState(sessionId: String, movieId: Int): AccountStateResponse {
         return client.get("movie/${movieId}/account_states") {
             contentType(ContentType.Application.Json)
             url {
                 parameters.append(ApiImpl.SESSION_ID, sessionId)
             }
-        }.body<AccountStateResponse>().mapToDataModel()
+        }.body()
     }
 
-    override suspend fun getTvState(sessionId: String, tvId: Int): AccountStateDataModel {
+    override suspend fun getTvState(sessionId: String, tvId: Int): AccountStateResponse {
         return client.get("tv/${tvId}/account_states") {
             contentType(ContentType.Application.Json)
             url {
                 parameters.append(ApiImpl.SESSION_ID, sessionId)
             }
-        }.body<AccountStateResponse>().mapToDataModel()
+        }.body()
     }
 
     override suspend fun getFavoriteMovie(accountId: Int, sessionId: String): FavoriteMovieModel {
@@ -86,25 +85,5 @@ class AccountServiceImpl(
     companion object {
         const val ACCOUNT = "account"
         const val SESSION_ID = "session_id"
-    }
-}
-
-private fun AccountStateResponse.mapToDataModel(): AccountStateDataModel {
-    return when (this) {
-        is AccountStateResponse.RatedAccountStateResponse -> AccountStateDataModel(
-            favorite = favorite,
-            id = id,
-            isRated = true,
-            userRate = rated?.value,
-            watchlist = watchlist
-        )
-
-        is AccountStateResponse.NotRatedAccountStateResponse -> AccountStateDataModel(
-            favorite = favorite,
-            id = id,
-            isRated = rated,
-            userRate = null,
-            watchlist = watchlist
-        )
     }
 }
