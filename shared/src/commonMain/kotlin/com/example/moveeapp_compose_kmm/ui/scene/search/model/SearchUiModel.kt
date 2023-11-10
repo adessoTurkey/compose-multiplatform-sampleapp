@@ -1,11 +1,11 @@
-package com.example.moveeapp_compose_kmm.data.uimodel
+package com.example.moveeapp_compose_kmm.ui.scene.search.model
 
 import dev.icerock.moko.resources.ImageResource
 
-data class SearchUiModel(
+class SearchUiModel(
     val name: String = "",
     val imagePath: String = "",
-    val type: ImageResource? = null,
+    val iconType: ImageResource? = null,
     val mediaType: String = "",
     val id: Int = 0
 )
