@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.moveeapp_compose_kmm.MR
+import com.example.moveeapp_compose_kmm.domain.MediaType
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import dev.icerock.moko.resources.compose.fontFamilyResource
 import dev.icerock.moko.resources.compose.stringResource
@@ -169,10 +170,4 @@ fun SuccessContent(
         }
     }
 }
-
-enum class MediaType(val mediaType: String) {
-    MOVIE("movie"),
-    TV("tv")
-}
-
 

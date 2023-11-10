@@ -28,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.moveeapp_compose_kmm.MR
+import com.example.moveeapp_compose_kmm.domain.MediaType
 import com.example.moveeapp_compose_kmm.domain.account.favorite.FavoriteMovie
 import com.example.moveeapp_compose_kmm.domain.account.favorite.FavoriteTv
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
@@ -37,7 +38,6 @@ import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.ui.scene.account.FavoriteMovieUiState
 import com.example.moveeapp_compose_kmm.ui.scene.account.FavoriteTvUiState
-import com.example.moveeapp_compose_kmm.ui.scene.account.MediaType
 import dev.icerock.moko.resources.compose.fontFamilyResource
 import dev.icerock.moko.resources.compose.stringResource
 
@@ -113,6 +113,8 @@ fun FavoriteScreen(
                 }
             }
         }
+
+        else -> Unit
     }
 }
 
