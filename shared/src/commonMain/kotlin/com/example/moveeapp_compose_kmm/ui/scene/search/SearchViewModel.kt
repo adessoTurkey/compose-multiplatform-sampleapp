@@ -53,11 +53,9 @@ class SearchViewModel(
                         it.showError(err.message ?: "Something went wrong")
                     }
                 }.collect { result ->
-                    result.runCatching {
-                        onSuccess { list ->
-                            _uiState.update { uiState ->
-                                uiState.updateData(list = list.map { mapper.map(it) })
-                            }
+                    result.onSuccess { list ->
+                        _uiState.update { uiState ->
+                            uiState.updateData(list = list.map { mapper.map(it) })
                         }
                     }
                 }
