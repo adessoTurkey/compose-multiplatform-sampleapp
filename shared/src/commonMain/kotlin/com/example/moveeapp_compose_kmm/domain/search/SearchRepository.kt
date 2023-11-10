@@ -1,7 +1,5 @@
 package com.example.moveeapp_compose_kmm.domain.search
 
-import kotlinx.coroutines.flow.Flow
-
 interface SearchRepository {
-    suspend fun getSearch(query: String): Flow<Result<List<Search>>>
+    suspend fun getSearch(query: String): Result<List<SearchItem>>
 }

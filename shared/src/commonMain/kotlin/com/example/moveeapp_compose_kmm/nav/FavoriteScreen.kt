@@ -6,7 +6,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.core.BackHandler
 import com.example.moveeapp_compose_kmm.core.viewModel
-import com.example.moveeapp_compose_kmm.ui.scene.account.MediaType
+import com.example.moveeapp_compose_kmm.domain.MediaType
 import com.example.moveeapp_compose_kmm.ui.scene.account.favoritescreen.FavoriteScreen
 import com.example.moveeapp_compose_kmm.ui.scene.account.favoritescreen.FavoriteViewModel
 

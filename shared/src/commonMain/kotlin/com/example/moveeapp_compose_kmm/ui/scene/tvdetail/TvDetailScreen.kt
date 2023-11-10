@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.Share
 import com.example.moveeapp_compose_kmm.core.ifNotNull
+import com.example.moveeapp_compose_kmm.domain.MediaType
 import com.example.moveeapp_compose_kmm.domain.artist.Credits
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
 import com.example.moveeapp_compose_kmm.ui.components.ChipItem
@@ -56,7 +57,6 @@ import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.RateRow
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import com.example.moveeapp_compose_kmm.utils.Constants
 import dev.icerock.moko.resources.compose.stringResource
 import kotlin.math.round
 
@@ -93,7 +93,7 @@ fun TvDetailScreen(
             onFavouriteClicked = { isFav, tvId ->
                 viewModel.addFavorite(
                     mediaId = tvId,
-                    mediaType = Constants.TV,
+                    mediaType = MediaType.TV.mediaType,
                     isFavorite = isFav
                 )
             },

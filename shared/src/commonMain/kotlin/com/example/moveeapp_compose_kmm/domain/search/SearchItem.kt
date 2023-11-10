@@ -1,11 +1,10 @@
 package com.example.moveeapp_compose_kmm.domain.search
 
-import dev.icerock.moko.resources.ImageResource
+import com.example.moveeapp_compose_kmm.domain.MediaType
 
-data class Search(
+data class SearchItem(
     val name: String = "",
     val imagePath: String = "",
-    val type: ImageResource? = null,
-    val mediaType: String = "",
+    val mediaType: MediaType?,
     val id: Int = 0
 )
