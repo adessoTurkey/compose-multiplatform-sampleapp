@@ -19,7 +19,7 @@ class SearchItemToUiModelMapper {
         }
     }
 
-    private fun getIconType(searchItem: SearchItem): ImageResource =
+    private fun getIconType(searchItem: SearchItem): ImageResource? =
         when (searchItem.mediaType) {
             MediaType.MOVIE -> {
                 MR.images.ic_search_movie
@@ -29,6 +29,9 @@ class SearchItemToUiModelMapper {
                 MR.images.ic_search_tv
             }
 
-            else -> MR.images.ic_search_actor
+            MediaType.PERSON -> {
+                MR.images.ic_search_actor
+            }
+            else -> null
         }
 }
