@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.Share
 import com.example.moveeapp_compose_kmm.core.ifNotNull
+import com.example.moveeapp_compose_kmm.domain.MediaType
 import com.example.moveeapp_compose_kmm.domain.artist.Credits
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
 import com.example.moveeapp_compose_kmm.ui.components.DateItem
@@ -56,7 +57,6 @@ import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.RateRow
 import com.example.moveeapp_compose_kmm.ui.components.RuntimeItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import com.example.moveeapp_compose_kmm.utils.Constants
 import dev.icerock.moko.resources.compose.stringResource
 import kotlin.math.round
 
@@ -93,7 +93,7 @@ fun MovieDetailScreen(
             onDetailClick = navigateToActor,
             onFavouriteClicked = { isFav, movieId ->
                 viewModel.addFavorite(
-                    mediaType = Constants.MOVIE,
+                    mediaType = MediaType.MOVIE.mediaType,
                     mediaId = movieId,
                     isFavorite = isFav
                 )

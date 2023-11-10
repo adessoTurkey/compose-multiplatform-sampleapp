@@ -1,9 +1,7 @@
-package com.example.moveeapp_compose_kmm.data.remote.model
+package com.example.moveeapp_compose_kmm.data.search
 
-import com.example.moveeapp_compose_kmm.MR
-import com.example.moveeapp_compose_kmm.data.uimodel.SearchUiModel
-import com.example.moveeapp_compose_kmm.utils.Constants
-import dev.icerock.moko.resources.ImageResource
+import com.example.moveeapp_compose_kmm.domain.MediaType
+import com.example.moveeapp_compose_kmm.domain.search.SearchItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -39,43 +37,14 @@ data class SearchModel(
         @SerialName("vote_count") val voteCount: Int? = null
     ) {
 
-        fun toUiModel() = SearchUiModel(
-            name = getDisplayName(),
+        fun toDomain() = SearchItem(
+            name = getMediaName(),
             imagePath = getImagePath(),
-            type = getIconType(),
-            mediaType = getNameType(),
+            mediaType = getMediaType(),
             id = id ?: 0
         )
 
-        private fun getNameType() : String =
-            when (this.mediaType) {
-                Constants.MOVIE -> {
-                    "Movie"
-                }
-
-                Constants.TV -> {
-                    "TV Series"
-                }
-
-                Constants.PERSON -> {
-                    "Person"
-                } else -> ""
-            }
-
-        private fun getIconType(): ImageResource =
-            when (this.mediaType) {
-                "movie" -> {
-                    MR.images.ic_search_movie
-                }
-
-                "tv" -> {
-                    MR.images.ic_search_tv
-                }
-
-                else -> MR.images.ic_search_actor
-            }
-
-        private fun getDisplayName(): String =
+        private fun getMediaName(): String =
             when (this.mediaType) {
                 "movie" -> this.originalTitle ?: ""
                 else -> this.name ?: ""
@@ -85,6 +54,22 @@ data class SearchModel(
             when (this.mediaType) {
                 "person" -> this.profilePath ?: ""
                 else -> this.posterPath ?: ""
+            }
+
+        private fun getMediaType(): MediaType? =
+            when (this.mediaType) {
+                MediaType.MOVIE.mediaType -> {
+                    MediaType.MOVIE
+                }
+
+                MediaType.TV.mediaType -> {
+                    MediaType.TV
+                }
+
+                MediaType.PERSON.mediaType -> {
+                    MediaType.PERSON
+                }
+                else -> null
             }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.ui.scene.searchscreen
+package com.example.moveeapp_compose_kmm.ui.scene.search
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,6 +24,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -34,12 +35,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.ifNotNull
-import com.example.moveeapp_compose_kmm.data.uimodel.SearchUiModel
+import com.example.moveeapp_compose_kmm.domain.MediaType
 import com.example.moveeapp_compose_kmm.ui.components.CardImageItem
 import com.example.moveeapp_compose_kmm.ui.components.ErrorScreen
 import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.SearchTextField
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
+import com.example.moveeapp_compose_kmm.ui.scene.search.model.SearchUiModel
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
 
@@ -52,6 +54,10 @@ fun SearchScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val queryState by viewModel.query.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.makeSearch()
+    }
 
     Column(modifier = Modifier.background(MaterialTheme.colorScheme.secondaryContainer)) {
         Spacer(
@@ -68,11 +74,11 @@ fun SearchScreen(
             handleQueryState = viewModel::handleQueryChange,
             onDetailClick = { id, mediaType ->
                 when (mediaType) {
-                    "Movie" -> navigateToMovie(id)
+                    MediaType.MOVIE.title -> navigateToMovie(id)
 
-                    "TV Series" -> navigateToTv(id)
+                    MediaType.TV.title -> navigateToTv(id)
 
-                    "Person" -> navigateToActor(id)
+                    MediaType.PERSON.title -> navigateToActor(id)
                 }
             })
     }
@@ -109,13 +115,16 @@ fun SearchContent(
 
                 when {
                     uiState.isLoading -> {
-                        LoadingScreen()
+                        LoadingScreen(
+                            modifier = Modifier.padding(top = 100.dp),
+                            contentAlignment = Alignment.TopCenter
+                        )
                     }
 
                     !uiState.emptyState -> {
                         LazyColumn {
                             items(uiState.data) {
-                                SearchRow(search = it, onDetailClick = onDetailClick)
+                                SearchRow(searchItem = it, onDetailClick = onDetailClick)
                             }
                         }
                     }
@@ -146,10 +155,10 @@ fun SearchContent(
 }
 
 @Composable
-fun SearchRow(search: SearchUiModel, onDetailClick: (Int, String) -> Unit) {
+fun SearchRow(searchItem: SearchUiModel, onDetailClick: (Int, String) -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp)
-            .clickable { onDetailClick(search.id, search.mediaType) },
+            .clickable { onDetailClick(searchItem.id, searchItem.mediaType) },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer),
         elevation = CardDefaults.cardElevation(5.dp)
@@ -157,7 +166,7 @@ fun SearchRow(search: SearchUiModel, onDetailClick: (Int, String) -> Unit) {
         Row {
             CardImageItem(
                 modifier = Modifier.size(width = 66.6.dp, height = 100.dp),
-                imagePath = search.imagePath,
+                imagePath = searchItem.imagePath,
                 contentScale = ContentScale.Fit
             )
             Column(
@@ -165,7 +174,7 @@ fun SearchRow(search: SearchUiModel, onDetailClick: (Int, String) -> Unit) {
                     .fillMaxWidth(), verticalArrangement = Arrangement.SpaceBetween
             ) {
                 TextItem(
-                    text = search.name,
+                    text = searchItem.name,
                     modifier = Modifier.padding(top = 8.dp),
                     fontSize = 16.sp, fontWeight = FontWeight.Bold,
                 )
@@ -176,7 +185,7 @@ fun SearchRow(search: SearchUiModel, onDetailClick: (Int, String) -> Unit) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
 
-                    search.type?.let { painterResource(it) }?.let {
+                    searchItem.iconType?.let { painterResource(it) }?.let {
                         Icon(
                             painter = it,
                             contentDescription = null,
@@ -185,7 +194,7 @@ fun SearchRow(search: SearchUiModel, onDetailClick: (Int, String) -> Unit) {
                         )
                     }
                     TextItem(
-                        text = search.mediaType,
+                        text = searchItem.mediaType,
                     )
                 }
             }
