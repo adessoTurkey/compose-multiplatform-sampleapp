@@ -43,7 +43,7 @@ class MovieRepositoryImpl(
                 sessionId = sessionSettings.getSessionId() ?: "",
                 movieId
             )
-            MovieAccountState(response.favorite ?: false, response.rated?.value)
+            MovieAccountState(response.favorite ?: false, response.rated)
         }
     }
 }

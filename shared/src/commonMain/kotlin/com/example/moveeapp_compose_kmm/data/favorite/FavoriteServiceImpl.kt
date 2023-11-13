@@ -1,6 +1,6 @@
 package com.example.moveeapp_compose_kmm.data.favorite
 
-import com.example.moveeapp_compose_kmm.data.remote.ApiImpl
+import com.example.moveeapp_compose_kmm.utils.Constants.SESSION_ID
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -21,7 +21,7 @@ class FavoriteServiceImpl(
         return client.post("account/$accountId/favorite") {
             contentType(ContentType.Application.Json)
             url {
-                parameters.append(ApiImpl.SESSION_ID, sessionId)
+                parameters.append(SESSION_ID, sessionId)
             }
             setBody(addFavoriteRequestModel)
         }.body()
@@ -30,7 +30,7 @@ class FavoriteServiceImpl(
     override suspend fun getFavoriteMovie(accountId: Int, sessionId: String): FavoriteMovieModel {
         return client.get("account/{$accountId}/favorite/movies") {
             url {
-                parameters.append(ApiImpl.SESSION_ID, sessionId)
+                parameters.append(SESSION_ID, sessionId)
             }
         }.body()
     }
@@ -38,7 +38,7 @@ class FavoriteServiceImpl(
     override suspend fun getFavoriteTv(accountId: Int, sessionId: String): FavoriteTvModel {
         return client.get("account/{$accountId}/favorite/tv") {
             url {
-                parameters.append(ApiImpl.SESSION_ID, sessionId)
+                parameters.append(SESSION_ID, sessionId)
             }
         }.body()
     }

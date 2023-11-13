@@ -1,6 +1,6 @@
 package com.example.moveeapp_compose_kmm.data.rate
 
-import com.example.moveeapp_compose_kmm.data.remote.ApiImpl
+import com.example.moveeapp_compose_kmm.utils.Constants.SESSION_ID
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.delete
@@ -17,7 +17,7 @@ class RatingServiceImpl(
         return client.post("movie/$movieId/rating") {
             contentType(ContentType.Application.Json)
             url {
-                parameters.append(ApiImpl.SESSION_ID, sessionId)
+                parameters.append(SESSION_ID, sessionId)
             }
             setBody(rating)
         }.body()
@@ -31,7 +31,7 @@ class RatingServiceImpl(
         return client.post("tv/$tvShowId/rating") {
             contentType(ContentType.Application.Json)
             url {
-                parameters.append(ApiImpl.SESSION_ID, sessionId)
+                parameters.append(SESSION_ID, sessionId)
             }
             setBody(rating)
         }.body()
@@ -40,7 +40,7 @@ class RatingServiceImpl(
     override suspend fun removeMovieRating(movieId: Int, sessionId: String) {
         client.delete("movie/$movieId/rating") {
             url {
-                parameters.append(ApiImpl.SESSION_ID, sessionId)
+                parameters.append(SESSION_ID, sessionId)
             }
         }
     }
@@ -48,7 +48,7 @@ class RatingServiceImpl(
     override suspend fun removeTvShowRating(tvShowId: Int, sessionId: String) {
         client.delete("tv/$tvShowId/rating") {
             url {
-                parameters.append(ApiImpl.SESSION_ID, sessionId)
+                parameters.append(SESSION_ID, sessionId)
             }
         }
     }

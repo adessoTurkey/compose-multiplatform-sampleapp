@@ -8,4 +8,5 @@ object Constants {
     const val IMAGE_BASE = BuildKonfig.IMAGE_BASE_URL
     const val REGISTER = BuildKonfig.REGISTER_URL
     const val FORGOT_PASSWORD = BuildKonfig.RESET_PASSWORD_URL
+    const val SESSION_ID = "session_id"
 }
