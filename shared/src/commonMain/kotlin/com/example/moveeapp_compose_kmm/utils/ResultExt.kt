@@ -18,5 +18,4 @@ inline fun <R> resultOf(block: () -> R): Result<R> {
     } catch (e: Exception) {
         Result.failure(e)
     }
-    //todo gelen failure mesajını cast edebiliriz.
 }

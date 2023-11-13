@@ -5,8 +5,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.core.viewModel
-import com.example.moveeapp_compose_kmm.ui.scene.loginscreen.LoginScreen
-import com.example.moveeapp_compose_kmm.ui.scene.loginscreen.LoginViewModel
+import com.example.moveeapp_compose_kmm.ui.scene.login.LoginScreen
+import com.example.moveeapp_compose_kmm.ui.scene.login.LoginViewModel
 
 class LoginScreen : Screen {
     @Composable

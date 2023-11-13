@@ -1,9 +1,8 @@
-package com.example.moveeapp_compose_kmm.domain.account.favorite
+package com.example.moveeapp_compose_kmm.domain.favorite
 
-import com.example.moveeapp_compose_kmm.data.account.favorite.AddFavoriteRequestModel
-import com.example.moveeapp_compose_kmm.domain.account.AccountRepository
+import com.example.moveeapp_compose_kmm.data.favorite.AddFavoriteRequestModel
 
-class AddFavoriteUseCase(private val repository: AccountRepository) {
+class AddFavoriteUseCase(private val repository: FavoriteRepository) {
 
     suspend fun execute(
         accountId: Int,

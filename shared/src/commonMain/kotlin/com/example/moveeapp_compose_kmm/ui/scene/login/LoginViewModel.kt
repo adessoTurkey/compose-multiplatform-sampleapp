@@ -1,25 +1,25 @@
-package com.example.moveeapp_compose_kmm.ui.scene.loginscreen
+package com.example.moveeapp_compose_kmm.ui.scene.login
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.example.moveeapp_compose_kmm.core.viewModelScope
-import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
 import com.example.moveeapp_compose_kmm.core.ViewModel
-import com.example.moveeapp_compose_kmm.data.repository.LoginRepository
-import com.example.moveeapp_compose_kmm.data.repository.LoginState
+import com.example.moveeapp_compose_kmm.core.viewModelScope
+import com.example.moveeapp_compose_kmm.data.account.LoginState
+import com.example.moveeapp_compose_kmm.domain.account.AccountRepository
 import com.example.moveeapp_compose_kmm.domain.account.GetAccountDetailUseCase
+import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val loginRepository: LoginRepository,
+    private val repository: AccountRepository,
     private val sessionSettings: SessionSettings,
     private val getAccountDetailUseCase: GetAccountDetailUseCase
 ) : ViewModel {
 
-    private val _isLoggedIn = MutableStateFlow(loginRepository.getLoginState())
+    private val _isLoggedIn = MutableStateFlow(repository.getLoginState())
     val isLoggedIn: StateFlow<LoginState>
         get() = _isLoggedIn
     var loginUiState by mutableStateOf(LoginUiState())
@@ -45,7 +45,7 @@ class LoginViewModel(
                 return@launch
             }
             loginUiState = loginUiState.copy(isLoading = true, loginError = null)
-            loginRepository.login(
+            repository.login(
                 loginUiState.userName,
                 loginUiState.password
             )

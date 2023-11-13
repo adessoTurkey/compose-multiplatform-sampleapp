@@ -2,6 +2,8 @@ package com.example.moveeapp_compose_kmm.di
 
 import com.example.moveeapp_compose_kmm.data.account.AccountService
 import com.example.moveeapp_compose_kmm.data.account.AccountServiceImpl
+import com.example.moveeapp_compose_kmm.data.favorite.FavoriteService
+import com.example.moveeapp_compose_kmm.data.favorite.FavoriteServiceImpl
 import com.example.moveeapp_compose_kmm.data.movie.MovieService
 import com.example.moveeapp_compose_kmm.data.movie.MovieServiceImpl
 import com.example.moveeapp_compose_kmm.data.rate.RatingService
@@ -63,5 +65,6 @@ val networkModule = module {
     single<AccountService> { AccountServiceImpl(get()) }
     single<MovieService> { MovieServiceImpl(get()) }
     single<TvService> { TvServiceImpl(get()) }
+    single<FavoriteService> { FavoriteServiceImpl(get()) }
     single<SearchService> { SearchServiceImpl(get()) }
 }

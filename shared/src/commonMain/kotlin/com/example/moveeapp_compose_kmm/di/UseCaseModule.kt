@@ -1,9 +1,9 @@
 package com.example.moveeapp_compose_kmm.di
 
 import com.example.moveeapp_compose_kmm.domain.account.GetAccountDetailUseCase
-import com.example.moveeapp_compose_kmm.domain.account.favorite.AddFavoriteUseCase
-import com.example.moveeapp_compose_kmm.domain.account.favorite.GetMovieStateUseCase
-import com.example.moveeapp_compose_kmm.domain.account.favorite.GetTvStateUseCase
+import com.example.moveeapp_compose_kmm.domain.favorite.AddFavoriteUseCase
+import com.example.moveeapp_compose_kmm.domain.favorite.GetMovieStateUseCase
+import com.example.moveeapp_compose_kmm.domain.favorite.GetTvStateUseCase
 import com.example.moveeapp_compose_kmm.domain.account.LogoutUseCase
 import com.example.moveeapp_compose_kmm.domain.rating.RateMovieUseCase
 import com.example.moveeapp_compose_kmm.domain.rating.RateTvShowUseCase

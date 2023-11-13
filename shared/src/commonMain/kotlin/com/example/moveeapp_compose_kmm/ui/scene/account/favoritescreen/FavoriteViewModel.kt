@@ -2,8 +2,8 @@ package com.example.moveeapp_compose_kmm.ui.scene.account.favoritescreen
 
 import com.example.moveeapp_compose_kmm.core.ViewModel
 import com.example.moveeapp_compose_kmm.core.viewModelScope
-import com.example.moveeapp_compose_kmm.domain.account.AccountRepository
 import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
+import com.example.moveeapp_compose_kmm.domain.favorite.FavoriteRepository
 import com.example.moveeapp_compose_kmm.ui.scene.account.FavoriteMovieUiState
 import com.example.moveeapp_compose_kmm.ui.scene.account.FavoriteTvUiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class FavoriteViewModel(
-    private val repository: AccountRepository,
+    private val favoriteRepository: FavoriteRepository,
     private val sessionSettings: SessionSettings
 ) : ViewModel {
 
@@ -25,7 +25,7 @@ class FavoriteViewModel(
 
     fun getPopularMovie() {
         viewModelScope.launch {
-            val result = repository.getFavoriteMovie(
+            val result = favoriteRepository.getFavoriteMovie(
                 accountId = sessionSettings.getAccountId() ?: 0,
                 sessionId = sessionSettings.getSessionId() ?: ""
             )
@@ -42,7 +42,7 @@ class FavoriteViewModel(
 
     fun getPopularTv() {
         viewModelScope.launch {
-            val result = repository.getFavoriteTv(
+            val result = favoriteRepository.getFavoriteTv(
                 accountId = sessionSettings.getAccountId() ?: 0,
                 sessionId = sessionSettings.getSessionId() ?: ""
             )
