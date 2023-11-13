@@ -29,7 +29,8 @@ import dev.icerock.moko.resources.compose.stringResource
 fun MapsMarkerDialog(
     modifier: Modifier = Modifier,
     title: String,
-    subTitle: String
+    subTitle: String,
+    onClick : () -> Unit
 ) {
     Card(
         modifier = modifier,
@@ -76,7 +77,9 @@ fun MapsMarkerDialog(
             ),
             shape = RoundedCornerShape(11.dp),
             contentPadding = PaddingValues(0.dp),
-            onClick = { /*TODO*/ }) {
+            onClick = {
+                onClick.invoke()
+            }) {
             Icon(
                 modifier = Modifier.padding(2.dp),
                 imageVector = Icons.Outlined.KeyboardArrowRight,

@@ -64,7 +64,7 @@ actual fun Map(
 
         if (uiState.lastLocation != null) {
             CurrentLocationMarker(
-                position = LatLng(uiState.lastLocation.latitude ?: 0.0, uiState.lastLocation.longitude ?: 0.0),
+                position = LatLng(uiState.lastLocation.latitude, uiState.lastLocation.longitude),
                 iconRes = R.drawable.ic_maps_marker_user
             ) {
                 coroutineScope.launch {
@@ -80,28 +80,12 @@ actual fun Map(
 
         uiState.cinemaList.forEach { cinema ->
             MapsMarker(
-                position = LatLng(cinema.location.latitude ?: 0.0, cinema.location.longitude ?: 0.0),
+                position = LatLng(cinema.location.latitude, cinema.location.longitude),
                 title = cinema.name,
                 iconRes = R.drawable.ic_maps_marker
             ) {
                 onMarkerClick.invoke(cinema)
             }
-
-            }
-        }
-
-        AnimatedVisibility(
-            visible = uiState.selectedCinema != null,
-            enter = expandVertically(),
-            exit = shrinkVertically(),
-        ) {
-            MapsMarkerDialog(
-                modifier = Modifier
-                    .padding(horizontal = 20.dp, vertical = 18.dp)
-                    .align(Alignment.TopCenter),
-                title = uiState.selectedCinema?.name ?: "",
-                subTitle = uiState.selectedCinema?.description ?: ""
-            )
         }
     }
 }
