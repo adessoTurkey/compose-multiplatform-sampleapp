@@ -5,10 +5,8 @@ import com.example.moveeapp_compose_kmm.data.account.login.LoginResponseModel
 import com.example.moveeapp_compose_kmm.data.account.login.RequestTokenResponseModel
 import com.example.moveeapp_compose_kmm.data.account.login.SessionRequestModel
 import com.example.moveeapp_compose_kmm.data.account.login.SessionResponseModel
-import com.example.moveeapp_compose_kmm.data.account.favorite.AccountStateResponse
-import com.example.moveeapp_compose_kmm.data.account.favorite.FavoriteMovieModel
-import com.example.moveeapp_compose_kmm.data.account.favorite.FavoriteTvModel
 import com.example.moveeapp_compose_kmm.data.remote.ApiImpl
+import com.example.moveeapp_compose_kmm.utils.Constants.SESSION_ID
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.delete
@@ -50,21 +48,6 @@ class AccountServiceImpl(
         }.body()
     }
 
-    override suspend fun getFavoriteMovie(accountId: Int, sessionId: String): FavoriteMovieModel {
-        return client.get("account/{$accountId}/favorite/movies") {
-            url {
-                parameters.append(ApiImpl.SESSION_ID, sessionId)
-            }
-        }.body()
-    }
-
-    override suspend fun getFavoriteTv(accountId: Int, sessionId: String): FavoriteTvModel {
-        return client.get("account/{$accountId}/favorite/tv") {
-            url {
-                parameters.append(ApiImpl.SESSION_ID, sessionId)
-            }
-        }.body()
-    }
 
     override suspend fun logout(logoutRequestModel: LogoutRequestModel): LogoutResponseModel {
         return client.delete(ApiImpl.LOGOUT) {
@@ -75,7 +58,6 @@ class AccountServiceImpl(
 
     companion object {
         const val ACCOUNT = "account"
-        const val SESSION_ID = "session_id"
         const val REQUEST_TOKEN = "authentication/token/new"
         const val LOGIN = "authentication/token/validate_with_login"
         const val SESSION = "authentication/session/new"

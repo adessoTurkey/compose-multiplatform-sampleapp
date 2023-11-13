@@ -1,20 +1,10 @@
 package com.example.moveeapp_compose_kmm.data.remote
 
-import com.example.moveeapp_compose_kmm.data.remote.model.SearchModel
-import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginRequestModel
-import com.example.moveeapp_compose_kmm.data.remote.model.login.LoginResponseModel
-import com.example.moveeapp_compose_kmm.data.remote.model.login.RequestTokenResponseModel
-import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionRequestModel
-import com.example.moveeapp_compose_kmm.data.remote.model.login.SessionResponseModel
 import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonCreditsModel
 import com.example.moveeapp_compose_kmm.data.remote.model.person.PersonDetailModel
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
-import io.ktor.client.request.post
-import io.ktor.client.request.setBody
-import io.ktor.http.ContentType
-import io.ktor.http.contentType
 
 class ApiImpl(private val client: HttpClient) : ApiInterface {
 
@@ -28,15 +18,8 @@ class ApiImpl(private val client: HttpClient) : ApiInterface {
         return client.get("person/$personId/combined_credits").body()
     }
 
-    //Account
-
-
     companion object {
-
-
         const val LOGOUT = "authentication/session"
-
-        const val SESSION_ID = "session_id"
     }
 }
 

@@ -1,6 +1,6 @@
 package com.example.moveeapp_compose_kmm.data.movie
 
-import com.example.moveeapp_compose_kmm.data.favorite.AccountStateResponseModel
+import com.example.moveeapp_compose_kmm.data.account.favorite.AccountStateResponseModel
 import com.example.moveeapp_compose_kmm.data.artist.CreditsModel
 
 interface MovieService {

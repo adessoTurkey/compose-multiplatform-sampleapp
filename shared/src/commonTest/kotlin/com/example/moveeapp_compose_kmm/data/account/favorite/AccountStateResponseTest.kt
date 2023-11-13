@@ -22,9 +22,9 @@ class AccountStateResponseTest {
             ignoreUnknownKeys = true
         }
 
-        val accountStateResponse = json.decodeFromString<AccountStateResponse>(input)
+        val accountStateResponseModel = json.decodeFromString<AccountStateResponseModel>(input)
 
-        assertNull(accountStateResponse.rated)
+        assertNull(accountStateResponseModel.rated)
     }
 
     @Test
@@ -42,8 +42,8 @@ class AccountStateResponseTest {
             ignoreUnknownKeys = true
         }
 
-        val accountStateResponse = json.decodeFromString<AccountStateResponse>(input)
+        val accountStateResponseModel = json.decodeFromString<AccountStateResponseModel>(input)
 
-        assertEquals(5.0f, accountStateResponse.rated)
+        assertEquals(5.0f, accountStateResponseModel.rated)
     }
 }

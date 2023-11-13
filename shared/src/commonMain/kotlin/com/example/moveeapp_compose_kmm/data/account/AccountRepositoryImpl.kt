@@ -5,8 +5,6 @@ import com.example.moveeapp_compose_kmm.data.account.login.SessionRequestModel
 import com.example.moveeapp_compose_kmm.domain.account.AccountDetail
 import com.example.moveeapp_compose_kmm.domain.account.AccountRepository
 import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
-import com.example.moveeapp_compose_kmm.domain.account.favorite.FavoriteMovie
-import com.example.moveeapp_compose_kmm.domain.account.favorite.FavoriteTv
 import com.example.moveeapp_compose_kmm.utils.resultOf
 
 class AccountRepositoryImpl(
@@ -52,30 +50,6 @@ class AccountRepositoryImpl(
             sessionSettings.setSessionId(sessionResponse.sessionId)
 
             loginRequestTokenResponse
-        }
-    }
-
-    override suspend fun getFavoriteMovie(
-        accountId: Int,
-        sessionId: String
-    ): Result<List<FavoriteMovie>> {
-        return resultOf {
-            service.getFavoriteMovie(
-                accountId = accountId,
-                sessionId = sessionId
-            ).favMovies.map { it.toDomain() }
-        }
-    }
-
-    override suspend fun getFavoriteTv(
-        accountId: Int,
-        sessionId: String
-    ): Result<List<FavoriteTv>> {
-        return resultOf {
-            service.getFavoriteTv(
-                accountId = accountId,
-                sessionId = sessionId
-            ).favTv.map { it.toDomain() }
         }
     }
 
