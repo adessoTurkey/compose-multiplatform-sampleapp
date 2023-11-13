@@ -20,7 +20,7 @@ class MapViewModel(
     private val _uiState = MutableStateFlow(MapUiState())
     val uiState: StateFlow<MapUiState> = _uiState
 
-    var job : Job? = null
+    private var job : Job? = null
 
     fun loadForecastWithLocation() {
         coroutineScope.launch {
@@ -47,7 +47,7 @@ class MapViewModel(
             )
             result.onSuccess { list ->
                 _uiState.update {
-                    it.copy(cinemaList = list)
+                    it.copy(cinemaList = list, lastLocation = coordinates)
                 }
             }
     }

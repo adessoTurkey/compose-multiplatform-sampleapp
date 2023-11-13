@@ -2,6 +2,8 @@ package com.example.moveeapp_compose_kmm.map
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.interop.UIKitView
@@ -40,6 +42,8 @@ actual fun Map(
         )
     }
 
+    val isMoved = remember { mutableStateOf(true) }
+
     val mkMapView = remember {
         MKMapView().apply {
             addAnnotation(annotation)
@@ -52,7 +56,12 @@ actual fun Map(
     }
 
     val delegate = remember {
-        MKDelegate { annotation ->
+        MKDelegate(onMove = { onMove ->
+            isMoved.value = onMove
+            mkMapView.centerCoordinate.useContents {
+                onPositionChange.invoke(DeviceLocation(latitude, longitude))
+            }
+        }, onAnnotationClicked = { annotation ->
             if (annotation != null) {
                 val deviceLocation = annotation.coordinate.useContents {
                     DeviceLocation(latitude, longitude)
@@ -64,6 +73,14 @@ actual fun Map(
                         deviceLocation
                     )
                 )
+            }
+        })
+    }
+
+    LaunchedEffect(isMoved) {
+        if (isMoved.value) {
+            mkMapView.centerCoordinate.useContents {
+                onPositionChange.invoke(DeviceLocation(latitude, longitude))
             }
         }
     }
@@ -94,8 +111,8 @@ actual fun Map(
 
                 pin.setCoordinate(
                     CLLocationCoordinate2DMake(
-                        coordinates.latitude ?: 0.0,
-                        coordinates.longitude ?: 0.0
+                        coordinates.latitude,
+                        coordinates.longitude
                     )
                 )
 
@@ -109,8 +126,14 @@ actual fun Map(
 }
 
 private class MKDelegate(
-    private val onAnnotationClicked: (MKPointAnnotation?) -> Unit
+    private val onAnnotationClicked: (MKPointAnnotation?) -> Unit,
+    private val onMove: (Boolean) -> Unit
 ) : NSObject(), MKMapViewDelegateProtocol {
+
+    override fun mapView(mapView: MKMapView, regionDidChangeAnimated: Boolean) {
+        onMove(regionDidChangeAnimated)
+    }
+
     override fun mapView(mapView: MKMapView, didSelectAnnotationView: MKAnnotationView) {
         val annotation = didSelectAnnotationView.annotation as MKPointAnnotation
         onAnnotationClicked(annotation)
