@@ -1,14 +1,10 @@
 package com.example.moveeapp_compose_kmm.data.account
 
-import com.example.moveeapp_compose_kmm.data.account.favorite.AddFavoriteRequestModel
-import com.example.moveeapp_compose_kmm.data.account.favorite.AddFavoriteResponseModel
+import com.example.moveeapp_compose_kmm.data.account.login.LoginRequestModel
+import com.example.moveeapp_compose_kmm.data.account.login.SessionRequestModel
 import com.example.moveeapp_compose_kmm.domain.account.AccountDetail
 import com.example.moveeapp_compose_kmm.domain.account.AccountRepository
 import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
-import com.example.moveeapp_compose_kmm.domain.account.favorite.FavoriteMovie
-import com.example.moveeapp_compose_kmm.domain.account.favorite.FavoriteTv
-import com.example.moveeapp_compose_kmm.domain.account.favorite.MovieAccountState
-import com.example.moveeapp_compose_kmm.domain.account.favorite.TvAccountState
 import com.example.moveeapp_compose_kmm.utils.resultOf
 
 class AccountRepositoryImpl(
@@ -25,59 +21,35 @@ class AccountRepositoryImpl(
         }
     }
 
-    override suspend fun addFavorite(
-        accountId: Int,
-        addFavoriteRequestModel: AddFavoriteRequestModel
-    ): Result<AddFavoriteResponseModel> {
-        return resultOf {
-            service.addFavorite(
-                accountId,
-                addFavoriteRequestModel,
-                sessionSettings.getSessionId() ?: ""
+    private val sessionId = sessionSettings.getSessionId()
+    override fun getLoginState(): LoginState {
+        return if (sessionId.isNullOrEmpty()) {
+            LoginState.LOGGED_OUT
+        } else {
+            LoginState.LOGGED_IN
+        }
+    }
+
+    override suspend fun login(username: String, password: String) = resultOf {
+        com.example.moveeapp_compose_kmm.utils.invoke {
+            val requestTokenResponse = service.createRequestToken()
+
+            val loginRequestTokenResponse =
+                service.createRequestTokenWithLogin(
+                    LoginRequestModel(
+                        username = username,
+                        password = password,
+                        requestToken = requestTokenResponse.requestToken
+                    )
+                )
+            val sessionResponse = service.createSession(
+                SessionRequestModel(
+                    loginRequestTokenResponse.requestToken
+                )
             )
-        }
-    }
+            sessionSettings.setSessionId(sessionResponse.sessionId)
 
-    override suspend fun getMovieAccountState(movieId: Int): Result<MovieAccountState> {
-        return resultOf {
-            val response = service.getMovieState(
-                sessionId = sessionSettings.getSessionId() ?: "",
-                movieId
-            )
-            MovieAccountState(response.favorite ?: false, response.rated)
-        }
-    }
-
-    override suspend fun getTvAccountState(tvId: Int): Result<TvAccountState> {
-        return resultOf {
-            val response = service.getTvState(
-                sessionId = sessionSettings.getSessionId() ?: "", tvId
-            )
-            TvAccountState(response.favorite ?: false, response.rated)
-        }
-    }
-
-    override suspend fun getFavoriteMovie(
-        accountId: Int,
-        sessionId: String
-    ): Result<List<FavoriteMovie>> {
-        return resultOf {
-            service.getFavoriteMovie(
-                accountId = accountId,
-                sessionId = sessionId
-            ).favMovies.map { it.toDomain() }
-        }
-    }
-
-    override suspend fun getFavoriteTv(
-        accountId: Int,
-        sessionId: String
-    ): Result<List<FavoriteTv>> {
-        return resultOf {
-            service.getFavoriteTv(
-                accountId = accountId,
-                sessionId = sessionId
-            ).favTv.map { it.toDomain() }
+            loginRequestTokenResponse
         }
     }
 
@@ -87,3 +59,9 @@ class AccountRepositoryImpl(
         }
     }
 }
+
+enum class LoginState {
+    LOGGED_IN,
+    LOGGED_OUT
+}
+

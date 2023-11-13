@@ -1,5 +1,7 @@
 package com.example.moveeapp_compose_kmm.data.tv
 
+import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
+import com.example.moveeapp_compose_kmm.domain.favorite.TvAccountState
 import com.example.moveeapp_compose_kmm.domain.artist.Credits
 import com.example.moveeapp_compose_kmm.domain.tv.PopularTv
 import com.example.moveeapp_compose_kmm.domain.tv.TopRatedTv
@@ -8,7 +10,8 @@ import com.example.moveeapp_compose_kmm.domain.tv.TvRepository
 import com.example.moveeapp_compose_kmm.utils.resultOf
 
 class TvRepositoryImpl(
-    private val service: TvService
+    private val service: TvService,
+    private val sessionSettings: SessionSettings
 ) : TvRepository {
 
     override suspend fun getPopularTv(): Result<List<PopularTv>> {
@@ -32,6 +35,15 @@ class TvRepositoryImpl(
     override suspend fun getTvCredits(tvId: Int): Result<List<Credits>> {
         return resultOf {
             service.tvCredit(tvId).cast.map { it.toDomain() }
+        }
+    }
+
+    override suspend fun getTvAccountState(tvId: Int): Result<TvAccountState> {
+        return resultOf {
+            val response = service.getTvState(
+                sessionId = sessionSettings.getSessionId() ?: "", tvId
+            )
+            TvAccountState(response.favorite ?: false, response.rated)
         }
     }
 }

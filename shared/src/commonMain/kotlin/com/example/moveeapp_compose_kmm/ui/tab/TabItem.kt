@@ -18,7 +18,7 @@ sealed class TabItem(
 
     class TvShowsTab : TabItem(
         MR.strings.tab_tv,
-        MR.images.ic_tabbar_tv,
+        MR.images.ic_tabbar_tv_svg,
     )
 
     class SearchTab : TabItem(

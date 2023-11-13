@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.domain.account.favorite
+package com.example.moveeapp_compose_kmm.domain.favorite
 
 data class FavoriteMovie(
     val movieId: Int = 0,

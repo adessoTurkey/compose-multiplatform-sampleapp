@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.ui.scene.loginscreen
+package com.example.moveeapp_compose_kmm.ui.scene.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -29,7 +29,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.moveeapp_compose_kmm.MR
-import com.example.moveeapp_compose_kmm.data.repository.LoginState
+import com.example.moveeapp_compose_kmm.data.account.LoginState
 import com.example.moveeapp_compose_kmm.ui.components.TextInputItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.utils.Constants

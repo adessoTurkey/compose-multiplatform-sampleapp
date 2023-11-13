@@ -10,7 +10,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable
-data class AccountStateResponse(
+data class AccountStateResponseModel(
     val favorite: Boolean?,
     val id: Int?,
     @Serializable(RatingDeserializer::class) val rated: Float?,

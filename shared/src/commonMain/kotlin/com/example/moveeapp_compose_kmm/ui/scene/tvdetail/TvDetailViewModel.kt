@@ -5,8 +5,8 @@ import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
 import com.example.moveeapp_compose_kmm.domain.tv.TvDetail
 import com.example.moveeapp_compose_kmm.domain.tv.TvRepository
-import com.example.moveeapp_compose_kmm.domain.account.favorite.AddFavoriteUseCase
-import com.example.moveeapp_compose_kmm.domain.account.favorite.GetTvStateUseCase
+import com.example.moveeapp_compose_kmm.domain.favorite.AddFavoriteUseCase
+import com.example.moveeapp_compose_kmm.domain.favorite.GetTvStateUseCase
 import com.example.moveeapp_compose_kmm.domain.rating.RateTvShowUseCase
 import com.example.moveeapp_compose_kmm.domain.rating.RemoveTvShowRatingUseCase
 import com.example.moveeapp_compose_kmm.ui.scene.tvdetail.model.mapper.TvDetailToUiModelMapper

@@ -29,8 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.domain.MediaType
-import com.example.moveeapp_compose_kmm.domain.account.favorite.FavoriteMovie
-import com.example.moveeapp_compose_kmm.domain.account.favorite.FavoriteTv
+import com.example.moveeapp_compose_kmm.domain.favorite.FavoriteMovie
+import com.example.moveeapp_compose_kmm.domain.favorite.FavoriteTv
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
 import com.example.moveeapp_compose_kmm.ui.components.CardImageItem
 import com.example.moveeapp_compose_kmm.ui.components.DateItem

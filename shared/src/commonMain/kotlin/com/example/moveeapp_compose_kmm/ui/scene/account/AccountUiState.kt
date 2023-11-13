@@ -1,7 +1,7 @@
 package com.example.moveeapp_compose_kmm.ui.scene.account
 
-import com.example.moveeapp_compose_kmm.domain.account.favorite.FavoriteMovie
-import com.example.moveeapp_compose_kmm.domain.account.favorite.FavoriteTv
+import com.example.moveeapp_compose_kmm.domain.favorite.FavoriteMovie
+import com.example.moveeapp_compose_kmm.domain.favorite.FavoriteTv
 import com.example.moveeapp_compose_kmm.domain.account.AccountDetail
 
 data class AccountUiState(

@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.ui.scene.loginscreen
+package com.example.moveeapp_compose_kmm.ui.scene.login
 
 data class LoginUiState(
     val userName:String = "",
