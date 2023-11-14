@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.domain.location
+package com.example.moveeapp_compose_kmm.data.map
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

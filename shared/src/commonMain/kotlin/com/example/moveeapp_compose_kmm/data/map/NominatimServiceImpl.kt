@@ -1,11 +1,10 @@
-package com.example.moveeapp_compose_kmm.data.remote
+package com.example.moveeapp_compose_kmm.data.map
 
-import com.example.moveeapp_compose_kmm.domain.location.OSMObject
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 
-class NominatimImpl(private val client: HttpClient) : NominatimInterface {
+class NominatimServiceImpl(private val client: HttpClient) : NominatimService {
     override suspend fun getCinemas(latitude: Double, longitude: Double): List<OSMObject> {
         val parameterss = mapOf(
             "q" to "$latitude,$longitude cinema",
