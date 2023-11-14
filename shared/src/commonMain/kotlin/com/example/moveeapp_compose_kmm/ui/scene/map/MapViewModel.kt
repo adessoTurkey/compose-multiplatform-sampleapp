@@ -1,10 +1,10 @@
 package com.example.moveeapp_compose_kmm.ui.scene.map
 
-import cafe.adriel.voyager.core.model.coroutineScope
 import com.example.moveeapp_compose_kmm.core.ViewModel
+import com.example.moveeapp_compose_kmm.core.viewModelScope
 import com.example.moveeapp_compose_kmm.domain.location.DeviceLocation
 import com.example.moveeapp_compose_kmm.domain.location.LocationRepository
-import com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.map.CinemaSearchUseCase
+import com.example.moveeapp_compose_kmm.domain.map.CinemaSearchUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,10 +20,10 @@ class MapViewModel(
     private val _uiState = MutableStateFlow(MapUiState())
     val uiState: StateFlow<MapUiState> = _uiState
 
-    private var job : Job? = null
+    private var job: Job? = null
 
     fun loadForecastWithLocation() {
-        coroutineScope.launch {
+        viewModelScope.launch {
             val location = locationService.getCurrentLocation()
             _uiState.value = _uiState.value.copy(lastLocation = location)
             getCinemasOnLocation(location)
@@ -32,7 +32,7 @@ class MapViewModel(
 
     fun getUpdates(location: DeviceLocation) {
         job?.cancel()
-        job = coroutineScope.launch {
+        job = viewModelScope.launch {
             delay(1000)
             getCinemasOnLocation(location)
             job = null

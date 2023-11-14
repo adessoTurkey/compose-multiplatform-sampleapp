@@ -9,6 +9,7 @@ import com.example.moveeapp_compose_kmm.domain.rating.RateMovieUseCase
 import com.example.moveeapp_compose_kmm.domain.rating.RateTvShowUseCase
 import com.example.moveeapp_compose_kmm.domain.rating.RemoveMovieRatingUseCase
 import com.example.moveeapp_compose_kmm.domain.rating.RemoveTvShowRatingUseCase
+import com.example.moveeapp_compose_kmm.domain.map.CinemaSearchUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {

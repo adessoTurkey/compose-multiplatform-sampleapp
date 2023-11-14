@@ -8,8 +8,8 @@ import com.example.moveeapp_compose_kmm.data.movie.MovieService
 import com.example.moveeapp_compose_kmm.data.movie.MovieServiceImpl
 import com.example.moveeapp_compose_kmm.data.rate.RatingService
 import com.example.moveeapp_compose_kmm.data.rate.RatingServiceImpl
-import com.example.moveeapp_compose_kmm.data.remote.NominatimImpl
-import com.example.moveeapp_compose_kmm.data.remote.NominatimInterface
+import com.example.moveeapp_compose_kmm.data.map.NominatimServiceImpl
+import com.example.moveeapp_compose_kmm.data.map.NominatimService
 import com.example.moveeapp_compose_kmm.data.remote.ApiImpl
 import com.example.moveeapp_compose_kmm.data.remote.ApiInterface
 import com.example.moveeapp_compose_kmm.data.search.SearchService
@@ -71,8 +71,8 @@ val networkModule = module {
     single<FavoriteService> { FavoriteServiceImpl(get()) }
     single<SearchService> { SearchServiceImpl(get()) }
 
-    single<NominatimInterface> {
+    single<NominatimService> {
         val client = get<HttpClient>()
-        NominatimImpl(client)
+        NominatimServiceImpl(client)
     }
 }

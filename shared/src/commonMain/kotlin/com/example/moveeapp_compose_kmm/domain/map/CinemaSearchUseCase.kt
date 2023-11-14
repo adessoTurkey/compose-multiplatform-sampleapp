@@ -1,6 +1,5 @@
-package com.example.moveeapp_compose_kmm.domain.usecase.accountusecase.map
+package com.example.moveeapp_compose_kmm.domain.map
 
-import com.example.moveeapp_compose_kmm.data.repository.MapRepository
 import com.example.moveeapp_compose_kmm.ui.scene.map.Cinema
 
 class CinemaSearchUseCase(
