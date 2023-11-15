@@ -18,7 +18,7 @@ class TvDetailScreen(private val tvId: Int) : Screen {
         TvDetailScreen(
             viewModel = viewModel,
             tvId = tvId,
-            navigateToActor = { navigator.push(ActorDetailScreen(it)) },
+            navigateToActor = { navigator.push(ArtistDetailScreen(it)) },
             onBackPressed = navigator::pop
         )
 

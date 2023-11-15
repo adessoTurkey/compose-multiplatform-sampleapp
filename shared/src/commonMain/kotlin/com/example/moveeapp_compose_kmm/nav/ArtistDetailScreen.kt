@@ -6,19 +6,19 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.core.BackHandler
 import com.example.moveeapp_compose_kmm.core.viewModel
-import com.example.moveeapp_compose_kmm.ui.scene.actordetail.ActorDetailScreen
-import com.example.moveeapp_compose_kmm.ui.scene.actordetail.ActorDetailViewModel
+import com.example.moveeapp_compose_kmm.ui.scene.artistdetail.ArtistDetailScreen
+import com.example.moveeapp_compose_kmm.ui.scene.artistdetail.ArtistDetailViewModel
 
-class ActorDetailScreen(
+class ArtistDetailScreen(
     private val actorId: Int,
 ) : Screen {
 
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-        val viewModel: ActorDetailViewModel = viewModel()
+        val viewModel: ArtistDetailViewModel = viewModel()
 
-        ActorDetailScreen(
+        ArtistDetailScreen(
             viewModel = viewModel,
             actorId = actorId,
             navigateToMovie = { navigator.push(MovieDetailScreen(movieId = it)) },

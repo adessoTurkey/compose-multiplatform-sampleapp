@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.ui.scene.actordetail
+package com.example.moveeapp_compose_kmm.ui.scene.artistdetail
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +23,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.moveeapp_compose_kmm.MR
-import com.example.moveeapp_compose_kmm.data.uimodel.ActorCreditUiModel
+import com.example.moveeapp_compose_kmm.domain.MediaType
+import com.example.moveeapp_compose_kmm.domain.artist.ArtistCredit
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
 import com.example.moveeapp_compose_kmm.ui.components.DetailPosterImage
 import com.example.moveeapp_compose_kmm.ui.components.DetailScreensAppBar
@@ -33,8 +34,8 @@ import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import dev.icerock.moko.resources.compose.stringResource
 
 @Composable
-fun ActorDetailScreen(
-    viewModel: ActorDetailViewModel,
+fun ArtistDetailScreen(
+    viewModel: ArtistDetailViewModel,
     actorId: Int,
     navigateToMovie: (Int) -> Unit,
     navigateToTv: (Int) -> Unit,
@@ -44,8 +45,8 @@ fun ActorDetailScreen(
 
     SuccessContent(uiState, onBackPressed = onBackPressed, onDetailClick = {
         when (it.second) {
-            "movie" -> navigateToMovie(it.first)
-            "tv" -> navigateToTv(it.first)
+            MediaType.MOVIE.mediaType -> navigateToMovie(it.first)
+            MediaType.TV.mediaType -> navigateToTv(it.first)
         }
     })
 
@@ -56,7 +57,7 @@ fun ActorDetailScreen(
 
 @Composable
 fun SuccessContent(
-    uiState: ActorDetailUiState,
+    uiState: ArtistDetailUiState,
     onDetailClick: (Pair<Int, String>) -> Unit,
     onBackPressed: () -> Unit,
 ) {
@@ -67,20 +68,20 @@ fun SuccessContent(
             leadingIcon = { BackPressedItem { onBackPressed() } },
             content = {
                 DetailPosterImage(
-                    imagePath = uiState.actorDetailData.profilePath
+                    imagePath = uiState.artistDetailData.profilePath
                 )
             }
         )
 
         Column(modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp)) {
             TextItem(
-                text = uiState.actorDetailData.name,
+                text = uiState.artistDetailData.name,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.ExtraBold,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
             ExpandableText(
-                text = uiState.actorDetailData.biography
+                text = uiState.artistDetailData.biography
             )
             Row(
                 modifier = Modifier.padding(bottom = 24.dp, top = 24.dp),
@@ -94,7 +95,7 @@ fun SuccessContent(
                 TextItem(
                     maxLines = Int.MAX_VALUE,
                     fontSize = 16.sp,
-                    text = "${uiState.actorDetailData.birthday}  ${uiState.actorDetailData.placeOfBirth}"
+                    text = "${uiState.artistDetailData.birthday}  ${uiState.artistDetailData.placeOfBirth}"
                 )
             }
         }
@@ -104,16 +105,16 @@ fun SuccessContent(
 
 @Composable
 fun PersonCreditLazyRow(
-    uiState: ActorDetailUiState,
+    uiState: ArtistDetailUiState,
     onDetailClick: (Pair<Int, String>) -> Unit,
 ) {
     LazyRow(
         modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        items(uiState.actorDetailData.credit.size) { index ->
+        items(uiState.artistDetailData.credit.size) { index ->
             PersonCreditCardView(
-                credit = uiState.actorDetailData.credit[index],
+                credit = uiState.artistDetailData.credit[index],
                 onClick = onDetailClick
             )
         }
@@ -122,7 +123,7 @@ fun PersonCreditLazyRow(
 
 @Composable
 fun PersonCreditCardView(
-    credit: ActorCreditUiModel,
+    credit: ArtistCredit,
     onClick: (Pair<Int, String>) -> Unit,
 ) {
     Column(

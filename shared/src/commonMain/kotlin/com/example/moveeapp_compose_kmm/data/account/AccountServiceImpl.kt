@@ -5,7 +5,6 @@ import com.example.moveeapp_compose_kmm.data.account.login.LoginResponseModel
 import com.example.moveeapp_compose_kmm.data.account.login.RequestTokenResponseModel
 import com.example.moveeapp_compose_kmm.data.account.login.SessionRequestModel
 import com.example.moveeapp_compose_kmm.data.account.login.SessionResponseModel
-import com.example.moveeapp_compose_kmm.data.remote.ApiImpl
 import com.example.moveeapp_compose_kmm.utils.Constants.SESSION_ID
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -50,7 +49,7 @@ class AccountServiceImpl(
 
 
     override suspend fun logout(logoutRequestModel: LogoutRequestModel): LogoutResponseModel {
-        return client.delete(ApiImpl.LOGOUT) {
+        return client.delete(LOGOUT) {
             setBody(logoutRequestModel)
             contentType(ContentType.Application.Json)
         }.body()
@@ -61,5 +60,6 @@ class AccountServiceImpl(
         const val REQUEST_TOKEN = "authentication/token/new"
         const val LOGIN = "authentication/token/validate_with_login"
         const val SESSION = "authentication/session/new"
+        const val LOGOUT = "authentication/session"
     }
 }
