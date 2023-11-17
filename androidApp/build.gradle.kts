@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose)
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1"
 }
 
 android {
@@ -68,4 +69,9 @@ dependencies {
         implementation(android)
         implementation(core)
     }
+}
+
+secrets {
+    defaultPropertiesFileName = "default.local.properties"
+    propertiesFileName = "local.properties"
 }
