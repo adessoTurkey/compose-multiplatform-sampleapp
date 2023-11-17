@@ -1,6 +1,7 @@
 [versions]
 
 minSdk = "24"
+secretsGradlePlugin = "2.0.1"
 targetSdk = "34"
 
 kotlin = "1.9.10"
@@ -39,6 +40,7 @@ play-services-location = { module = "com.google.android.gms:play-services-locati
 
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 
+secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 voyager-tabs = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
