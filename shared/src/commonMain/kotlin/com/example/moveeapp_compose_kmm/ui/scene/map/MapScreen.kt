@@ -11,7 +11,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -26,9 +25,6 @@ import com.example.moveeapp_compose_kmm.core.getPlatformContext
 import com.example.moveeapp_compose_kmm.core.navigateToMap
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.map.Map
-import com.example.moveeapp_compose_kmm.permission.Permission
-import com.example.moveeapp_compose_kmm.permission.isGranted
-import com.example.moveeapp_compose_kmm.permission.rememberPermissionState
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
 import com.example.moveeapp_compose_kmm.ui.components.MapsMarkerDialog
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
@@ -45,18 +41,7 @@ class MapScreen : Screen {
 
         val platformContext = getPlatformContext()
 
-        val permissionState = rememberPermissionState(Permission.LOCATION)
-        LaunchedEffect(Unit) {
-            permissionState.launchPermissionRequest()
-        }
-
-        val isGranted = permissionState.status.isGranted
-
-        LaunchedEffect(isGranted) {
-            if (isGranted) {
-                viewModel.loadForecastWithLocation()
-            }
-        }
+        viewModel.loadForecastWithLocation()
 
         Scaffold(topBar = {
             TopAppBar(

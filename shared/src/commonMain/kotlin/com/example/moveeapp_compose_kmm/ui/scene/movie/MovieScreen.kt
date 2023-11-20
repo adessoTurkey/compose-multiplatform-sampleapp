@@ -41,6 +41,9 @@ import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.ifNotNull
 import com.example.moveeapp_compose_kmm.domain.movie.NowPlayingMovie
 import com.example.moveeapp_compose_kmm.domain.movie.PopularMovie
+import com.example.moveeapp_compose_kmm.permission.Permission
+import com.example.moveeapp_compose_kmm.permission.isGranted
+import com.example.moveeapp_compose_kmm.permission.rememberPermissionState
 import com.example.moveeapp_compose_kmm.ui.components.CardImageItem
 import com.example.moveeapp_compose_kmm.ui.components.DateItem
 import com.example.moveeapp_compose_kmm.ui.components.ErrorScreen
@@ -179,9 +182,23 @@ fun HorizontalMoviePager(
                     fontSize = 34.sp,
                     fontFamily = fontFamilyResource(MR.fonts.sfpro.bold),
                     textColor = MaterialTheme.colorScheme.primaryContainer,
-                    text = stringResource( MR.strings.tab_movies))
+                    text = stringResource(MR.strings.tab_movies)
+                )
+
+                val permissionState = rememberPermissionState(Permission.LOCATION) { result ->
+                    if (result) {
+                        onMapClick.invoke()
+                    }
+                }
+
                 IconButton(
-                    onClick = onMapClick
+                    onClick = {
+                        if (permissionState.status.isGranted) {
+                            onMapClick.invoke()
+                        } else {
+                            permissionState.launchPermissionRequest()
+                        }
+                    }
                 ) {
                     Surface(
                         modifier = Modifier.size(35.dp),

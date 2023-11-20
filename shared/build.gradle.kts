@@ -127,9 +127,9 @@ kotlin {
                 api(libs.moko.resources)
                 api(libs.moko.resources.compose)
 
-                //Location
-                api(libs.play.services.location)
-                api (libs.play.services.maps)
+//                //Location
+//                api(libs.play.services.location)
+//                api (libs.play.services.maps)
             }
         }
 
