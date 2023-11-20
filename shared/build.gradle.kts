@@ -150,6 +150,7 @@ kotlin {
                     api(core)
                     api(appcompat)
                     api(activity.compose)
+                    api(startup)
                 }
 
                 with(libs.androidx.compose.ui) {

@@ -24,19 +24,21 @@ import androidx.compose.material.Card
 import androidx.compose.material.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import com.example.moveeapp_compose_kmm.core.ifNotNull
+import com.example.moveeapp_compose_kmm.core.ErrorMessage
+import com.example.moveeapp_compose_kmm.core.errorMessage
 import com.example.moveeapp_compose_kmm.domain.movie.NowPlayingMovie
 import com.example.moveeapp_compose_kmm.domain.movie.PopularMovie
 import com.example.moveeapp_compose_kmm.ui.components.CardImageItem
 import com.example.moveeapp_compose_kmm.ui.components.DateItem
-import com.example.moveeapp_compose_kmm.ui.components.ErrorScreen
 import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
@@ -48,6 +50,9 @@ fun MovieScreen(
     onDetailClick: (Int) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val errorMessage by viewModel.errorMessage.collectAsState()
+
+    LaunchedEffect(Unit) { viewModel.fetchData() }
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -58,20 +63,20 @@ fun MovieScreen(
                 .background(MaterialTheme.colorScheme.primary)
         )
 
-        uiState.error.ifNotNull {
-            ErrorScreen(it)
-        }
+        ErrorMessage(errorMessage, Color.Transparent){
+            when (val state = uiState) {
+                MovieUiState.Loading -> LoadingScreen()
 
-        if (uiState.isLoading) {
-            LoadingScreen()
+                is MovieUiState.Movies -> {
+                    SuccessContent(
+                        modifier = Modifier.weight(1f),
+                        popularMovieData = state.popularMovies,
+                        nowPlayingMovieData = state.nowPlayingMovies,
+                        onDetailClick = onDetailClick
+                    )
+                }
+            }
         }
-
-        SuccessContent(
-            modifier = Modifier.weight(1f),
-            popularMovieData = uiState.popularMovieData,
-            nowPlayingMovieData = uiState.nowPlayingMovieData,
-            onDetailClick = onDetailClick
-        )
     }
 }
 
