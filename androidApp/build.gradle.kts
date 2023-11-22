@@ -1,7 +1,10 @@
+import movee.util.requireStringProperty
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose)
+    alias(libs.plugins.maps.secrets)
 }
 
 android {
@@ -14,6 +17,14 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+    }
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file(requireStringProperty("SIGNING_STORE_FILE"))
+            storePassword = requireStringProperty("SIGNING_STORE_PASSWORD")
+            keyAlias = requireStringProperty("SIGNING_KEY_ALIAS")
+            keyPassword = requireStringProperty("SIGNING_KEY_PASSWORD")
+        }
     }
     buildFeatures {
         compose = true
@@ -34,6 +45,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        getByName("debug") {
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -57,4 +71,9 @@ dependencies {
         implementation(android)
         implementation(core)
     }
+}
+
+secrets {
+    defaultPropertiesFileName = "default.local.properties"
+    propertiesFileName = "local.properties"
 }

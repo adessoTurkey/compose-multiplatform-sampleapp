@@ -1,5 +1,5 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec
-import com.example.moveeapp_compose_kmm.util.requireStringProperty
+import movee.util.requireStringProperty
 
 plugins {
     alias(libs.plugins.multiplatform)
@@ -157,6 +157,11 @@ kotlin {
                     api(tooling)
                     api(preview)
                 }
+                api (libs.maps.compose)
+
+                //Location
+                api(libs.play.services.location)
+                api (libs.play.services.maps)
             }
         }
         val iosX64Main by getting

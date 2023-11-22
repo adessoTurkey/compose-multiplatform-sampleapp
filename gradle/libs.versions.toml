@@ -21,6 +21,10 @@ koin = "3.5.0"
 koin-compose = "1.1.0"
 moko = "0.23.0"
 seiko = "1.5.1"
+mapsCompose = "2.15.0"
+playServicesMaps = "18.1.0"
+playServicesLocation = "21.0.1"
+maps-secrets = "2.0.1"
 
 [libraries]
 
@@ -30,6 +34,9 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 androidx-compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
+play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 
@@ -78,3 +85,4 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 moko-resources = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "moko" }
+maps-secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "maps-secrets" }

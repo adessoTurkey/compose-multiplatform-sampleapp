@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.moko.resources).apply(false)
     alias(libs.plugins.buildKonfig).apply(false)
     alias(libs.plugins.kotlin.cocoapods).apply(false)
+    alias(libs.plugins.maps.secrets).apply(false)
 }
 
 tasks.register("clean", Delete::class) {

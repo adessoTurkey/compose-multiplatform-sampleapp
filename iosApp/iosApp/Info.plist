@@ -48,6 +48,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>If you want to see the weather for your location, grant the permission.</string>
 	<key>UILaunchScreen</key>
 	<dict/>
 </dict>

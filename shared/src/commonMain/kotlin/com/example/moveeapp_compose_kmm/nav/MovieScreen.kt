@@ -5,6 +5,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.core.viewModel
+import com.example.moveeapp_compose_kmm.ui.scene.map.MapScreen
 import com.example.moveeapp_compose_kmm.ui.scene.movie.MovieScreen
 import com.example.moveeapp_compose_kmm.ui.scene.movie.MovieViewModel
 
@@ -14,6 +15,10 @@ class MovieScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val viewModel: MovieViewModel = viewModel()
 
-        MovieScreen(viewModel) { navigator.push(MovieDetailScreen(it)) }
+        MovieScreen(
+            viewModel = viewModel,
+            onDetailClick = { navigator.push(MovieDetailScreen(it)) },
+            onMapClick = { navigator.push(MapScreen())}
+        )
     }
 }

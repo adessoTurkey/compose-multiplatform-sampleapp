@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.domain.MediaType
+import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import dev.icerock.moko.resources.compose.fontFamilyResource
 import dev.icerock.moko.resources.compose.stringResource
