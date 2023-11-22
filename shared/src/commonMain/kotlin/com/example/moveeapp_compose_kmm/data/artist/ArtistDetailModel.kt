@@ -25,8 +25,7 @@ data class ArtistDetailModel(
         biography = biography,
         birthday = birthday.orEmpty(),
         placeOfBirth = placeOfBirth,
-        profilePath = profilePath,
-        //credit = credit.map { it.toDomain() }
+        profilePath = profilePath
     )
 }
 
