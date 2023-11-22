@@ -1,7 +1,6 @@
 [versions]
 
 minSdk = "24"
-secretsGradlePlugin = "2.0.1"
 targetSdk = "34"
 
 kotlin = "1.9.10"
@@ -25,6 +24,7 @@ seiko = "1.5.1"
 mapsCompose = "2.15.0"
 playServicesMaps = "18.1.0"
 playServicesLocation = "21.0.1"
+maps-secrets = "2.0.1"
 
 [libraries]
 
@@ -40,7 +40,6 @@ play-services-location = { module = "com.google.android.gms:play-services-locati
 
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 
-secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 voyager-tabs = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
@@ -86,3 +85,4 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 moko-resources = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "moko" }
+maps-secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "maps-secrets" }

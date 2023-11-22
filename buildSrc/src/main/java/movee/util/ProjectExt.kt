@@ -1,4 +1,4 @@
-package com.example.moveeapp_compose_kmm.util
+package movee.util
 
 import org.gradle.api.Project
 

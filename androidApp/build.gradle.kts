@@ -1,8 +1,10 @@
+import movee.util.requireStringProperty
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose)
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1"
+    alias(libs.plugins.maps.secrets)
 }
 
 android {
@@ -18,10 +20,10 @@ android {
     }
     signingConfigs {
         getByName("debug") {
-            storeFile = rootProject.file("debug.jks")
-            storePassword = "movee1234"
-            keyAlias = "key0"
-            keyPassword = "movee1234"
+            storeFile = file(requireStringProperty("SIGNING_STORE_FILE"))
+            storePassword = requireStringProperty("SIGNING_STORE_PASSWORD")
+            keyAlias = requireStringProperty("SIGNING_KEY_ALIAS")
+            keyPassword = requireStringProperty("SIGNING_KEY_PASSWORD")
         }
     }
     buildFeatures {
