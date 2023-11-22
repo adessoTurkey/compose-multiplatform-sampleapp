@@ -31,9 +31,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -41,8 +38,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.moveeapp_compose_kmm.MR
-import com.example.moveeapp_compose_kmm.core.Share
+import com.example.moveeapp_compose_kmm.core.getPlatformContext
 import com.example.moveeapp_compose_kmm.core.ifNotNull
+import com.example.moveeapp_compose_kmm.core.share
 import com.example.moveeapp_compose_kmm.domain.MediaType
 import com.example.moveeapp_compose_kmm.domain.artist.Credits
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
@@ -163,6 +161,8 @@ fun TvDetailContent(
     ratingValue: State<Int?>,
     onRateTvShow: (rate: Int, tvShowId: Int) -> Unit,
 ) {
+    val platformContext = getPlatformContext()
+
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
 
         TextItem(
@@ -185,20 +185,14 @@ fun TvDetailContent(
             ratingValue = ratingValue,
             onRatingValueChange = { onRateTvShow.invoke(it, uiState.tvDetailData.tvSeriesId) },
             hidableContent = {
-                var shareText by remember { mutableStateOf("") }
-
                 FloatingActionButtonItem(
                     text = stringResource(MR.strings.share),
                     icon = Icons.Default.Share,
-                    onClick = { shareText = uiState.tvDetailData.homepage }
+                    onClick = {
+                        share(platformContext, uiState.tvDetailData.homepage)
+                    }
                 )
-
-                if (shareText.isNotEmpty()) {
-                    Share(shareText)
-                    shareText = ""
-                }
             })
-
 
         Divider(
             modifier = Modifier.padding(vertical = 10.dp),
