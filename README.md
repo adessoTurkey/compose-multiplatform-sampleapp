@@ -3,10 +3,23 @@
 This application is the Compose Multiplatform Mobile sample app developed by adesso Turkey. The primary objective of this project is to enable the concurrent operation of iOS and Android mobile applications through a unified code base, leveraging the emerging framework, Compose Multiplatform. The application encompasses a range of features, including the display of currently screening movies and TV series, the presentation of nearby movie theaters, and the ability to curate a personalized favorites list through integration with the TMBD movie API.
 
 ### Screenshots
-<div align="left">
- <img src="docs/android.png" height="550"/>
- <img src="docs/iphone.png" height="550"/>
-</div>
+
+#### Android
+
+  <div style="display: flex; width: 100%">
+  <img src="docs/android_main.png" width="25%"/>
+  <img src="docs/android_detail.png" width="25%"/>
+  <img src="docs/android_map.png" width="25%"/>
+  </div>
+
+#### IOS
+
+  <div style="display: flex">
+  <img src="docs/ios_main.png" width="25%"/>
+  <img src="docs/ios_detail.png" width="25%"/>
+  <img src="docs/ios_map.png" width="25%"/>
+  </div>
+
 
 ## Table of Contents
 
@@ -22,13 +35,24 @@ This application is the Compose Multiplatform Mobile sample app developed by ade
 ### Setup Environment
 **[Compose Multiplatform Template](https://github.com/JetBrains/compose-multiplatform-ios-android-template#set-up-the-environment):** You can see how to setup environment here
 
-### API Key
+#### TMDB API Key
 
 To run the application you need to supply an API key from [TMBD](https://developers.themoviedb.org/3/getting-started/introduction). When you get the key please add following variable to your local environment:
 
 `` API_KEY_TMDB = Your API Key ``
 
 How to set an environment variable in [Mac](https://medium.com/@himanshuagarwal1395/setting-up-environment-variables-in-macos-sierra-f5978369b255) / [Windows](https://www.architectryan.com/2018/08/31/how-to-change-environment-variables-on-windows-10/)
+
+#### MAP API Key
+
+-  To view the google maps you need to supply an API key from [Google Cloud Console](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
+
+- Add your API key to `local.properties`.
+
+```
+# local.properties
+MAPS_API_KEY=<YOUR_KEY>
+```
 
 ## Architecture
 
