@@ -1,12 +1,12 @@
-package com.example.moveeapp_compose_kmm.data.remote.model.person
+package com.example.moveeapp_compose_kmm.data.artist
 
-import com.example.moveeapp_compose_kmm.data.uimodel.ActorCreditUiModel
-import com.example.moveeapp_compose_kmm.data.uimodel.ActorDetailUiModel
+import com.example.moveeapp_compose_kmm.domain.artist.ArtistCredit
+import com.example.moveeapp_compose_kmm.domain.artist.ArtistDetail
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PersonDetailModel(
+data class ArtistDetailModel(
     @SerialName("also_known_as") val alsoKnownAs: List<String>,
     @SerialName("adult") val adult: Boolean,
     @SerialName("biography") val biography: String,
@@ -20,18 +20,17 @@ data class PersonDetailModel(
     @SerialName("popularity") val popularity: Double,
     @SerialName("profile_path") val profilePath: String
 ) {
-    fun toUiModel(credit: List<PersonCreditsModel.Cast>) = ActorDetailUiModel(
+    fun toDomain() = ArtistDetail(
         name = name,
         biography = biography,
         birthday = birthday.orEmpty(),
         placeOfBirth = placeOfBirth,
-        profilePath = profilePath,
-        credit = credit.map { it.toUiModel() }
+        profilePath = profilePath
     )
 }
 
 @Serializable
-data class PersonCreditsModel(
+data class ArtistCreditsModel(
     @SerialName("cast") val cast: List<Cast>?=null,
     @SerialName("crew") val crew: List<Crew>?=null,
     @SerialName("id") val id: Int?=null
@@ -58,8 +57,8 @@ data class PersonCreditsModel(
         @SerialName("vote_average") val voteAverage: Double?=null,
         @SerialName("vote_count") val voteCount: Int?=null
     ) {
-        fun toUiModel() =
-            ActorCreditUiModel(
+        fun toDomain() =
+            ArtistCredit(
                 id = id ,
                 name = originalTitle,
                 imagePath = posterPath,

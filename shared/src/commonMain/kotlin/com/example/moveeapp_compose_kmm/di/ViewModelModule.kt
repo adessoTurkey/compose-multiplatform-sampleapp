@@ -2,7 +2,7 @@ package com.example.moveeapp_compose_kmm.di
 
 import com.example.moveeapp_compose_kmm.ui.scene.account.AccountDetailViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.account.favoritescreen.FavoriteViewModel
-import com.example.moveeapp_compose_kmm.ui.scene.actordetail.ActorDetailViewModel
+import com.example.moveeapp_compose_kmm.ui.scene.artistdetail.ArtistDetailViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.login.LoginViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.map.MapViewModel
 import com.example.moveeapp_compose_kmm.ui.scene.main.MainViewModel
@@ -24,7 +24,7 @@ val viewModelModule = module {
     factory { TvViewModel(get()) }
     factory { TvDetailViewModel(get(), get(), get(), get(), get(), get()) }
     factory { SearchViewModel(get()) }
-    factory { ActorDetailViewModel(get()) }
+    factory { ArtistDetailViewModel(get()) }
     factory { FavoriteViewModel(get(), get()) }
     factory { MapViewModel(get(), get()) }
 }

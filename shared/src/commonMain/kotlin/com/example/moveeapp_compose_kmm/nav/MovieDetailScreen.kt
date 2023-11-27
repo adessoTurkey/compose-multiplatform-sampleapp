@@ -21,7 +21,7 @@ class MovieDetailScreen(
         MovieDetailScreen(
             viewModel = viewModel,
             movieId = movieId,
-            navigateToActor = { navigator.push(ActorDetailScreen(it)) },
+            navigateToActor = { navigator.push(ArtistDetailScreen(it)) },
             onBackPressed = navigator::pop,
         )
 

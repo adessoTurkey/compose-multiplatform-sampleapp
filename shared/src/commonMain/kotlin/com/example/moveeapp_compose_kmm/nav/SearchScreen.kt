@@ -20,7 +20,7 @@ class SearchScreen : Screen {
             viewModel = viewModel,
             navigateToMovie = { navigator.push(MovieDetailScreen(it)) },
             navigateToTv = { navigator.push(TvDetailScreen(it)) },
-            navigateToActor = { navigator.push(ActorDetailScreen(it)) }
+            navigateToActor = { navigator.push(ArtistDetailScreen(it)) }
         )
 
         BackHandler(isEnabled = true) {
