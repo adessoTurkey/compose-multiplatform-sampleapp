@@ -8,7 +8,7 @@ class LogoutUseCase(
     suspend fun execute(): Result<Boolean> {
         val result = repository.logout(sessionSettings.getSessionId())
 
-        if (result.isSuccess) sessionSettings.setSessionId("")
+        if (result.isSuccess) sessionSettings.removeSession()
 
         return result
     }

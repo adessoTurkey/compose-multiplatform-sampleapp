@@ -2,7 +2,6 @@ package com.example.moveeapp_compose_kmm.data.repository
 
 import com.example.moveeapp_compose_kmm.data.account.LoginState
 import com.example.moveeapp_compose_kmm.data.account.login.LoginResponseModel
-import com.example.moveeapp_compose_kmm.data.favorite.AddFavoriteRequestModel
 import com.example.moveeapp_compose_kmm.data.favorite.AddFavoriteResponseModel
 import com.example.moveeapp_compose_kmm.domain.account.AccountDetail
 import com.example.moveeapp_compose_kmm.domain.account.AccountRepository
@@ -10,6 +9,7 @@ import com.example.moveeapp_compose_kmm.domain.favorite.FavoriteMovie
 import com.example.moveeapp_compose_kmm.domain.favorite.FavoriteTv
 import com.example.moveeapp_compose_kmm.domain.favorite.MovieAccountState
 import com.example.moveeapp_compose_kmm.domain.favorite.TvAccountState
+import kotlinx.coroutines.flow.StateFlow
 
 class FakeAccountRepository : AccountRepository {
 
@@ -28,7 +28,7 @@ class FakeAccountRepository : AccountRepository {
         TODO("Not yet implemented")
     }
 
-    override fun getLoginState(): LoginState {
+    override fun getLoginState(): StateFlow<LoginState> {
         TODO("Not yet implemented")
     }
 
