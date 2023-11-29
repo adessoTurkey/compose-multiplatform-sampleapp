@@ -5,12 +5,23 @@ import com.example.moveeapp_compose_kmm.data.account.login.SessionRequestModel
 import com.example.moveeapp_compose_kmm.domain.account.AccountDetail
 import com.example.moveeapp_compose_kmm.domain.account.AccountRepository
 import com.example.moveeapp_compose_kmm.domain.account.SessionSettings
+import com.example.moveeapp_compose_kmm.utils.invoke
 import com.example.moveeapp_compose_kmm.utils.resultOf
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class AccountRepositoryImpl(
     private val service: AccountService,
     private val sessionSettings: SessionSettings,
 ) : AccountRepository {
+    private val _loginStateFlow = MutableStateFlow(
+        if (sessionSettings.doesSessionExist()) {
+            LoginState.LOGGED_IN
+        } else {
+            LoginState.LOGGED_OUT
+        }
+    )
 
     override suspend fun getAccountDetail(): Result<AccountDetail> {
         return resultOf {
@@ -21,17 +32,12 @@ class AccountRepositoryImpl(
         }
     }
 
-    private val sessionId = sessionSettings.getSessionId()
-    override fun getLoginState(): LoginState {
-        return if (sessionId.isNullOrEmpty()) {
-            LoginState.LOGGED_OUT
-        } else {
-            LoginState.LOGGED_IN
-        }
+    override fun getLoginState(): StateFlow<LoginState> {
+        return _loginStateFlow.asStateFlow()
     }
 
     override suspend fun login(username: String, password: String) = resultOf {
-        com.example.moveeapp_compose_kmm.utils.invoke {
+        invoke {
             val requestTokenResponse = service.createRequestToken()
 
             val loginRequestTokenResponse =
@@ -48,6 +54,7 @@ class AccountRepositoryImpl(
                 )
             )
             sessionSettings.setSessionId(sessionResponse.sessionId)
+            _loginStateFlow.value = LoginState.LOGGED_IN
 
             loginRequestTokenResponse
         }
@@ -56,7 +63,7 @@ class AccountRepositoryImpl(
     override suspend fun logout(sessionId: String?): Result<Boolean> {
         return resultOf {
             service.logout(LogoutRequestModel(sessionId!!)).success
-        }
+        }.onSuccess { _loginStateFlow.value = LoginState.LOGGED_OUT }
     }
 }
 
