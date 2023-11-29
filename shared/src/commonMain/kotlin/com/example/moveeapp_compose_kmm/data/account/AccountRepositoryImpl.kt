@@ -63,7 +63,7 @@ class AccountRepositoryImpl(
     override suspend fun logout(sessionId: String?): Result<Boolean> {
         return resultOf {
             service.logout(LogoutRequestModel(sessionId!!)).success
-        }.onSuccess { _loginStateFlow.value = LoginState.LOGGED_OUT }
+        }.onSuccess { if (it) _loginStateFlow.value = LoginState.LOGGED_OUT }
     }
 }
 
