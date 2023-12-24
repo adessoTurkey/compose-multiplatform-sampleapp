@@ -3,18 +3,19 @@
 minSdk = "24"
 targetSdk = "34"
 
-kotlin = "1.9.10"
+kotlin = "1.9.21"
 kotlinx-coroutines = "1.7.3"
 kotlinx-serialization = "1.6.0"
 kotlinx-datetime = "0.4.1"
-ktor = "2.3.4"
+ktor = "2.3.5"
 agp = "8.1.2"
 desugar_jdk_libs = "2.0.3"
-compose = "1.5.3"
+compose = "1.5.11"
+compose-ui-tooling = "1.5.4"
 androidx = "1.12.0"
-androidx-activity = "1.8.0"
+androidx-activity = "1.8.1"
 androidx-appcompat = "1.6.1"
-voyager = "1.0.0-rc08"
+voyager = "1.0.0-rc10"
 napier = "2.6.1"
 buildKonfig = "0.14.0"
 koin = "3.5.0"
@@ -22,7 +23,7 @@ koin-compose = "1.1.0"
 moko = "0.23.0"
 seiko = "1.5.1"
 mapsCompose = "2.15.0"
-playServicesMaps = "18.1.0"
+playServicesMaps = "18.2.0"
 playServicesLocation = "21.0.1"
 maps-secrets = "2.0.1"
 
@@ -31,9 +32,9 @@ maps-secrets = "2.0.1"
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
-androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose" }
-androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
-androidx-compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose-ui-tooling" }
+androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-ui-tooling" }
+androidx-compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose-ui-tooling" }
 maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
