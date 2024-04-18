@@ -222,7 +222,7 @@ fun HorizontalMoviePager(
             Card(
                 Modifier
                     .graphicsLayer {
-                        val pageOffset = pagerState.initialPageOffsetFraction
+                        val pageOffset = pagerState.currentPageOffsetFraction
                         lerp(
                             start = 0.65f,
                             stop = 1f,

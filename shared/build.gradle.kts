@@ -157,11 +157,11 @@ kotlin {
                     api(tooling)
                     api(preview)
                 }
-                api (libs.maps.compose)
+                api(libs.maps.compose)
 
                 //Location
                 api(libs.play.services.location)
-                api (libs.play.services.maps)
+                api(libs.play.services.maps)
             }
         }
         val iosX64Main by getting
@@ -190,7 +190,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.4"
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
 }
 
