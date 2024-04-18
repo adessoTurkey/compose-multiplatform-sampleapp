@@ -54,6 +54,7 @@ import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import dev.icerock.moko.resources.compose.fontFamilyResource
 import dev.icerock.moko.resources.compose.painterResource
 import dev.icerock.moko.resources.compose.stringResource
+import kotlin.math.absoluteValue
 
 @Composable
 fun MovieScreen(
@@ -215,28 +216,29 @@ fun HorizontalMoviePager(
                 }
             }
 
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier.fillMaxSize()
-        ) { page ->
-            Card(
-                Modifier
-                    .graphicsLayer {
-                        val pageOffset = pagerState.currentPageOffsetFraction
-                        lerp(
-                            start = 0.65f,
-                            stop = 1f,
-                            fraction = 0.5f - pageOffset.coerceIn(0f, 1f)
-                        ).also { scale ->
-                            scaleX = scale
-                            scaleY = scale
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.fillMaxSize()
+            ) { page ->
+                Card(
+                    Modifier
+                        .graphicsLayer {
+                            val pageOffset =
+                                ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
+                            lerp(
+                                start = 0.65f,
+                                stop = 1f,
+                                fraction = 0.5f - pageOffset.coerceIn(0f, 1f)
+                            ).also { scale ->
+                                scaleX = scale
+                                scaleY = scale
+                            }
                         }
-                    }
-                    .fillMaxWidth()
-                    .clickable {
-                        onDetailClick(popularMovie[page].movieId)
-                    }
-                    .aspectRatio(0.666f)) {
+                        .fillMaxWidth()
+                        .clickable {
+                            onDetailClick(popularMovie[page].movieId)
+                        }
+                        .aspectRatio(0.666f)) {
                     PosterImageItem(imagePath = popularMovie[page].posterPath)
                 }
             }

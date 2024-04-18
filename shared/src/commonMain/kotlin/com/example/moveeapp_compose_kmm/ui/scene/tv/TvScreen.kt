@@ -38,6 +38,7 @@ import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
+import kotlin.math.absoluteValue
 
 @Composable
 fun TvScreen(
@@ -152,7 +153,8 @@ fun HorizontalMoviePager(
     ) { page ->
         Card(
             Modifier.graphicsLayer {
-                val pageOffset = pagerState.currentPageOffsetFraction
+                val pageOffset =
+                    ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
                 lerp(
                     start = 0.65f, stop = 1f, fraction = 0.5f - pageOffset.coerceIn(0f, 1f)
                 ).also { scale ->
