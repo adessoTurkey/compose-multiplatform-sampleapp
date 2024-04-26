@@ -1,7 +1,5 @@
 package com.example.moveeapp_compose_kmm.core
 
-import android.content.Context
-import android.graphics.Bitmap
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,24 +22,24 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
-import com.google.android.gms.maps.model.BitmapDescriptor
+import com.example.moveeapp_compose_kmm.utils.asAndroidBitmap
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.MarkerState
+import org.jetbrains.compose.resources.DrawableResource
 
 @Composable
 fun MapsMarker(
     position: LatLng,
-    iconRes: Int,
+    iconRes: DrawableResource,
     title: String,
     onClick: (Marker) -> Unit
 ) {
     val context = LocalContext.current
     val markerState = MarkerState(position = position)
-    val icon = bitmapDescriptor(context, iconRes)
+    val icon = BitmapDescriptorFactory.fromBitmap(iconRes.asAndroidBitmap())
 
     MarkerInfoWindow(
         state = markerState,
@@ -57,7 +55,7 @@ fun MapsMarker(
         },
 
         ) {
-        val color =  MaterialTheme.colorScheme.primary
+        val color = MaterialTheme.colorScheme.primary
 
         Column(
             modifier = Modifier.offset(y = (20).dp)
@@ -94,12 +92,12 @@ fun MapsMarker(
 @Composable
 fun CurrentLocationMarker(
     position: LatLng,
-    iconRes: Int,
+    iconRes: DrawableResource,
     onClick: (Marker) -> Unit
 ) {
     val context = LocalContext.current
     val markerState = MarkerState(position = position)
-    val icon = bitmapDescriptor(context, iconRes)
+    val icon = BitmapDescriptorFactory.fromBitmap(iconRes.asAndroidBitmap())
 
     MarkerInfoWindow(
         state = markerState,
@@ -110,24 +108,4 @@ fun CurrentLocationMarker(
             true
         },
     )
-}
-
-fun bitmapDescriptor(
-    context: Context,
-    vectorResId: Int
-): BitmapDescriptor? {
-
-    // retrieve the actual drawable
-    val drawable = ContextCompat.getDrawable(context, vectorResId) ?: return null
-    drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-    val bm = Bitmap.createBitmap(
-        drawable.intrinsicWidth,
-        drawable.intrinsicHeight,
-        Bitmap.Config.ARGB_8888
-    )
-
-    // draw it onto the bitmap
-    val canvas = android.graphics.Canvas(bm)
-    drawable.draw(canvas)
-    return BitmapDescriptorFactory.fromBitmap(bm)
 }

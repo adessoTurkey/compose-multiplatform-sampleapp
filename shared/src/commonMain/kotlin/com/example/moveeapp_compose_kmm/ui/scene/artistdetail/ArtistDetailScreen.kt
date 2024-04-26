@@ -22,7 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.domain.MediaType
 import com.example.moveeapp_compose_kmm.domain.artist.ArtistCredit
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
@@ -31,7 +30,9 @@ import com.example.moveeapp_compose_kmm.ui.components.DetailScreensAppBar
 import com.example.moveeapp_compose_kmm.ui.components.ExpandableText
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import dev.icerock.moko.resources.compose.stringResource
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.actor_born
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ArtistDetailScreen(
@@ -88,7 +89,7 @@ fun SuccessContent(
                 horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
                 TextItem(
-                    text = stringResource(MR.strings.actor_born),
+                    text = stringResource(Res.string.actor_born),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )

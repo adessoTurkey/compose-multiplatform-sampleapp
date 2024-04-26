@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -27,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.domain.MediaType
 import com.example.moveeapp_compose_kmm.domain.favorite.FavoriteMovie
 import com.example.moveeapp_compose_kmm.domain.favorite.FavoriteTv
@@ -38,8 +37,11 @@ import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.ui.scene.account.FavoriteMovieUiState
 import com.example.moveeapp_compose_kmm.ui.scene.account.FavoriteTvUiState
-import dev.icerock.moko.resources.compose.fontFamilyResource
-import dev.icerock.moko.resources.compose.stringResource
+import com.example.moveeapp_compose_kmm.ui.theme.Fonts
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.fav_movie
+import movee.shared.generated.resources.fav_tv
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,9 +63,9 @@ fun FavoriteScreen(
                 TopAppBar(
                     title = {
                         TextItem(
-                            text = stringResource(MR.strings.fav_movie),
+                            text = stringResource(Res.string.fav_movie),
                             fontSize = 20.sp,
-                            fontFamily = fontFamilyResource(MR.fonts.sfpro.bold),
+                            fontFamily = Fonts.bold,
                             textColor = MaterialTheme.colorScheme.primaryContainer
                         )
                     },
@@ -91,9 +93,9 @@ fun FavoriteScreen(
                 TopAppBar(
                     title = {
                         TextItem(
-                            text = stringResource(MR.strings.fav_tv),
+                            text = stringResource(Res.string.fav_tv),
                             fontSize = 20.sp,
-                            fontFamily = fontFamilyResource(MR.fonts.sfpro.bold),
+                            fontFamily = Fonts.bold,
                             textColor = MaterialTheme.colorScheme.primaryContainer
                         )
                     },

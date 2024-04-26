@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.cocoapods)
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.moko.resources)
     alias(libs.plugins.buildKonfig)
 }
 
@@ -65,13 +64,15 @@ kotlin {
             baseName = "shared"
             isStatic = true
         }
-        extraSpecAttributes["resources"] =
-            "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
 
-    jvmToolchain(11)
+    jvmToolchain(17)
 
     sourceSets {
+        all {
+            languageSettings.optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
+        }
+
         val commonMain by getting {
             dependencies {
 
@@ -83,6 +84,7 @@ kotlin {
                     api(material3)
                     api(materialIconsExtended)
                     api(animation)
+                    implementation(components.resources)
                 }
 
                 implementation(libs.logger)
@@ -122,10 +124,6 @@ kotlin {
 
                 //KVault
                 api(libs.settings)
-
-                //Moko
-                api(libs.moko.resources)
-                api(libs.moko.resources.compose)
             }
         }
 
@@ -192,8 +190,4 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
-}
-
-multiplatformResources {
-    multiplatformResourcesPackage = "com.example.moveeapp_compose_kmm"
 }

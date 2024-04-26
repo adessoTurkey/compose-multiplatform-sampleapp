@@ -42,8 +42,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
-import com.example.moveeapp_compose_kmm.MR
-import dev.icerock.moko.resources.compose.stringResource
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.rate
+import org.jetbrains.compose.resources.stringResource
 import kotlin.math.ceil
 
 private val rateButtonSize = 40.dp
@@ -97,7 +98,7 @@ fun RateButton(
 
             Row(modifier = Modifier.animateContentSize()) {
                 TextItem(
-                    text = stringResource(MR.strings.rate),
+                    text = stringResource(Res.string.rate),
                     fontSize = 15.sp
                 )
 
@@ -138,7 +139,7 @@ private fun RateButtonContent(
         var previousDragRating by remember { mutableStateOf<Int?>(null) }
         Box(modifier = modifier.fillMaxWidth()
             .alpha(alpha).pointerInput(Unit) {
-                detectDragGestures(onDrag = { change, dragAmount ->
+                detectDragGestures(onDrag = { change, _ ->
                     val x = change.position.x
                     val rating = getRatingByOffset(
                         xOffsetDp = x.toDp(),

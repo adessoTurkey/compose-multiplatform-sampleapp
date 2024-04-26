@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,7 +27,7 @@ fun WebViewContent(url: String, onBackPressed: () -> Unit) {
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TransparentIconHolder(icon = Icons.Rounded.ArrowBack, onClick = onBackPressed)
+            TransparentIconHolder(icon = Icons.AutoMirrored.Rounded.ArrowBack, onClick = onBackPressed)
         }
         WebView(modifier = Modifier.fillMaxSize(), url)
     }

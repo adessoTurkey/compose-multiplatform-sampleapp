@@ -13,7 +13,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -22,8 +21,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.moveeapp_compose_kmm.MR
-import dev.icerock.moko.resources.compose.painterResource
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.ic_tabbar_search
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun TextInputItem(
@@ -33,8 +33,7 @@ fun TextInputItem(
     isError: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     label: @Composable (() -> Unit)? = null,
-    leadingIcon: @Composable (() -> Unit)? = null
-
+    leadingIcon: @Composable (() -> Unit)? = null,
 ) {
     TextField(
         modifier = modifier
@@ -71,7 +70,6 @@ fun TextInputItem(
     )
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchTextField(
     modifier: Modifier = Modifier,
@@ -92,7 +90,10 @@ fun SearchTextField(
         value = query,
         onValueChange = { onValueChange.invoke(it) },
         leadingIcon = {
-            Icon(painter = painterResource(MR.images.ic_tabbar_search), contentDescription = null)
+            Icon(
+                painter = painterResource(Res.drawable.ic_tabbar_search),
+                contentDescription = null
+            )
         },
         trailingIcon = {
             if (query.isNotEmpty()) {

@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.getPlatformContext
 import com.example.moveeapp_compose_kmm.core.navigateToMap
 import com.example.moveeapp_compose_kmm.core.viewModel
@@ -28,8 +27,10 @@ import com.example.moveeapp_compose_kmm.map.Map
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
 import com.example.moveeapp_compose_kmm.ui.components.MapsMarkerDialog
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import dev.icerock.moko.resources.compose.fontFamilyResource
-import dev.icerock.moko.resources.compose.stringResource
+import com.example.moveeapp_compose_kmm.ui.theme.Fonts
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.cinema
+import org.jetbrains.compose.resources.stringResource
 
 class MapScreen : Screen {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -47,9 +48,9 @@ class MapScreen : Screen {
             TopAppBar(
                 title = {
                     TextItem(
-                        text = stringResource(MR.strings.cinema),
+                        text = stringResource(Res.string.cinema),
                         fontSize = 20.sp,
-                        fontFamily = fontFamilyResource(MR.fonts.sfpro.bold),
+                        fontFamily = Fonts.bold,
                         textColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 },

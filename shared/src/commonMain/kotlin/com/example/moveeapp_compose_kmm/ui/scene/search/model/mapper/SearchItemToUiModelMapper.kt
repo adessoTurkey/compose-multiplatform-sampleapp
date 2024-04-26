@@ -1,10 +1,13 @@
 package com.example.moveeapp_compose_kmm.ui.scene.search.model.mapper
 
-import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.domain.MediaType
 import com.example.moveeapp_compose_kmm.domain.search.SearchItem
 import com.example.moveeapp_compose_kmm.ui.scene.search.model.SearchUiModel
-import dev.icerock.moko.resources.ImageResource
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.ic_search_actor
+import movee.shared.generated.resources.ic_search_movie
+import movee.shared.generated.resources.ic_search_tv
+import org.jetbrains.compose.resources.DrawableResource
 
 class SearchItemToUiModelMapper {
     fun map(from: SearchItem): SearchUiModel {
@@ -19,19 +22,20 @@ class SearchItemToUiModelMapper {
         }
     }
 
-    private fun getIconType(searchItem: SearchItem): ImageResource? =
+    private fun getIconType(searchItem: SearchItem): DrawableResource? =
         when (searchItem.mediaType) {
             MediaType.MOVIE -> {
-                MR.images.ic_search_movie
+                Res.drawable.ic_search_movie
             }
 
             MediaType.TV -> {
-                MR.images.ic_search_tv
+                Res.drawable.ic_search_tv
             }
 
             MediaType.PERSON -> {
-                MR.images.ic_search_actor
+                Res.drawable.ic_search_actor
             }
+
             else -> null
         }
 }

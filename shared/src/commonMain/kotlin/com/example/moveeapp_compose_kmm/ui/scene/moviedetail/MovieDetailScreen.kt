@@ -36,7 +36,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.getPlatformContext
 import com.example.moveeapp_compose_kmm.core.ifNotNull
 import com.example.moveeapp_compose_kmm.core.share
@@ -55,7 +54,10 @@ import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.RateRow
 import com.example.moveeapp_compose_kmm.ui.components.RuntimeItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import dev.icerock.moko.resources.compose.stringResource
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.movie_detail_cast
+import movee.shared.generated.resources.share
+import org.jetbrains.compose.resources.stringResource
 import kotlin.math.round
 
 @Composable
@@ -196,7 +198,7 @@ fun MovieDetailContent(
             onRatingValueChange = { onRateMovie.invoke(it, uiState.movieDetailData.movieId) },
             hidableContent = {
                 FloatingActionButtonItem(
-                    text = stringResource(MR.strings.share),
+                    text = stringResource(Res.string.share),
                     icon = Icons.Default.Share,
                     onClick = {
                         share(platformContext, uiState.movieDetailData.homepage)
@@ -223,7 +225,7 @@ fun MovieCreditLazyRow(
     onDetailClick: (Int) -> Unit,
 ) {
     TextItem(
-        text = stringResource(MR.strings.movie_detail_cast),
+        text = stringResource(Res.string.movie_detail_cast),
         fontSize = 28.sp,
         fontWeight = FontWeight.Bold,
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)

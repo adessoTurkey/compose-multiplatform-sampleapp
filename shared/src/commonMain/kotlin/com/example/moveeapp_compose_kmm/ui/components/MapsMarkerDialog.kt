@@ -7,12 +7,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -21,16 +21,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.moveeapp_compose_kmm.MR
-import dev.icerock.moko.resources.compose.fontFamilyResource
-import dev.icerock.moko.resources.compose.stringResource
+import com.example.moveeapp_compose_kmm.ui.theme.Fonts
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.go
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun MapsMarkerDialog(
     modifier: Modifier = Modifier,
     title: String,
     subTitle: String,
-    onClick : () -> Unit
+    onClick: () -> Unit
 ) {
     Card(
         modifier = modifier,
@@ -60,12 +61,12 @@ fun MapsMarkerDialog(
             fontWeight = FontWeight.Light,
             maxLines = Int.MAX_VALUE
         )
-        Divider(
+        HorizontalDivider(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp, vertical = 10.dp),
-            color = MaterialTheme.colorScheme.secondaryContainer,
-            thickness = 1.dp
+            thickness = 1.dp,
+            color = MaterialTheme.colorScheme.secondaryContainer
         )
         Button(
             modifier = Modifier
@@ -82,16 +83,16 @@ fun MapsMarkerDialog(
             }) {
             Icon(
                 modifier = Modifier.padding(2.dp),
-                imageVector = Icons.Outlined.KeyboardArrowRight,
+                imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
                 tint = Color.White,
                 contentDescription = null
             )
             TextItem(
                 modifier = Modifier.wrapContentSize(),
                 fontSize = 10.sp,
-                fontFamily = fontFamilyResource(MR.fonts.sfpro.medium),
+                fontFamily = Fonts.medium,
                 textColor = MaterialTheme.colorScheme.primaryContainer,
-                text = stringResource(MR.strings.go),
+                text = stringResource(Res.string.go),
             )
         }
     }

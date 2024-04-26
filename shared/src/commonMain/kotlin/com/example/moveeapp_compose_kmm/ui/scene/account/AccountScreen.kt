@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,12 +29,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.domain.MediaType
-import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import dev.icerock.moko.resources.compose.fontFamilyResource
-import dev.icerock.moko.resources.compose.stringResource
+import com.example.moveeapp_compose_kmm.ui.theme.Fonts
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.fav_movie
+import movee.shared.generated.resources.fav_tv
+import movee.shared.generated.resources.hello
+import movee.shared.generated.resources.tab_profile
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun AccountScreen(
@@ -85,23 +88,23 @@ fun SuccessContent(
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                 TextItem(
                     modifier = Modifier.padding(top = 24.dp),
-                    text = stringResource(MR.strings.tab_profile),
+                    text = stringResource(Res.string.tab_profile),
                     fontSize = 34.sp,
                     textColor = MaterialTheme.colorScheme.primaryContainer,
-                    fontFamily = fontFamilyResource(MR.fonts.sfpro.bold)
+                    fontFamily = Fonts.bold
                 )
                 TextItem(
                     modifier = Modifier.padding(top = 31.dp),
-                    text = stringResource(MR.strings.hello), fontSize = 20.sp,
+                    text = stringResource(Res.string.hello), fontSize = 20.sp,
                     textColor = MaterialTheme.colorScheme.primaryContainer,
-                    fontFamily = fontFamilyResource(MR.fonts.sfpro.medium)
+                    fontFamily = Fonts.medium
                 )
                 TextItem(
                     modifier = Modifier.padding(top = 8.dp),
                     text = uiState.accountData.fullName,
                     fontSize = 25.sp,
                     textColor = MaterialTheme.colorScheme.primaryContainer,
-                    fontFamily = fontFamilyResource(MR.fonts.sfpro.bold)
+                    fontFamily = Fonts.bold
                 )
             }
         }
@@ -120,10 +123,10 @@ fun SuccessContent(
             ) {
                 TextItem(
                     modifier = Modifier.padding(start = 16.dp),
-                    text = stringResource(MR.strings.fav_movie),
+                    text = stringResource(Res.string.fav_movie),
                 )
                 Icon(
-                    Icons.Default.ArrowForward,
+                    Icons.AutoMirrored.Filled.ArrowForward,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(end = 16.dp)
@@ -143,10 +146,10 @@ fun SuccessContent(
             ) {
                 TextItem(
                     modifier = Modifier.padding(start = 16.dp),
-                    text = stringResource(MR.strings.fav_tv),
+                    text = stringResource(Res.string.fav_tv),
                 )
                 Icon(
-                    Icons.Default.ArrowForward,
+                    Icons.AutoMirrored.Filled.ArrowForward,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(end = 16.dp)
@@ -166,7 +169,7 @@ fun SuccessContent(
                 style = TextStyle(textDecoration = TextDecoration.Underline),
                 textAlign = TextAlign.Center,
                 fontSize = 16.sp,
-                fontFamily = fontFamilyResource(MR.fonts.sfpro.regular)
+                fontFamily = Fonts.regular
             )
         }
     }
