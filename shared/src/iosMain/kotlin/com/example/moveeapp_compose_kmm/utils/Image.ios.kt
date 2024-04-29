@@ -40,9 +40,7 @@ fun DrawableResource.asUiImage(width: Dp = 24.dp, height: Dp = 24.dp): UIImage? 
 
 @OptIn(ExperimentalForeignApi::class)
 fun ImageBitmap.toUiImage(): UIImage? {
-    val buffer = IntArray(width * height)
-    readPixels(buffer)
-    val pixels = this.asSkiaBitmap().readPixels(
+    val pixels = asSkiaBitmap().readPixels(
         ImageInfo(width, height, ColorType.RGBA_8888, ColorAlphaType.PREMUL, ColorSpace.sRGB)
     ) ?: return null
 
