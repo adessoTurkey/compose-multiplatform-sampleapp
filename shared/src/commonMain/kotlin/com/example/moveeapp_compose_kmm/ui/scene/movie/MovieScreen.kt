@@ -37,7 +37,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
-import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.ifNotNull
 import com.example.moveeapp_compose_kmm.domain.movie.NowPlayingMovie
 import com.example.moveeapp_compose_kmm.domain.movie.PopularMovie
@@ -51,9 +50,13 @@ import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import dev.icerock.moko.resources.compose.fontFamilyResource
-import dev.icerock.moko.resources.compose.painterResource
-import dev.icerock.moko.resources.compose.stringResource
+import com.example.moveeapp_compose_kmm.ui.theme.Fonts
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.ic_map
+import movee.shared.generated.resources.tab_movies
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import kotlin.math.absoluteValue
 
 @Composable
 fun MovieScreen(
@@ -180,9 +183,9 @@ fun HorizontalMoviePager(
             ) {
                 TextItem(
                     fontSize = 34.sp,
-                    fontFamily = fontFamilyResource(MR.fonts.sfpro.bold),
+                    fontFamily = Fonts.bold,
                     textColor = MaterialTheme.colorScheme.primaryContainer,
-                    text = stringResource(MR.strings.tab_movies)
+                    text = stringResource(Res.string.tab_movies)
                 )
 
                 val permissionState = rememberPermissionState(Permission.LOCATION) { result ->
@@ -207,7 +210,7 @@ fun HorizontalMoviePager(
                         Icon(
                             modifier = Modifier.size(width = 14.dp, height = 19.dp)
                                 .padding(8.dp),
-                            painter = painterResource(MR.images.ic_map),
+                            painter = painterResource(Res.drawable.ic_map),
                             tint = MaterialTheme.colorScheme.primary,
                             contentDescription = null
                         )
@@ -215,28 +218,29 @@ fun HorizontalMoviePager(
                 }
             }
 
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier.fillMaxSize()
-        ) { page ->
-            Card(
-                Modifier
-                    .graphicsLayer {
-                        val pageOffset = pagerState.initialPageOffsetFraction
-                        lerp(
-                            start = 0.65f,
-                            stop = 1f,
-                            fraction = 0.5f - pageOffset.coerceIn(0f, 1f)
-                        ).also { scale ->
-                            scaleX = scale
-                            scaleY = scale
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.fillMaxSize()
+            ) { page ->
+                Card(
+                    Modifier
+                        .graphicsLayer {
+                            val pageOffset =
+                                ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue
+                            lerp(
+                                start = 0.65f,
+                                stop = 1f,
+                                fraction = 0.5f - pageOffset.coerceIn(0f, 1f)
+                            ).also { scale ->
+                                scaleX = scale
+                                scaleY = scale
+                            }
                         }
-                    }
-                    .fillMaxWidth()
-                    .clickable {
-                        onDetailClick(popularMovie[page].movieId)
-                    }
-                    .aspectRatio(0.666f)) {
+                        .fillMaxWidth()
+                        .clickable {
+                            onDetailClick(popularMovie[page].movieId)
+                        }
+                        .aspectRatio(0.666f)) {
                     PosterImageItem(imagePath = popularMovie[page].posterPath)
                 }
             }

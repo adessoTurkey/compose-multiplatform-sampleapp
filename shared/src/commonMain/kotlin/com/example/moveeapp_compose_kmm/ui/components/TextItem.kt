@@ -10,8 +10,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import com.example.moveeapp_compose_kmm.MR
-import dev.icerock.moko.resources.compose.fontFamilyResource
+import com.example.moveeapp_compose_kmm.ui.theme.Fonts
 
 @Composable
 fun TextItem(
@@ -23,7 +22,7 @@ fun TextItem(
     maxLines: Int = 1,
     overflow: TextOverflow = TextOverflow.Clip,
     lineHeight: TextUnit = TextUnit.Unspecified,
-    fontFamily: FontFamily = fontFamilyResource(MR.fonts.sfpro.regular)
+    fontFamily: FontFamily = Fonts.regular
 ) {
     Text(
         text = text,

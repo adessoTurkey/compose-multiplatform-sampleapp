@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.cocoapods)
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.moko.resources)
     alias(libs.plugins.buildKonfig)
 }
 
@@ -65,13 +64,21 @@ kotlin {
             baseName = "shared"
             isStatic = true
         }
-        extraSpecAttributes["resources"] =
-            "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
 
-    jvmToolchain(11)
+    androidTarget {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = JavaVersion.VERSION_11.toString()
+            }
+        }
+    }
 
     sourceSets {
+        all {
+            languageSettings.optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
+        }
+
         val commonMain by getting {
             dependencies {
 
@@ -83,6 +90,7 @@ kotlin {
                     api(material3)
                     api(materialIconsExtended)
                     api(animation)
+                    implementation(components.resources)
                 }
 
                 implementation(libs.logger)
@@ -122,10 +130,6 @@ kotlin {
 
                 //KVault
                 api(libs.settings)
-
-                //Moko
-                api(libs.moko.resources)
-                api(libs.moko.resources.compose)
             }
         }
 
@@ -157,11 +161,11 @@ kotlin {
                     api(tooling)
                     api(preview)
                 }
-                api (libs.maps.compose)
+                api(libs.maps.compose)
 
                 //Location
                 api(libs.play.services.location)
-                api (libs.play.services.maps)
+                api(libs.play.services.maps)
             }
         }
         val iosX64Main by getting
@@ -190,10 +194,10 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.4"
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
-}
-
-multiplatformResources {
-    multiplatformResourcesPackage = "com.example.moveeapp_compose_kmm"
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
 }

@@ -1,6 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
-rootProject.name = "Movee CMP"
+rootProject.name = "Movee"
 
 pluginManagement {
     repositories {

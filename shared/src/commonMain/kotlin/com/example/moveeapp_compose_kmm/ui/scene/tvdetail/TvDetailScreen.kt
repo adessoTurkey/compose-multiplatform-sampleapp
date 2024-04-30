@@ -37,7 +37,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.getPlatformContext
 import com.example.moveeapp_compose_kmm.core.ifNotNull
 import com.example.moveeapp_compose_kmm.core.share
@@ -55,7 +54,12 @@ import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.RateRow
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
-import dev.icerock.moko.resources.compose.stringResource
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.movie_detail_cast
+import movee.shared.generated.resources.share
+import movee.shared.generated.resources.tv_detail_episode
+import movee.shared.generated.resources.tv_detail_season
+import org.jetbrains.compose.resources.stringResource
 import kotlin.math.round
 
 @Composable
@@ -186,7 +190,7 @@ fun TvDetailContent(
             onRatingValueChange = { onRateTvShow.invoke(it, uiState.tvDetailData.tvSeriesId) },
             hidableContent = {
                 FloatingActionButtonItem(
-                    text = stringResource(MR.strings.share),
+                    text = stringResource(Res.string.share),
                     icon = Icons.Default.Share,
                     onClick = {
                         share(platformContext, uiState.tvDetailData.homepage)
@@ -212,12 +216,12 @@ fun TvDetailContent(
             horizontalArrangement = Arrangement.Start
         ) {
             ChipItem(
-                string = stringResource(MR.strings.tv_detail_season) + " ${uiState.tvDetailData.numberOfSeasons}",
+                string = stringResource(Res.string.tv_detail_season) + " ${uiState.tvDetailData.numberOfSeasons}",
                 backgroundColor = MaterialTheme.colorScheme.secondary
             )
             Spacer(modifier = Modifier.padding(8.dp))
             ChipItem(
-                string = stringResource(MR.strings.tv_detail_episode) + " ${uiState.tvDetailData.numberOfEpisodes}",
+                string = stringResource(Res.string.tv_detail_episode) + " ${uiState.tvDetailData.numberOfEpisodes}",
                 backgroundColor = MaterialTheme.colorScheme.secondary
             )
         }
@@ -230,7 +234,7 @@ fun TvCreditLazyRow(
     onDetailClick: (Int) -> Unit,
 ) {
     TextItem(
-        text = stringResource(MR.strings.movie_detail_cast),
+        text = stringResource(Res.string.movie_detail_cast),
         fontSize = 28.sp,
         fontWeight = FontWeight.Bold,
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)

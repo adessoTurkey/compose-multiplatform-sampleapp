@@ -28,13 +28,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.data.account.LoginState
 import com.example.moveeapp_compose_kmm.ui.components.TextInputItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.utils.Constants
-import dev.icerock.moko.resources.compose.painterResource
-import dev.icerock.moko.resources.compose.stringResource
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.ic_login_movee
+import movee.shared.generated.resources.login_background
+import movee.shared.generated.resources.login_forgot_password
+import movee.shared.generated.resources.login_password
+import movee.shared.generated.resources.login_register
+import movee.shared.generated.resources.login_title
+import movee.shared.generated.resources.login_username
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun LoginScreen(
@@ -46,7 +53,7 @@ fun LoginScreen(
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(MR.images.login_background),
+            painter = painterResource(Res.drawable.login_background),
             contentDescription = null,
             contentScale = ContentScale.FillBounds
         )
@@ -60,7 +67,7 @@ fun LoginScreen(
             ) {
                 Image(
                     modifier = Modifier.align(Alignment.Center),
-                    painter = painterResource(MR.images.ic_login_movee),
+                    painter = painterResource(Res.drawable.ic_login_movee),
                     contentDescription = null
                 )
             }
@@ -102,7 +109,7 @@ fun LoginContent(
             onValueChange = { onUserNameChange(it) },
             label = {
                 TextItem(
-                    text = stringResource(MR.strings.login_username),
+                    text = stringResource(Res.string.login_username),
                     textColor = MaterialTheme.colorScheme.primaryContainer
                 )
             },
@@ -110,7 +117,7 @@ fun LoginContent(
                 Icon(
                     imageVector = Icons.Default.Person,
                     tint = Color.White,
-                    contentDescription = stringResource(MR.strings.login_username)
+                    contentDescription = stringResource(Res.string.login_username)
                 )
             },
             isError = loginUiState.loginError != null
@@ -122,7 +129,7 @@ fun LoginContent(
             onValueChange = { onPasswordChange(it) },
             label = {
                 TextItem(
-                    text = stringResource(MR.strings.login_password),
+                    text = stringResource(Res.string.login_password),
                     textColor = MaterialTheme.colorScheme.primaryContainer
                 )
             },
@@ -130,7 +137,7 @@ fun LoginContent(
                 Icon(
                     imageVector = Icons.Default.Lock,
                     tint = Color.White,
-                    contentDescription = stringResource(MR.strings.login_password)
+                    contentDescription = stringResource(Res.string.login_password)
                 )
             },
             isError = loginUiState.loginError != null,
@@ -139,7 +146,7 @@ fun LoginContent(
 
         Row {
             TextItem(
-                text = stringResource(MR.strings.login_forgot_password),
+                text = stringResource(Res.string.login_forgot_password),
                 modifier = Modifier.clickable {
                     navigateToWebViewScreen(Constants.FORGOT_PASSWORD)
                 },
@@ -156,13 +163,13 @@ fun LoginContent(
             ),
             onClick = { onLogin() }) {
             TextItem(
-                text = stringResource(MR.strings.login_title),
+                text = stringResource(Res.string.login_title),
                 textColor = MaterialTheme.colorScheme.primary
             )
         }
 
         TextItem(
-            text = stringResource(MR.strings.login_register),
+            text = stringResource(Res.string.login_register),
             modifier = Modifier.clickable {
                 navigateToWebViewScreen(Constants.REGISTER)
             },

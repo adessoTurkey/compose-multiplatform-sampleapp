@@ -20,7 +20,6 @@ import androidx.compose.ui.layout.ContentScale.Companion.FillWidth
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.StatusBarAppearance
 import com.example.moveeapp_compose_kmm.core.getDominantColor
 import com.example.moveeapp_compose_kmm.core.toComposeImageBitmap
@@ -32,7 +31,9 @@ import com.seiko.imageloader.asImageBitmap
 import com.seiko.imageloader.model.ImageRequest
 import com.seiko.imageloader.model.ImageResult
 import com.seiko.imageloader.rememberAsyncImagePainter
-import dev.icerock.moko.resources.compose.painterResource
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.search_place_holder
+import org.jetbrains.compose.resources.painterResource
 import kotlin.math.roundToInt
 
 @Composable
@@ -112,7 +113,7 @@ fun CardImageItem(
 
     Image(
         painter = if (imagePath.isNullOrEmpty()) {
-            painterResource(MR.images.search_place_holder)
+            painterResource(Res.drawable.search_place_holder)
         } else {
             rememberAsyncImagePainter(
                 Constants.IMAGE_BASE.plus(imagePath)

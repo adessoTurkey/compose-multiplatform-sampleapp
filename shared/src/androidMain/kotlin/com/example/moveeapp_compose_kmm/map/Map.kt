@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.example.moveeapp_compose_kmm.R
 import com.example.moveeapp_compose_kmm.core.CurrentLocationMarker
 import com.example.moveeapp_compose_kmm.core.GoogleMapsComponent
 import com.example.moveeapp_compose_kmm.core.MapsMarker
@@ -18,6 +17,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraMoveStartedReason
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.ic_maps_marker
+import movee.shared.generated.resources.ic_maps_marker_user
 
 @Composable
 actual fun Map(
@@ -65,7 +67,7 @@ actual fun Map(
         if (uiState.lastLocation != null) {
             CurrentLocationMarker(
                 position = LatLng(uiState.lastLocation.latitude, uiState.lastLocation.longitude),
-                iconRes = R.drawable.ic_maps_marker_user
+                iconRes = Res.drawable.ic_maps_marker_user
             ) {
                 coroutineScope.launch {
                     cameraPositionState.animate(
@@ -82,7 +84,7 @@ actual fun Map(
             MapsMarker(
                 position = LatLng(cinema.location.latitude, cinema.location.longitude),
                 title = cinema.name,
-                iconRes = R.drawable.ic_maps_marker
+                iconRes = Res.drawable.ic_maps_marker
             ) {
                 onMarkerClick.invoke(cinema)
             }

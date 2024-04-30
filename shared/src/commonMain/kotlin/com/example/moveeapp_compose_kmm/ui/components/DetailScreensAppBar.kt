@@ -22,8 +22,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.moveeapp_compose_kmm.MR
-import dev.icerock.moko.resources.compose.painterResource
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.ic_arrow_back
+import movee.shared.generated.resources.ic_heart
+import movee.shared.generated.resources.ic_heart_filled
+import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -69,7 +72,7 @@ fun BackPressedItem(modifier: Modifier = Modifier, onBackPressed: () -> Unit) {
                 .fillMaxSize()
                 .clickable(onClick = onBackPressed)
                 .padding(7.dp),
-            painter = painterResource(MR.images.ic_arrow_back),
+            painter = painterResource(Res.drawable.ic_arrow_back),
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primaryContainer
         )
@@ -96,7 +99,7 @@ fun FavouriteItem(
             Icon(
                 modifier = Modifier
                     .padding(6.dp),
-                painter = painterResource(if (isFavorite) MR.images.ic_heart_filled else MR.images.ic_heart),
+                painter = painterResource(if (isFavorite) Res.drawable.ic_heart_filled else Res.drawable.ic_heart),
                 contentDescription = null,
                 tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary
             )

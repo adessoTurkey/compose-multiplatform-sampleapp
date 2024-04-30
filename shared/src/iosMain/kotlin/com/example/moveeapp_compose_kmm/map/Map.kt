@@ -9,18 +9,24 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.interop.UIKitView
-import com.example.moveeapp_compose_kmm.MR
+import com.example.moveeapp_compose_kmm.utils.asUiImage
 import com.example.moveeapp_compose_kmm.domain.location.DeviceLocation
 import com.example.moveeapp_compose_kmm.ui.scene.map.Cinema
 import com.example.moveeapp_compose_kmm.ui.scene.map.MapUiState
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.useContents
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.ic_maps_marker
+import movee.shared.generated.resources.ic_maps_marker_user
 import platform.CoreLocation.CLLocationCoordinate2DMake
+import platform.MapKit.MKAnnotationProtocol
 import platform.MapKit.MKAnnotationView
 import platform.MapKit.MKCoordinateRegionMakeWithDistance
 import platform.MapKit.MKMapView
 import platform.MapKit.MKMapViewDelegateProtocol
 import platform.MapKit.MKPointAnnotation
+import platform.MapKit.MKUserLocation
+import platform.UIKit.UIImage
 import platform.darwin.NSObject
 
 @OptIn(ExperimentalForeignApi::class)
@@ -71,28 +77,34 @@ actual fun Map(
         }
     }
 
+    val userLocation = Res.drawable.ic_maps_marker_user.asUiImage()
+    val marker = Res.drawable.ic_maps_marker.asUiImage()
+
     val delegate = remember {
-        MKDelegate(onMove = { onMove ->
-            isMoved.value = onMove
-            mkMapView.centerCoordinate.useContents {
-                onPositionChange.invoke(DeviceLocation(latitude, longitude))
-            }
-        }, onAnnotationClicked = { annotationView ->
-            if (annotationView != null) {
-                val deviceLocation = annotationView.annotation?.coordinate?.useContents {
-                    DeviceLocation(latitude, longitude)
+        MKDelegate(
+            userLocation,
+            marker,
+            onMove = { onMove ->
+                isMoved.value = onMove
+                mkMapView.centerCoordinate.useContents {
+                    onPositionChange.invoke(DeviceLocation(latitude, longitude))
                 }
-                onMarkerClick.invoke(
-                    Cinema(
-                        annotationView.annotation?.title ?: "",
-                        annotationView.annotation?.subtitle ?: "",
-                        deviceLocation ?: DeviceLocation(0.0,0.0)
+            }, onAnnotationClicked = { annotation ->
+                if (annotation != null) {
+                    val deviceLocation = annotation.coordinate.useContents {
+                        DeviceLocation(latitude, longitude)
+                    }
+                    onMarkerClick.invoke(
+                        Cinema(
+                            annotation.title.orEmpty(),
+                            annotation.subtitle.orEmpty(),
+                            deviceLocation
+                        )
                     )
-                )
-            } else {
-                onMarkerClick(null)
-            }
-        })
+                } else {
+                    onMarkerClick(null)
+                }
+            })
     }
 
     LaunchedEffect(isMoved) {
@@ -130,22 +142,18 @@ actual fun Map(
                 )
                 pin.setTitle(item.name)
                 pin.setSubtitle(item.description)
-
-                var annotationView = mkMapView.dequeueReusableAnnotationViewWithIdentifier("custom")
-                if (annotationView == null) {
-                    annotationView = MKAnnotationView(pin, "custom")
-                }
-                annotationView.setImage(MR.images.ic_map.toUIImage())
-                annotationView.canShowCallout = true
-                annotationView
+                pin
             }
             mkMapView.addAnnotations(pins)
         }
     )
 }
+
 @Suppress("CONFLICTING_OVERLOADS", "PARAMETER_NAME_CHANGED_ON_OVERRIDE")
 private class MKDelegate(
-    private val onAnnotationClicked: (MKAnnotationView?) -> Unit,
+    private val userLocationImage: UIImage?,
+    private val markerImage: UIImage?,
+    private val onAnnotationClicked: (MKAnnotationProtocol?) -> Unit,
     private val onMove: (Boolean) -> Unit
 ) : NSObject(), MKMapViewDelegateProtocol {
 
@@ -153,12 +161,36 @@ private class MKDelegate(
         onMove(regionDidChangeAnimated)
     }
 
+    override fun mapView(
+        mapView: MKMapView,
+        viewForAnnotation: MKAnnotationProtocol
+    ): MKAnnotationView {
+        return if (viewForAnnotation is MKUserLocation) {
+            mapView.getOrCreateAnnotation(viewForAnnotation, "user").apply {
+                image = userLocationImage
+            }
+        } else {
+            mapView.getOrCreateAnnotation(viewForAnnotation, "custom").apply {
+                image = markerImage
+                canShowCallout = false
+            }
+        }
+    }
+
     override fun mapView(mapView: MKMapView, didSelectAnnotationView: MKAnnotationView) {
-        val annotationView = didSelectAnnotationView.annotation as MKAnnotationView
-        onAnnotationClicked(annotationView)
+        if (didSelectAnnotationView.annotation !is MKUserLocation)
+            onAnnotationClicked(didSelectAnnotationView.annotation)
     }
 
     override fun mapView(mapView: MKMapView, didDeselectAnnotationView: MKAnnotationView) {
         onAnnotationClicked(null)
+    }
+
+    private fun MKMapView.getOrCreateAnnotation(
+        viewForAnnotation: MKAnnotationProtocol,
+        identifier: String
+    ): MKAnnotationView {
+        return dequeueReusableAnnotationViewWithIdentifier(identifier)
+            ?: MKAnnotationView(viewForAnnotation, identifier)
     }
 }

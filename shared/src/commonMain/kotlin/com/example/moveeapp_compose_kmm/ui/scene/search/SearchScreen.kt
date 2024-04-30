@@ -33,7 +33,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.moveeapp_compose_kmm.MR
 import com.example.moveeapp_compose_kmm.core.ifNotNull
 import com.example.moveeapp_compose_kmm.domain.MediaType
 import com.example.moveeapp_compose_kmm.ui.components.CardImageItem
@@ -42,8 +41,12 @@ import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.SearchTextField
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.ui.scene.search.model.SearchUiModel
-import dev.icerock.moko.resources.compose.painterResource
-import dev.icerock.moko.resources.compose.stringResource
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.search_empty_text
+import movee.shared.generated.resources.search_place_holder
+import movee.shared.generated.resources.tab_search
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun SearchScreen(
@@ -102,7 +105,7 @@ fun SearchContent(
             )
             Column(modifier = Modifier.padding(horizontal = 24.dp).padding(top = 40.dp)) {
                 TextItem(
-                    text = stringResource(MR.strings.tab_search),
+                    text = stringResource(Res.string.tab_search),
                     fontSize = 34.sp,
                     fontWeight = FontWeight.Bold,
                     textColor = MaterialTheme.colorScheme.primaryContainer
@@ -136,12 +139,12 @@ fun SearchContent(
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Image(
-                                    painter = painterResource(MR.images.search_place_holder),
+                                    painter = painterResource(Res.drawable.search_place_holder),
                                     contentDescription = null
                                 )
                                 TextItem(
                                     modifier = Modifier.padding(top = 8.dp),
-                                    text = stringResource(MR.strings.search_empty_text),
+                                    text = stringResource(Res.string.search_empty_text),
                                     textColor = MaterialTheme.colorScheme.primary,
                                     fontSize = 18.sp
                                 )

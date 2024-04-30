@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
+    <string name="app_name">Movee</string>
     <string name="actor_born">Doğum tarihi:</string>
     <string name="login_username">Kullanıcı adı</string>
     <string name="login_password">Şifre</string>

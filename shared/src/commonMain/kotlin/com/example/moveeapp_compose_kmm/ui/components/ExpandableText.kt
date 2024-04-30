@@ -21,8 +21,10 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.moveeapp_compose_kmm.MR
-import dev.icerock.moko.resources.compose.stringResource
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.expandable_show_less
+import movee.shared.generated.resources.expandable_show_more
+import org.jetbrains.compose.resources.stringResource
 
 const val DEFAULT_MINIMUM_TEXT_LINE = 5
 
@@ -33,12 +35,12 @@ fun ExpandableText(
     style: TextStyle = LocalTextStyle.current,
     fontStyle: FontStyle? = null,
     collapsedMaxLine: Int = DEFAULT_MINIMUM_TEXT_LINE,
-    showMoreText: String = stringResource(MR.strings.expandable_show_more),
+    showMoreText: String = stringResource(Res.string.expandable_show_more),
     showMoreStyle: SpanStyle = SpanStyle(
         fontWeight = FontWeight.W500,
         color = MaterialTheme.colorScheme.primary
     ),
-    showLessText: String = stringResource(MR.strings.expandable_show_less),
+    showLessText: String = stringResource(Res.string.expandable_show_less),
     showLessStyle: SpanStyle = showMoreStyle,
     textAlign: TextAlign? = null
 ) {

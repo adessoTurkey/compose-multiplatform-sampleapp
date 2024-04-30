@@ -134,7 +134,6 @@
 				7555FF79242A565900829871 /* Resources */,
 				7555FFB4242A642300829871 /* Embed Frameworks */,
 				32063F414771D6D5A93F4A86 /* [CP] Copy Pods Resources */,
-				39F214602A94D8D100A86704 /* Copy Moko Resources */,
 			);
 			buildRules = (
 			);
@@ -229,24 +228,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		39F214602A94D8D100A86704 /* Copy Moko Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Moko Resources";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"$SRCROOT/../gradlew\" -p \"$SRCROOT/../\" :shared:copyFrameworkResourcesToApp \\\n    -Pmoko.resources.BUILT_PRODUCTS_DIR=\"$BUILT_PRODUCTS_DIR\" \\\n    -Pmoko.resources.CONTENTS_FOLDER_PATH=\"$CONTENTS_FOLDER_PATH\" \\\n    -Pkotlin.native.cocoapods.platform=\"$PLATFORM_NAME\" \\\n    -Pkotlin.native.cocoapods.archs=\"$ARCHS\" \\\n    -Pkotlin.native.cocoapods.configuration=\"$CONFIGURATION\" \n";
 		};
 		7555FFB5242A651A00829871 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

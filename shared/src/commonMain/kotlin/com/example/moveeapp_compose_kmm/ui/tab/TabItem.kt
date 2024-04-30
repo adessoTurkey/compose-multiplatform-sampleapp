@@ -1,33 +1,41 @@
 package com.example.moveeapp_compose_kmm.ui.tab
 
-import com.example.moveeapp_compose_kmm.MR
-import dev.icerock.moko.resources.ImageResource
-import dev.icerock.moko.resources.StringResource
+import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.ic_tabbar_movie
+import movee.shared.generated.resources.ic_tabbar_profile
+import movee.shared.generated.resources.ic_tabbar_search
+import movee.shared.generated.resources.ic_tabbar_tv_svg
+import movee.shared.generated.resources.tab_movies
+import movee.shared.generated.resources.tab_profile
+import movee.shared.generated.resources.tab_search
+import movee.shared.generated.resources.tab_tv
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.StringResource
 
 sealed class TabItem(
     val title: StringResource,
-    val icon: ImageResource,
+    val icon: DrawableResource,
 ) {
 
     val key: String = this::class.simpleName!!
 
     class MoviesTab : TabItem(
-        MR.strings.tab_movies,
-        MR.images.ic_tabbar_movie,
+        Res.string.tab_movies,
+        Res.drawable.ic_tabbar_movie,
     )
 
     class TvShowsTab : TabItem(
-        MR.strings.tab_tv,
-        MR.images.ic_tabbar_tv_svg,
+        Res.string.tab_tv,
+        Res.drawable.ic_tabbar_tv_svg,
     )
 
     class SearchTab : TabItem(
-        MR.strings.tab_search,
-        MR.images.ic_tabbar_search,
+        Res.string.tab_search,
+        Res.drawable.ic_tabbar_search,
     )
 
     class AccountTab : TabItem(
-        MR.strings.tab_profile,
-        MR.images.ic_tabbar_profile,
+        Res.string.tab_profile,
+        Res.drawable.ic_tabbar_profile,
     )
 }
