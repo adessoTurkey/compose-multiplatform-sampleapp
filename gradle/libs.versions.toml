@@ -2,42 +2,35 @@
 
 minSdk = "24"
 targetSdk = "34"
+compileSdk = "35"
 
-kotlin = "1.9.23"
-kotlinx-coroutines = "1.8.0"
-kotlinx-serialization = "1.6.0"
-kotlinx-datetime = "0.5.0"
-ktor = "2.3.5"
-agp = "8.3.2"
-desugar_jdk_libs = "2.0.4"
-compose = "1.6.2"
-compose-compiler = "1.5.11"
-compose-ui-tooling = "1.6.4"
-androidx = "1.13.0"
-androidx-activity = "1.9.0"
-androidx-appcompat = "1.6.1"
-voyager = "1.0.0-rc10"
-napier = "2.6.1"
-buildKonfig = "0.14.0"
-koin = "3.5.0"
-koin-compose = "1.1.0"
-moko = "0.23.0"
-seiko = "1.5.1"
-mapsCompose = "2.15.0"
-playServicesMaps = "18.2.0"
-playServicesLocation = "21.2.0"
+kotlin = "2.1.20"
+kotlinx-coroutines = "1.10.2"
+kotlinx-serialization = "1.8.1"
+kotlinx-datetime = "0.6.2"
+ktor = "3.1.2"
+agp = "8.9.1"
+desugar_jdk_libs = "2.1.5"
+compose = "1.7.3"
+androidx = "1.16.0"
+androidx-activity = "1.10.1"
+androidx-appcompat = "1.7.0"
+voyager = "1.0.1"
+napier = "2.7.1"
+buildKonfig = "0.17.0"
+koin = "4.0.4"
+seiko = "1.10.0"
+mapsCompose = "6.5.2"
+playServicesLocation = "21.3.0"
 maps-secrets = "2.0.1"
+nsexceptionKt = "0.1.17"
 
 [libraries]
 
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
-androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose-ui-tooling" }
-androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-ui-tooling" }
-androidx-compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose-ui-tooling" }
 maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
-play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
@@ -62,29 +55,26 @@ ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "kto
 ktor-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
-ktor-logging-logback = { module = "ch.qos.logback:logback-classic", version = "1.2.11" }
 
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
-koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin-compose" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 
 image-loader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "seiko" }
 
-settings = { module = "com.liftric:kvault", version = "1.10.0" }
+settings = { module = "com.liftric:kvault", version = "1.12.0" }
 
-moko-resources = { module = "dev.icerock.moko:resources", version.ref = "moko" }
-moko-resources-compose = { module = "dev.icerock.moko:resources-compose", version.ref = "moko" }
+nsexceptionKt-core = { module = "com.rickclephas.kmp:nsexception-kt-core", version.ref = "nsexceptionKt" }
 
 [plugins]
 
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-cocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 buildKonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildKonfig" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-moko-resources = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "moko" }
 maps-secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "maps-secrets" }

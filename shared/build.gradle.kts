@@ -4,8 +4,8 @@ import movee.util.requireStringProperty
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.compose)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.cocoapods)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.buildKonfig)
 }
@@ -47,154 +47,96 @@ buildkonfig {
     }
 }
 
-@OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
     androidTarget()
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
-
-    cocoapods {
-        version = "1.0.0"
-        summary = "Some description for the Shared Module"
-        homepage = "Link to the Shared Module homepage"
-        ios.deploymentTarget = "14.1"
-        podfile = project.file("../iosApp/Podfile")
-        framework {
-            baseName = "shared"
-            isStatic = true
-        }
-    }
-
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_11.toString()
-            }
-        }
-    }
+    iosArm64 { binaries.framework { baseName = "shared" } }
+    iosSimulatorArm64 { binaries.framework { baseName = "shared" } }
 
     sourceSets {
         all {
             languageSettings.optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
         }
 
-        val commonMain by getting {
-            dependencies {
+        commonMain.dependencies {
+            // Compose
+            api(compose.runtime)
+            api(compose.foundation)
+            api(compose.material)
+            api(compose.material3)
+            api(compose.materialIconsExtended)
+            api(compose.animation)
+            implementation(compose.components.resources)
 
-                // Compose
-                with(compose) {
-                    api(runtime)
-                    api(foundation)
-                    api(material)
-                    api(material3)
-                    api(materialIconsExtended)
-                    api(animation)
-                    implementation(components.resources)
-                }
+            implementation(libs.logger)
 
-                implementation(libs.logger)
+            // Coroutines
+            api(libs.kotlinx.coroutines.core)
 
-                // Coroutines
-                api(libs.kotlinx.coroutines.core)
+            // KotlinX Serialization Json
+            api(libs.kotlinx.serialization.json)
 
-                // KotlinX Serialization Json
-                api(libs.kotlinx.serialization.json)
+            // Ktor
+            api(libs.ktor.core)
+            api(libs.ktor.json)
+            api(libs.ktor.contentNegotiation)
+            api(libs.ktor.logging)
 
-                // Ktor
-                with(libs.ktor) {
-                    api(core)
-                    api(json)
-                    api(contentNegotiation)
-                    api(logging)
-                    api(logging.logback)
-                }
+            // Koin
+            api(libs.koin.core)
+            api(libs.koin.test)
+            api(libs.koin.compose)
 
-                // Koin
-                with(libs.koin) {
-                    api(core)
-                    api(test)
-                    api(compose)
-                }
+            //Navigation
+            api(libs.voyager.navigator)
+            api(libs.voyager.koin)
+            api(libs.voyager.tabs)
+            api(libs.voyager.transitions)
 
-                //Navigation
-                with(libs.voyager) {
-                    api(navigator)
-                    api(koin)
-                    api(tabs)
-                    api(transitions)
-                }
+            //Image loader
+            api(libs.image.loader)
 
-                //Image loader
-                api(libs.image.loader)
-
-                //KVault
-                api(libs.settings)
-            }
+            //KVault
+            api(libs.settings)
         }
 
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation(libs.kotlinx.coroutines.test)
-            }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.kotlinx.coroutines.test)
         }
 
-        val androidMain by getting {
-            dependsOn(commonMain)
+        androidMain.dependencies {
+            // Ktor
+            api(libs.ktor.client.android)
 
-            dependencies {
-                // Ktor
-                api(libs.ktor.client.android)
+            // Koin
+            api(libs.koin.android)
 
-                // Koin
-                api(libs.koin.android)
+            api(libs.androidx.core)
+            api(libs.androidx.appcompat)
+            api(libs.androidx.activity.compose)
 
-                with(libs.androidx) {
-                    api(core)
-                    api(appcompat)
-                    api(activity.compose)
-                }
+            api(libs.maps.compose)
 
-                with(libs.androidx.compose.ui) {
-                    api(util)
-                    api(tooling)
-                    api(preview)
-                }
-                api(libs.maps.compose)
-
-                //Location
-                api(libs.play.services.location)
-                api(libs.play.services.maps)
-            }
+            //Location
+            api(libs.play.services.location)
         }
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation(libs.ktor.client.darwin)
-            }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+            implementation(libs.nsexceptionKt.core)
         }
     }
 }
 
 android {
     namespace = "com.example.moveeapp_compose_kmm"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
     }
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

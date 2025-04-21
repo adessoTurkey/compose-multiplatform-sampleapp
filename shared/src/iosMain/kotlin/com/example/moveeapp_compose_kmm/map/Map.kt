@@ -8,12 +8,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.interop.UIKitView
-import com.example.moveeapp_compose_kmm.utils.asUiImage
+import androidx.compose.ui.viewinterop.UIKitInteropProperties
+import androidx.compose.ui.viewinterop.UIKitView
 import com.example.moveeapp_compose_kmm.domain.location.DeviceLocation
 import com.example.moveeapp_compose_kmm.ui.scene.map.Cinema
 import com.example.moveeapp_compose_kmm.ui.scene.map.MapUiState
+import com.example.moveeapp_compose_kmm.utils.asUiImage
 import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.ObjCSignatureOverride
 import kotlinx.cinterop.useContents
 import movee.shared.generated.resources.Res
 import movee.shared.generated.resources.ic_maps_marker
@@ -117,10 +119,12 @@ actual fun Map(
 
     UIKitView(
         modifier = modifier.fillMaxSize(),
-        interactive = true,
-        factory = {
-            mkMapView
-        }, update = { view ->
+        properties = UIKitInteropProperties(
+            isInteractive = true,
+            isNativeAccessibilityEnabled = true
+        ),
+        factory = { mkMapView },
+        update = { view ->
             mkMapView.setRegion(
                 MKCoordinateRegionMakeWithDistance(
                     centerCoordinate = location,
@@ -149,7 +153,6 @@ actual fun Map(
     )
 }
 
-@Suppress("CONFLICTING_OVERLOADS", "PARAMETER_NAME_CHANGED_ON_OVERRIDE")
 private class MKDelegate(
     private val userLocationImage: UIImage?,
     private val markerImage: UIImage?,
@@ -177,11 +180,13 @@ private class MKDelegate(
         }
     }
 
+    @ObjCSignatureOverride
     override fun mapView(mapView: MKMapView, didSelectAnnotationView: MKAnnotationView) {
         if (didSelectAnnotationView.annotation !is MKUserLocation)
             onAnnotationClicked(didSelectAnnotationView.annotation)
     }
 
+    @ObjCSignatureOverride
     override fun mapView(mapView: MKMapView, didDeselectAnnotationView: MKAnnotationView) {
         onAnnotationClicked(null)
     }

@@ -20,7 +20,7 @@ fun GoogleMapsComponent(
     modifier: Modifier = Modifier,
     cameraPositionState: CameraPositionState,
     onMapClick: (LatLng) -> Unit,
-    content: (@Composable @GoogleMapComposable () -> Unit)?,
+    content: (@Composable @GoogleMapComposable () -> Unit),
 ) {
     val context = LocalContext.current
     val mapProperties by remember {

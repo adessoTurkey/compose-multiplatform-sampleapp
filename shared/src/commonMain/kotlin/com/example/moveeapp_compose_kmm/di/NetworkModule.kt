@@ -6,12 +6,12 @@ import com.example.moveeapp_compose_kmm.data.artist.ArtistService
 import com.example.moveeapp_compose_kmm.data.artist.ArtistServiceImpl
 import com.example.moveeapp_compose_kmm.data.favorite.FavoriteService
 import com.example.moveeapp_compose_kmm.data.favorite.FavoriteServiceImpl
+import com.example.moveeapp_compose_kmm.data.map.NominatimService
+import com.example.moveeapp_compose_kmm.data.map.NominatimServiceImpl
 import com.example.moveeapp_compose_kmm.data.movie.MovieService
 import com.example.moveeapp_compose_kmm.data.movie.MovieServiceImpl
 import com.example.moveeapp_compose_kmm.data.rate.RatingService
 import com.example.moveeapp_compose_kmm.data.rate.RatingServiceImpl
-import com.example.moveeapp_compose_kmm.data.map.NominatimServiceImpl
-import com.example.moveeapp_compose_kmm.data.map.NominatimService
 import com.example.moveeapp_compose_kmm.data.search.SearchService
 import com.example.moveeapp_compose_kmm.data.search.SearchServiceImpl
 import com.example.moveeapp_compose_kmm.data.tv.TvService
@@ -21,7 +21,6 @@ import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
-import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
@@ -51,8 +50,12 @@ val networkModule = module {
                 socketTimeoutMillis = timeout
             }
             install(Logging) {
-                logger = Logger.DEFAULT
                 level = LogLevel.ALL
+                logger = object : Logger {
+                    override fun log(message: String) {
+                        com.example.moveeapp_compose_kmm.log(tag = "HttpClient") { message }
+                    }
+                }
             }
             install(ContentNegotiation) {
                 json(Json {
