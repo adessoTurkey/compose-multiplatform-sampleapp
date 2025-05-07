@@ -1,8 +1,9 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec
 import movee.util.requireStringProperty
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.compose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.android.library)
@@ -48,20 +49,19 @@ buildkonfig {
 }
 
 kotlin {
-    androidTarget()
+    androidTarget{
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+        }
+    }
     iosArm64 { binaries.framework { baseName = "shared" } }
     iosSimulatorArm64 { binaries.framework { baseName = "shared" } }
 
     sourceSets {
-        all {
-            languageSettings.optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
-        }
-
         commonMain.dependencies {
             // Compose
             api(compose.runtime)
             api(compose.foundation)
-            api(compose.material)
             api(compose.material3)
             api(compose.materialIconsExtended)
             api(compose.animation)
@@ -134,9 +134,6 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-    }
-    buildFeatures {
-        compose = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
