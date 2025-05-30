@@ -58,7 +58,7 @@ actual fun Map(
 
 
     GoogleMapsComponent(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         cameraPositionState = cameraPositionState,
         onMapClick = {
             onMarkerClick.invoke(null)

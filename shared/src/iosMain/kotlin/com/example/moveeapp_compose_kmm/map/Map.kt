@@ -118,7 +118,7 @@ actual fun Map(
     }
 
     UIKitView(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         properties = UIKitInteropProperties(
             isInteractive = true,
             isNativeAccessibilityEnabled = true

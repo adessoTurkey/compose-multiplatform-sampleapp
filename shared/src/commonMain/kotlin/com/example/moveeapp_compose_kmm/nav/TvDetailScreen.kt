@@ -1,16 +1,18 @@
 package com.example.moveeapp_compose_kmm.nav
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.example.moveeapp_compose_kmm.core.BackHandler
+import androidx.compose.ui.backhandler.BackHandler
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.ui.scene.tvdetail.TvDetailScreen
 import com.example.moveeapp_compose_kmm.ui.scene.tvdetail.TvDetailViewModel
 
 class TvDetailScreen(private val tvId: Int) : Screen {
 
+    @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
@@ -22,7 +24,7 @@ class TvDetailScreen(private val tvId: Int) : Screen {
             onBackPressed = navigator::pop
         )
 
-        BackHandler(isEnabled = true) {
+        BackHandler(enabled = true) {
             navigator.pop()
         }
     }

@@ -49,13 +49,16 @@ buildkonfig {
 }
 
 kotlin {
-    androidTarget{
+    androidTarget {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
+
     iosArm64 { binaries.framework { baseName = "shared" } }
     iosSimulatorArm64 { binaries.framework { baseName = "shared" } }
+
+    jvm()
 
     sourceSets {
         commonMain.dependencies {
@@ -65,6 +68,7 @@ kotlin {
             api(compose.material3)
             api(compose.materialIconsExtended)
             api(compose.animation)
+            api(libs.ui.backhandler)
             implementation(compose.components.resources)
 
             implementation(libs.logger)
@@ -95,8 +99,8 @@ kotlin {
             //Image loader
             api(libs.image.loader)
 
-            //KVault
-            api(libs.settings)
+            //Settings
+            implementation(libs.settings)
         }
 
         commonTest.dependencies {
@@ -119,11 +123,20 @@ kotlin {
 
             //Location
             api(libs.play.services.location)
+
+            implementation(libs.encryptedprefs)
         }
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
-            implementation(libs.nsexceptionKt.core)
+        }
+
+        jvmMain.dependencies {
+            val osSuffix = getOsSuffix()
+            implementation(dependencies.variantOf(libs.javafx.base) { classifier(osSuffix) })
+            implementation(dependencies.variantOf(libs.javafx.graphics) { classifier(osSuffix) })
+            implementation(dependencies.variantOf(libs.javafx.swing) { classifier(osSuffix) })
+            implementation(dependencies.variantOf(libs.javafx.web) { classifier(osSuffix) })
         }
     }
 }
@@ -138,5 +151,21 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+private fun getOsSuffix(): String {
+    // https://stackoverflow.com/questions/73187027/use-javafx-in-kotlin-multiplatform
+    // As JavaFX have platform-specific dependencies, we need to add them manually
+    val os = org.gradle.internal.os.OperatingSystem.current()
+    val arch = System.getProperty("os.arch")
+
+    return when {
+        os.isWindows -> "win"
+        os.isMacOsX && arch == "aarch64" -> "mac-aarch64"
+        os.isMacOsX -> "mac"
+        os.isLinux && arch == "aarch64" -> "linux-aarch64"
+        os.isLinux -> "linux"
+        else -> throw IllegalStateException("Unknown OS: ${os.name}")
     }
 }
