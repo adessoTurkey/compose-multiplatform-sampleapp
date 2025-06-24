@@ -2,7 +2,6 @@ package com.example.moveeapp_compose_kmm.nav
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.backhandler.BackHandler
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -26,9 +25,5 @@ class MovieDetailScreen(
             navigateToActor = { navigator.push(ArtistDetailScreen(it)) },
             onBackPressed = navigator::pop,
         )
-
-        BackHandler(enabled = true) {
-            navigator.pop()
-        }
     }
 }

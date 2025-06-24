@@ -5,7 +5,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import androidx.compose.ui.backhandler.BackHandler
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.domain.MediaType
 import com.example.moveeapp_compose_kmm.ui.scene.account.favoritescreen.FavoriteScreen
@@ -26,9 +25,5 @@ class FavoriteScreen(private val mediaType: MediaType) : Screen {
             navigateToTv = { navigator.push(TvDetailScreen(it)) },
             navigateBack = { navigator.pop() }
         )
-
-        BackHandler(enabled = true) {
-            navigator.pop()
-        }
     }
 }

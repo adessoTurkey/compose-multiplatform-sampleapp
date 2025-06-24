@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  iosApp
-//
-//  Created by Kilinc, Furkan on 16.08.2023.
-//  Copyright © 2023 orgName. All rights reserved.
-//
-
 import Foundation
 import shared
 import SwiftUI

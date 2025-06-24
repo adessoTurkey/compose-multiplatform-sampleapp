@@ -2,7 +2,6 @@ package com.example.moveeapp_compose_kmm.nav
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.backhandler.BackHandler
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -23,9 +22,5 @@ class AccountScreen : Screen {
             viewModel = viewModel,
             navigateToSplash = { mainNavigator.replaceAll(SplashScreen()) },
             navigateToFavorite = { navigator.push(FavoriteScreen(it)) })
-
-        BackHandler(enabled = true) {
-            navigator.pop()
-        }
     }
 }

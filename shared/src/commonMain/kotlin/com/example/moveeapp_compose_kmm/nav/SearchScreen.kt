@@ -5,7 +5,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import androidx.compose.ui.backhandler.BackHandler
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.ui.scene.search.SearchScreen
 import com.example.moveeapp_compose_kmm.ui.scene.search.SearchViewModel
@@ -24,9 +23,5 @@ class SearchScreen : Screen {
             navigateToTv = { navigator.push(TvDetailScreen(it)) },
             navigateToActor = { navigator.push(ArtistDetailScreen(it)) }
         )
-
-        BackHandler(enabled = true) {
-            navigator.pop()
-        }
     }
 }
