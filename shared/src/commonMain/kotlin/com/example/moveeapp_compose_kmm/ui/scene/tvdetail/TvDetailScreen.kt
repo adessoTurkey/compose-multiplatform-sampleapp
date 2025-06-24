@@ -193,7 +193,11 @@ fun TvDetailContent(
                     text = stringResource(Res.string.share),
                     icon = Icons.Default.Share,
                     onClick = {
-                        share(platformContext, uiState.tvDetailData.homepage)
+                        share(
+                            platformContext,
+                            uiState.tvDetailData.title,
+                            uiState.tvDetailData.overview,
+                            uiState.tvDetailData.posterPath.ifBlank { null })
                     }
                 )
             })

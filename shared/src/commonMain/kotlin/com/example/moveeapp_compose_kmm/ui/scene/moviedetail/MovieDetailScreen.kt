@@ -201,7 +201,12 @@ fun MovieDetailContent(
                     text = stringResource(Res.string.share),
                     icon = Icons.Default.Share,
                     onClick = {
-                        share(platformContext, uiState.movieDetailData.homepage)
+                        share(
+                            platformContext,
+                            uiState.movieDetailData.title,
+                            uiState.movieDetailData.overview,
+                            uiState.movieDetailData.posterPath.ifBlank { null }
+                        )
                     }
                 )
             })
