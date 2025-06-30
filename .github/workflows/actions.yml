@@ -63,9 +63,6 @@ jobs:
         with:
           gradle-version: 8.14.2
 
-      - name: Generate framework file
-        run: gradle :shared:generateDummyFramework
-
       - name: Build iosApp
         run: xcodebuild clean build -workspace iosApp/iosApp.xcworkspace -scheme iosApp -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.2' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 
