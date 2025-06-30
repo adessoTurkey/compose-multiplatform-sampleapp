@@ -26,7 +26,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          gradle-version: 8.4
+          gradle-version: 8.14.2
 
       - name: Build androidApp
         run: gradle :androidApp:buildDebug
@@ -61,18 +61,10 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          gradle-version: 8.4
+          gradle-version: 8.14.2
 
       - name: Generate framework file
         run: gradle :shared:generateDummyFramework
-
-      - name: Set up cocoapods
-        uses: maxim-lobanov/setup-cocoapods@v1
-        with:
-          version: latest
-
-      - name: Build xcworkspace
-        run: gradle podInstall
 
       - name: Build iosApp
         run: xcodebuild clean build -workspace iosApp/iosApp.xcworkspace -scheme iosApp -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.2' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
