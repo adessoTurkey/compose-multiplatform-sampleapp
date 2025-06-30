@@ -63,13 +63,14 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             // Compose
-            api(compose.runtime)
-            api(compose.foundation)
-            api(compose.material3)
-            api(compose.materialIconsExtended)
-            api(compose.animation)
-            api(libs.ui.backhandler)
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
+            implementation(compose.animation)
+            implementation(libs.ui.backhandler)
             implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
 
             implementation(libs.logger)
 
@@ -109,6 +110,7 @@ kotlin {
         }
 
         androidMain.dependencies {
+            implementation(compose.uiTooling)
             // Ktor
             api(libs.ktor.client.android)
 

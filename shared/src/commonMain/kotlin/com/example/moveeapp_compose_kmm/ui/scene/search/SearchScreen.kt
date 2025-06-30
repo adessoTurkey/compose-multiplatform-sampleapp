@@ -41,12 +41,17 @@ import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.SearchTextField
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.ui.scene.search.model.SearchUiModel
+import com.example.moveeapp_compose_kmm.ui.theme.AppTheme
 import movee.shared.generated.resources.Res
+import movee.shared.generated.resources.ic_search_actor
+import movee.shared.generated.resources.ic_search_movie
+import movee.shared.generated.resources.ic_search_tv
 import movee.shared.generated.resources.search_empty_text
 import movee.shared.generated.resources.search_place_holder
 import movee.shared.generated.resources.tab_search
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun SearchScreen(
@@ -72,7 +77,8 @@ fun SearchScreen(
             ErrorScreen(it)
         }
 
-        SearchContent(uiState = uiState,
+        SearchContent(
+            uiState = uiState,
             query = queryState,
             handleQueryState = viewModel::handleQueryChange,
             onDetailClick = { id, mediaType ->
@@ -88,7 +94,7 @@ fun SearchScreen(
 }
 
 @Composable
-fun SearchContent(
+private fun SearchContent(
     uiState: SearchUiState,
     query: String,
     handleQueryState: (String) -> Unit,
@@ -202,5 +208,39 @@ fun SearchRow(searchItem: SearchUiModel, onDetailClick: (Int, String) -> Unit) {
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun SearchPreview() {
+    AppTheme {
+        SearchContent(
+            uiState = SearchUiState(
+                data = listOf(
+                    SearchUiModel(
+                        id = 1,
+                        name = "Spider-Man: No Way Home",
+                        mediaType = "Movie",
+                        iconType = Res.drawable.ic_search_movie
+                    ),
+                    SearchUiModel(
+                        id = 2,
+                        name = "The Office",
+                        mediaType = "TV",
+                        iconType = Res.drawable.ic_search_tv
+                    ),
+                    SearchUiModel(
+                        id = 3,
+                        name = "Tom Cruise",
+                        mediaType = "Actor",
+                        iconType = Res.drawable.ic_search_actor
+                    )
+                )
+            ),
+            query = "",
+            handleQueryState = {},
+            onDetailClick = { _, _ -> }
+        )
     }
 }

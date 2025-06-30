@@ -1,9 +1,12 @@
 package com.example.moveeapp_compose_kmm.ui.scene.artistdetail
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -12,6 +15,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -30,9 +34,12 @@ import com.example.moveeapp_compose_kmm.ui.components.DetailScreensAppBar
 import com.example.moveeapp_compose_kmm.ui.components.ExpandableText
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
+import com.example.moveeapp_compose_kmm.ui.scene.artistdetail.model.ArtistDetailUiModel
+import com.example.moveeapp_compose_kmm.ui.theme.AppTheme
 import movee.shared.generated.resources.Res
 import movee.shared.generated.resources.actor_born
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ArtistDetailScreen(
@@ -57,7 +64,7 @@ fun ArtistDetailScreen(
 }
 
 @Composable
-fun SuccessContent(
+private fun SuccessContent(
     uiState: ArtistDetailUiState,
     onDetailClick: (Pair<Int, String>) -> Unit,
     onBackPressed: () -> Unit,
@@ -145,5 +152,29 @@ fun PersonCreditCardView(
             fontSize = 15.sp,
             overflow = TextOverflow.Ellipsis
         )
+    }
+}
+
+@Preview
+@Composable
+private fun ArtistDetailPreview() {
+    AppTheme {
+        Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+            SuccessContent(
+                ArtistDetailUiState(
+                    false,
+                    ArtistDetailUiModel(
+                        "Tom Cruise",
+                        "Thomas Cruise Mapother IV (born July 3, 1962) is an American actor and producer. Regarded as a Hollywood icon, he has received various accolades, including an Honorary Palme d'Or, three Golden Globe Awards, and nominations for four Academy Awards. His films have grossed over $12 billion worldwide, placing him among the highest-grossing actors ever.",
+                        "1962-07-03",
+                        "Syracuse, New York, USA",
+                        credit = listOf(
+                            ArtistCredit(name = "War fo the Worlds"),
+                            ArtistCredit(name = "Minority Report"),
+                            ArtistCredit(name = "The Outsiders"),
+                        )
+                    )
+                ), {}, {})
+        }
     }
 }

@@ -2,13 +2,19 @@ package com.example.moveeapp_compose_kmm.permission
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalInspectionMode
 
 @Composable
 fun rememberPermissionState(
     permission: Permission,
     onPermissionResult: (Boolean) -> Unit = {}
 ): PermissionState {
-    return rememberMutablePermissionState(permission, onPermissionResult)
+    return if (LocalInspectionMode.current) {
+        remember { FakePermissionState(permission) }
+    } else {
+        rememberMutablePermissionState(permission, onPermissionResult)
+    }
 }
 
 @Stable
@@ -43,3 +49,21 @@ interface PermissionState {
     fun openSettings()
 }
 
+/**
+ * A fake implementation of [PermissionState] that can be used in previews and tests.
+ * This class allows simulating different permission states by providing a custom [status].
+ * The [launchPermissionRequest] and [openSettings] methods are no-ops.
+ */
+class FakePermissionState(
+    override val permission: Permission,
+    override val status: PermissionStatus = PermissionStatus.Granted
+) : PermissionState {
+
+    override fun launchPermissionRequest() {
+        // no-op
+    }
+
+    override fun openSettings() {
+        // no-op
+    }
+}

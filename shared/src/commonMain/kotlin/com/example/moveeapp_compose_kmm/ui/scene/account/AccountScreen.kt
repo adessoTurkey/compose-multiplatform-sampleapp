@@ -30,7 +30,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.moveeapp_compose_kmm.domain.MediaType
+import com.example.moveeapp_compose_kmm.domain.account.AccountDetail
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
+import com.example.moveeapp_compose_kmm.ui.theme.AppTheme
 import com.example.moveeapp_compose_kmm.ui.theme.Fonts
 import movee.shared.generated.resources.Res
 import movee.shared.generated.resources.fav_movie
@@ -38,6 +40,7 @@ import movee.shared.generated.resources.fav_tv
 import movee.shared.generated.resources.hello
 import movee.shared.generated.resources.tab_profile
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun AccountScreen(
@@ -58,6 +61,15 @@ fun AccountScreen(
         }
     }
 
+    AccountScreen(uiState, logoutState, viewModel::logout, navigateToFavorite)
+}
+
+@Composable
+private fun AccountScreen(
+    uiState: AccountUiState, logoutState: Boolean,
+    onLogoutClick: () -> Unit,
+    navigateToFavorite: (MediaType) -> Unit,
+) {
     Column(modifier = Modifier.background(MaterialTheme.colorScheme.secondaryContainer)) {
         Spacer(
             Modifier.fillMaxWidth().windowInsetsTopHeight(WindowInsets.statusBars)
@@ -68,13 +80,13 @@ fun AccountScreen(
             uiState = uiState,
             onFavMovieClick = navigateToFavorite,
             onFavTvClick = navigateToFavorite,
-            onLogoutClick = { viewModel.logout() }
+            onLogoutClick = onLogoutClick
         )
     }
 }
 
 @Composable
-fun SuccessContent(
+private fun SuccessContent(
     uiState: AccountUiState,
     onFavMovieClick: (MediaType) -> Unit,
     onFavTvClick: (MediaType) -> Unit,
@@ -175,3 +187,15 @@ fun SuccessContent(
     }
 }
 
+@Preview
+@Composable
+private fun AccountPreview() {
+    AppTheme {
+        AccountScreen(
+            uiState = AccountUiState(false, null, AccountDetail(1, "John", "Doe", "tr")),
+            logoutState = false,
+            onLogoutClick = {},
+            navigateToFavorite = {}
+        )
+    }
+}

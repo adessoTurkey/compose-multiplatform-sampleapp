@@ -44,7 +44,8 @@ fun PosterImageItem(
     Image(
         modifier = modifier.fillMaxSize(),
         painter = rememberImagePainter(
-            Constants.IMAGE_BASE.plus(imagePath)
+            Constants.IMAGE_BASE.plus(imagePath),
+            placeholderPainter = { painterResource(Res.drawable.search_place_holder) }
         ),
         contentDescription = null,
         contentScale = contentScale

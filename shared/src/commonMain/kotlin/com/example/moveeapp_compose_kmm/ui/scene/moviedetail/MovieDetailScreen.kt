@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,6 +31,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -54,10 +56,13 @@ import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.RateRow
 import com.example.moveeapp_compose_kmm.ui.components.RuntimeItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
+import com.example.moveeapp_compose_kmm.ui.scene.moviedetail.model.MovieDetailUiModel
+import com.example.moveeapp_compose_kmm.ui.theme.AppTheme
 import movee.shared.generated.resources.Res
 import movee.shared.generated.resources.movie_detail_cast
 import movee.shared.generated.resources.share
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.math.round
 
 @Composable
@@ -89,7 +94,7 @@ fun MovieDetailScreen(
         }
 
         SuccessContent(
-            uiState = uiState,
+            movieDetailData = uiState.movieDetailData,
             onDetailClick = navigateToActor,
             onFavouriteClicked = { isFav, movieId ->
                 viewModel.addFavorite(
@@ -107,9 +112,9 @@ fun MovieDetailScreen(
 }
 
 @Composable
-fun SuccessContent(
+private fun SuccessContent(
     modifier: Modifier = Modifier,
-    uiState: MovieDetailUiState,
+    movieDetailData: MovieDetailUiModel,
     isFavorite: Boolean,
     onDetailClick: (Int) -> Unit,
     onBackPressed: () -> Unit,
@@ -129,18 +134,18 @@ fun SuccessContent(
                 FavouriteItem(
                     isFavorite = isFavorite,
                     onFavouriteClicked = {
-                        onFavouriteClicked(!isFavorite, uiState.movieDetailData.movieId)
+                        onFavouriteClicked(!isFavorite, movieDetailData.movieId)
                     }
                 )
             },
             content = {
                 DetailPosterImage(
-                    imagePath = uiState.movieDetailData.backdropPath,
-                    modifier = Modifier.padding(bottom = 12.dp)
+                    imagePath = movieDetailData.backdropPath,
+                    modifier = Modifier.padding(bottom = 12.dp).defaultMinSize(minHeight = 128.dp)
                 )
 
                 RateItem(
-                    rate = round(uiState.movieDetailData.voteAverage).toString(),
+                    rate = round(movieDetailData.voteAverage).toString(),
                     modifier = Modifier.align(
                         Alignment.BottomStart
                     ).padding(start = 16.dp)
@@ -148,15 +153,19 @@ fun SuccessContent(
             }
         )
 
-        MovieDetailContent(uiState = uiState, ratingValue = ratingValue, onRateMovie = onRateMovie)
+        MovieDetailContent(
+            data = movieDetailData,
+            ratingValue = ratingValue,
+            onRateMovie = onRateMovie
+        )
 
-        MovieCreditLazyRow(uiState = uiState, onDetailClick = onDetailClick)
+        MovieCreditLazyRow(credit = movieDetailData.credit, onDetailClick = onDetailClick)
     }
 }
 
 @Composable
 fun MovieDetailContent(
-    uiState: MovieDetailUiState,
+    data: MovieDetailUiModel,
     ratingValue: State<Int?>,
     onRateMovie: (rate: Int, movieId: Int) -> Unit,
 ) {
@@ -166,7 +175,7 @@ fun MovieDetailContent(
 
         TextItem(
             modifier = Modifier.padding(top = 8.dp),
-            text = uiState.movieDetailData.title,
+            text = data.title,
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             maxLines = Int.MAX_VALUE,
@@ -175,7 +184,7 @@ fun MovieDetailContent(
 
         TextItem(
             modifier = Modifier.padding(top = 8.dp),
-            text = uiState.movieDetailData.genre,
+            text = data.genre,
             textColor = MaterialTheme.colorScheme.secondary
         )
 
@@ -187,15 +196,15 @@ fun MovieDetailContent(
         ) {
             RuntimeItem(
                 modifier = Modifier.padding(end = 8.dp),
-                runtime = uiState.movieDetailData.runtime.toString()
+                runtime = data.runtime.toString()
             )
-            DateItem(date = uiState.movieDetailData.releaseDate)
+            DateItem(date = data.releaseDate)
         }
 
         RateRow(
             modifier = Modifier.padding(vertical = 12.dp).height(IntrinsicSize.Min),
             ratingValue = ratingValue,
-            onRatingValueChange = { onRateMovie.invoke(it, uiState.movieDetailData.movieId) },
+            onRatingValueChange = { onRateMovie.invoke(it, data.movieId) },
             hidableContent = {
                 FloatingActionButtonItem(
                     text = stringResource(Res.string.share),
@@ -203,9 +212,9 @@ fun MovieDetailContent(
                     onClick = {
                         share(
                             platformContext,
-                            uiState.movieDetailData.title,
-                            uiState.movieDetailData.overview,
-                            uiState.movieDetailData.posterPath.ifBlank { null }
+                            data.title,
+                            data.overview,
+                            data.posterPath.ifBlank { null }
                         )
                     }
                 )
@@ -218,7 +227,7 @@ fun MovieDetailContent(
         )
 
         TextItem(
-            text = uiState.movieDetailData.overview,
+            text = data.overview,
             maxLines = Int.MAX_VALUE
         )
     }
@@ -226,7 +235,7 @@ fun MovieDetailContent(
 
 @Composable
 fun MovieCreditLazyRow(
-    uiState: MovieDetailUiState,
+    credit: List<Credits>,
     onDetailClick: (Int) -> Unit,
 ) {
     TextItem(
@@ -240,9 +249,9 @@ fun MovieCreditLazyRow(
         modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        items(uiState.movieDetailData.credit.size) { index ->
+        items(credit.size) { index ->
             MovieCreditCardView(
-                credit = uiState.movieDetailData.credit[index],
+                credit = credit[index],
                 onClick = { id -> onDetailClick(id) })
         }
     }
@@ -270,6 +279,40 @@ fun MovieCreditCardView(
             modifier = Modifier.padding(horizontal = 3.dp, vertical = 5.dp),
             fontSize = 15.sp,
             overflow = TextOverflow.Ellipsis
+        )
+    }
+}
+
+@Preview
+@Composable
+fun SuccessContentPreview() {
+    AppTheme {
+        SuccessContent(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = MaterialTheme.colorScheme.primaryContainer),
+            movieDetailData = MovieDetailUiModel(
+                movieId = 1,
+                title = "Movie Title",
+                genre = "Action",
+                runtime = 120,
+                releaseDate = "2023-01-01",
+                overview = "This is a great movie.",
+                voteAverage = 8.5,
+                posterPath = "",
+                backdropPath = "",
+                credit = listOf(
+                    Credits(1, "John Doe", "profile_path_1"),
+                    Credits(2, "Jane Smith", "profile_path_2"),
+                    Credits(3, "Bob Johnson", "profile_path_3"),
+                )
+            ),
+            isFavorite = false,
+            onDetailClick = {},
+            onBackPressed = {},
+            onFavouriteClicked = { _, _ -> },
+            ratingValue = mutableStateOf(3),
+            onRateMovie = { _, _ -> }
         )
     }
 }

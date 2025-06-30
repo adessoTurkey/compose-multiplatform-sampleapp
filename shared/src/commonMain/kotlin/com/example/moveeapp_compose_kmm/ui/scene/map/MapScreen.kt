@@ -24,27 +24,45 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.moveeapp_compose_kmm.core.getPlatformContext
 import com.example.moveeapp_compose_kmm.core.navigateToMap
 import com.example.moveeapp_compose_kmm.core.viewModel
+import com.example.moveeapp_compose_kmm.domain.location.DeviceLocation
 import com.example.moveeapp_compose_kmm.map.Map
 import com.example.moveeapp_compose_kmm.ui.components.BackPressedItem
 import com.example.moveeapp_compose_kmm.ui.components.MapsMarkerDialog
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
+import com.example.moveeapp_compose_kmm.ui.theme.AppTheme
 import com.example.moveeapp_compose_kmm.ui.theme.Fonts
 import movee.shared.generated.resources.Res
 import movee.shared.generated.resources.cinema
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 class MapScreen : Screen {
-    @OptIn(ExperimentalMaterial3Api::class)
+
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val viewModel: MapViewModel = viewModel()
         val uiState by viewModel.uiState.collectAsState()
 
-        val platformContext = getPlatformContext()
-
         viewModel.loadForecastWithLocation()
 
+        MapScaffold(uiState, navigator::pop) {
+            Map(
+                modifier = Modifier.fillMaxSize(),
+                uiState = uiState,
+                onMarkerClick = viewModel::setSelectedCinema,
+                onPositionChange = viewModel::getUpdates
+            )
+        }
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    private fun MapScaffold(
+        uiState: MapUiState,
+        onNavigateBack: () -> Unit = {},
+        mapContent: @Composable () -> Unit
+    ) {
         Scaffold(topBar = {
             TopAppBar(
                 title = {
@@ -57,18 +75,14 @@ class MapScreen : Screen {
                 },
                 colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.primary),
                 navigationIcon = {
-                    BackPressedItem { navigator.pop() }
+                    BackPressedItem(onBackPressed = onNavigateBack)
                 }
             )
         }) { paddingValues ->
+            val platformContext = getPlatformContext()
 
             Box(modifier = Modifier.padding(top = paddingValues.calculateTopPadding())) {
-                Map(
-                    modifier = Modifier.fillMaxSize(),
-                    uiState = uiState,
-                    onMarkerClick = viewModel::setSelectedCinema,
-                    onPositionChange = viewModel::getUpdates
-                )
+                mapContent()
 
                 AnimatedVisibility(
                     visible = uiState.selectedCinema != null,
@@ -89,6 +103,20 @@ class MapScreen : Screen {
                         )
                     }
                 }
+            }
+        }
+    }
+
+    @Preview
+    @Composable
+    fun MapScreenPreview() {
+        AppTheme {
+            MapScreen().MapScaffold(
+                MapUiState(
+                    selectedCinema = Cinema("test", "test", DeviceLocation(1.0, 1.0))
+                )
+            ) {
+                Box(Modifier.fillMaxSize())
             }
         }
     }
