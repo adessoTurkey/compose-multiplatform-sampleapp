@@ -4,12 +4,13 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.maps.secrets)
 }
 
 android {
     namespace = "com.example.moveeapp_compose_kmm.android"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.example.moveeapp_compose_kmm.android"
@@ -29,12 +30,10 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/INDEX.LIST"
         }
     }
     buildTypes {
@@ -61,16 +60,14 @@ android {
 }
 
 dependencies {
-    implementation(project(":shared"))
+    implementation(projects.shared)
     implementation(libs.androidx.activity.compose)
 
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
     // Koin
-    with(libs.koin) {
-        implementation(android)
-        implementation(core)
-    }
+    implementation(libs.koin.android)
+    implementation(libs.koin.core)
 }
 
 secrets {

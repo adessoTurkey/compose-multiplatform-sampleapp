@@ -23,14 +23,13 @@ import androidx.compose.ui.unit.dp
 import com.example.moveeapp_compose_kmm.core.StatusBarAppearance
 import com.example.moveeapp_compose_kmm.core.getDominantColor
 import com.example.moveeapp_compose_kmm.core.toComposeImageBitmap
-import com.example.moveeapp_compose_kmm.core.toImage
 import com.example.moveeapp_compose_kmm.ui.theme.isLight
 import com.example.moveeapp_compose_kmm.utils.Constants
 import com.seiko.imageloader.LocalImageLoader
 import com.seiko.imageloader.asImageBitmap
 import com.seiko.imageloader.model.ImageRequest
 import com.seiko.imageloader.model.ImageResult
-import com.seiko.imageloader.rememberAsyncImagePainter
+import com.seiko.imageloader.rememberImagePainter
 import movee.shared.generated.resources.Res
 import movee.shared.generated.resources.search_place_holder
 import org.jetbrains.compose.resources.painterResource
@@ -44,8 +43,9 @@ fun PosterImageItem(
 ) {
     Image(
         modifier = modifier.fillMaxSize(),
-        painter = rememberAsyncImagePainter(
-            Constants.IMAGE_BASE.plus(imagePath)
+        painter = rememberImagePainter(
+            Constants.IMAGE_BASE.plus(imagePath),
+            placeholderPainter = { painterResource(Res.drawable.search_place_holder) }
         ),
         contentDescription = null,
         contentScale = contentScale
@@ -72,16 +72,16 @@ fun DetailPosterImage(
         modifier = modifier.fillMaxSize().onGloballyPositioned {
             viewWidth = it.size.width
         },
-        painter = rememberAsyncImagePainter(request, imageLoader),
+        painter = rememberImagePainter(request, imageLoader),
         contentDescription = null,
         contentScale = FillWidth
     )
 
     LaunchedEffect(imagePath) {
         val imageBitmap = when (val imageResult = imageLoader.execute(request)) {
-            is ImageResult.Bitmap -> imageResult.bitmap.asImageBitmap()
+            is ImageResult.OfBitmap -> imageResult.bitmap.asImageBitmap()
 
-            is ImageResult.Image -> imageResult.toImage().toComposeImageBitmap()
+            is ImageResult.OfImage -> imageResult.image.toComposeImageBitmap()
 
             else -> null
         }
@@ -115,7 +115,7 @@ fun CardImageItem(
         painter = if (imagePath.isNullOrEmpty()) {
             painterResource(Res.drawable.search_place_holder)
         } else {
-            rememberAsyncImagePainter(
+            rememberImagePainter(
                 Constants.IMAGE_BASE.plus(imagePath)
             )
         },

@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -37,14 +38,16 @@ import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
 import com.example.moveeapp_compose_kmm.ui.scene.account.FavoriteMovieUiState
 import com.example.moveeapp_compose_kmm.ui.scene.account.FavoriteTvUiState
+import com.example.moveeapp_compose_kmm.ui.theme.AppTheme
 import com.example.moveeapp_compose_kmm.ui.theme.Fonts
 import movee.shared.generated.resources.Res
 import movee.shared.generated.resources.fav_movie
 import movee.shared.generated.resources.fav_tv
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
 fun FavoriteScreen(
     viewModel: FavoriteViewModel,
     mediaType: MediaType,
@@ -59,60 +62,16 @@ fun FavoriteScreen(
         MediaType.MOVIE -> {
             viewModel.getPopularMovie()
 
-            Scaffold(topBar = {
-                TopAppBar(
-                    title = {
-                        TextItem(
-                            text = stringResource(Res.string.fav_movie),
-                            fontSize = 20.sp,
-                            fontFamily = Fonts.bold,
-                            textColor = MaterialTheme.colorScheme.primaryContainer
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.primary),
-                    navigationIcon = {
-                        BackPressedItem(onBackPressed = navigateBack)
-                    }
-                )
-            }) { contentPadding ->
-                Box(modifier = Modifier.padding(top = contentPadding.calculateTopPadding())) {
-                    Spacer(
-                        modifier = Modifier.height(190.dp).fillMaxWidth()
-                            .align(Alignment.TopCenter)
-                            .background(MaterialTheme.colorScheme.primary)
-                    )
-                    FavoriteMovieContent(favoriteMovieUiState, navigateToMovie)
-                }
+            FavoriteScreen(Res.string.fav_movie, navigateBack) {
+                FavoriteMovieContent(favoriteMovieUiState, navigateToMovie)
             }
         }
 
         MediaType.TV -> {
             viewModel.getPopularTv()
 
-            Scaffold(topBar = {
-                TopAppBar(
-                    title = {
-                        TextItem(
-                            text = stringResource(Res.string.fav_tv),
-                            fontSize = 20.sp,
-                            fontFamily = Fonts.bold,
-                            textColor = MaterialTheme.colorScheme.primaryContainer
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.primary),
-                    navigationIcon = {
-                        BackPressedItem(onBackPressed = navigateBack)
-                    }
-                )
-            }) { contentPadding ->
-                Box(modifier = Modifier.padding(top = contentPadding.calculateTopPadding())) {
-                    Spacer(
-                        modifier = Modifier.height(190.dp).fillMaxWidth()
-                            .align(Alignment.TopCenter)
-                            .background(MaterialTheme.colorScheme.primary)
-                    )
-                    FavoriteTvContent(favoriteTvUiState, navigateToTv)
-                }
+            FavoriteScreen(Res.string.fav_tv, navigateBack) {
+                FavoriteTvContent(favoriteTvUiState, navigateToTv)
             }
         }
 
@@ -120,22 +79,42 @@ fun FavoriteScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FavoriteTvContent(
-    favoriteTvUiState: FavoriteTvUiState,
-    onTvDetailClick: (Int) -> Unit,
+private fun FavoriteScreen(
+    title: StringResource,
+    navigateBack: () -> Unit,
+    content: @Composable BoxScope.() -> Unit,
 ) {
-    LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
-        items(favoriteTvUiState.favoriteTvData) {
-            FavoriteTvRow(favoriteTv = it) { tvId ->
-                onTvDetailClick(tvId)
+    Scaffold(topBar = {
+        TopAppBar(
+            title = {
+                TextItem(
+                    text = stringResource(title),
+                    fontSize = 20.sp,
+                    fontFamily = Fonts.bold,
+                    textColor = MaterialTheme.colorScheme.primaryContainer
+                )
+            },
+            colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.primary),
+            navigationIcon = {
+                BackPressedItem(onBackPressed = navigateBack)
             }
+        )
+    }) { contentPadding ->
+        Box(modifier = Modifier.padding(top = contentPadding.calculateTopPadding())) {
+            Spacer(
+                modifier = Modifier.height(190.dp).fillMaxWidth()
+                    .align(Alignment.TopCenter)
+                    .background(MaterialTheme.colorScheme.primary)
+            )
+            content()
         }
     }
 }
 
 @Composable
-fun FavoriteMovieContent(
+private fun FavoriteMovieContent(
     favoriteMovieUiState: FavoriteMovieUiState,
     onMovieDetailClick: (Int) -> Unit,
 ) {
@@ -149,7 +128,21 @@ fun FavoriteMovieContent(
 }
 
 @Composable
-fun FavoriteMovieRow(
+private fun FavoriteTvContent(
+    favoriteTvUiState: FavoriteTvUiState,
+    onTvDetailClick: (Int) -> Unit,
+) {
+    LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
+        items(favoriteTvUiState.favoriteTvData) {
+            FavoriteTvRow(favoriteTv = it) { tvId ->
+                onTvDetailClick(tvId)
+            }
+        }
+    }
+}
+
+@Composable
+private fun FavoriteMovieRow(
     favoriteMovie: FavoriteMovie,
     onDetailClick: (Int) -> Unit,
 ) {
@@ -188,7 +181,7 @@ fun FavoriteMovieRow(
 }
 
 @Composable
-fun FavoriteTvRow(
+private fun FavoriteTvRow(
     favoriteTv: FavoriteTv,
     onDetailClick: (Int) -> Unit,
 ) {
@@ -221,6 +214,62 @@ fun FavoriteTvRow(
                     RateItem(rate = favoriteTv.voteAverage.toString())
                 }
             }
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun FavoriteMoviePreview() {
+    AppTheme {
+        FavoriteScreen(Res.string.fav_movie, {}) {
+            FavoriteMovieContent(
+                FavoriteMovieUiState(
+                    favoriteMovieData = listOf(
+                        FavoriteMovie(
+                            movieId = 1,
+                            title = "Final Destination",
+                            posterPath = "",
+                            releaseDate = "2025-05-14",
+                            voteAverage = 8.0
+                        ),
+                        FavoriteMovie(
+                            movieId = 2,
+                            title = "Final Destination",
+                            posterPath = "",
+                            releaseDate = "2025-05-14",
+                            voteAverage = 8.0
+                        )
+                    )
+                )
+            ) {}
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun FavoriteTvPreview() {
+    AppTheme {
+        FavoriteScreen(Res.string.fav_tv, {}) {
+            FavoriteTvContent(
+                FavoriteTvUiState(
+                    favoriteTvData = listOf(
+                        FavoriteTv(
+                            tvId = 1,
+                            title = "The Office",
+                            posterPath = "",
+                            voteAverage = 8.0
+                        ),
+                        FavoriteTv(
+                            tvId = 2,
+                            title = "The Office",
+                            posterPath = "",
+                            voteAverage = 8.0
+                        )
+                    )
+                )
+            ) {}
         }
     }
 }

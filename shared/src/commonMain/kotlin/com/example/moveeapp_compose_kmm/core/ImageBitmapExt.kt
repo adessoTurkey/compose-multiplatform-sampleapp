@@ -6,7 +6,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 
-suspend fun ImageBitmap.getDominantColor(height: Int): Color {
+suspend fun ImageBitmap.getDominantColor(height: Int): Color? {
+    if (height <= 0) return null
     return withContext(Dispatchers.IO) {
         val pixels = IntArray(width * height)
         readPixels(pixels, width = width, height = height)

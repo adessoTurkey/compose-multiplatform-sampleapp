@@ -1,5 +1,9 @@
 package com.example.moveeapp_compose_kmm.nav
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -9,7 +13,6 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import cafe.adriel.voyager.transitions.SlideTransition
 import com.example.moveeapp_compose_kmm.ui.tab.TabItem
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -44,8 +47,31 @@ private class TabData(@Transient private val tab: TabItem, private val screen: S
 
     @Composable
     override fun Content() {
-        Navigator(screen) {
-            SlideTransition(it)
+        Navigator(screen) { navigator ->
+            PredictiveBackTransition(
+                navigator = navigator,
+                enterTransition = {
+                    slideInHorizontally(
+                        animationSpec = tween(easing = LinearEasing),
+                        initialOffsetX = { it })
+                },
+                popEnterTransition = {
+                    slideInHorizontally(
+                        animationSpec = tween(easing = LinearEasing),
+                        initialOffsetX = { -it / 2 })
+                },
+                exitTransition = {
+                    slideOutHorizontally(
+                        animationSpec = tween(easing = LinearEasing),
+                        targetOffsetX = { -it / 2 })
+                },
+                popExitTransition = {
+                    slideOutHorizontally(
+                        animationSpec = tween(easing = LinearEasing),
+                        targetOffsetX = { it })
+                },
+                flingAnimationSpec = { tween(easing = LinearEasing) }
+            )
         }
     }
 

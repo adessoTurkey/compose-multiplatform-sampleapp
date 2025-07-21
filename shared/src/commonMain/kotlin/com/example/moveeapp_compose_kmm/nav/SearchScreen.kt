@@ -1,16 +1,17 @@
 package com.example.moveeapp_compose_kmm.nav
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.example.moveeapp_compose_kmm.core.BackHandler
 import com.example.moveeapp_compose_kmm.core.viewModel
 import com.example.moveeapp_compose_kmm.ui.scene.search.SearchScreen
 import com.example.moveeapp_compose_kmm.ui.scene.search.SearchViewModel
 
 class SearchScreen : Screen {
 
+    @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
@@ -22,9 +23,5 @@ class SearchScreen : Screen {
             navigateToTv = { navigator.push(TvDetailScreen(it)) },
             navigateToActor = { navigator.push(ArtistDetailScreen(it)) }
         )
-
-        BackHandler(isEnabled = true) {
-            navigator.pop()
-        }
     }
 }

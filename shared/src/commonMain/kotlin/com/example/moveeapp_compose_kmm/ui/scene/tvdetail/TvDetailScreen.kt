@@ -21,10 +21,10 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material3.Divider
+import androidx.compose.material3.Card
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -193,12 +193,16 @@ fun TvDetailContent(
                     text = stringResource(Res.string.share),
                     icon = Icons.Default.Share,
                     onClick = {
-                        share(platformContext, uiState.tvDetailData.homepage)
+                        share(
+                            platformContext,
+                            uiState.tvDetailData.title,
+                            uiState.tvDetailData.overview,
+                            uiState.tvDetailData.posterPath.ifBlank { null })
                     }
                 )
             })
 
-        Divider(
+        HorizontalDivider(
             modifier = Modifier.padding(vertical = 10.dp),
             thickness = 1.dp,
             color = MaterialTheme.colorScheme.secondaryContainer

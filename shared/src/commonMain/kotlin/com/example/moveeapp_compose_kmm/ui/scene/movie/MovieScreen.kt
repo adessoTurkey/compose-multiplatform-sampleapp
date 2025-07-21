@@ -22,11 +22,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Surface
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -50,12 +50,14 @@ import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
+import com.example.moveeapp_compose_kmm.ui.theme.AppTheme
 import com.example.moveeapp_compose_kmm.ui.theme.Fonts
 import movee.shared.generated.resources.Res
 import movee.shared.generated.resources.ic_map
 import movee.shared.generated.resources.tab_movies
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.math.absoluteValue
 
 @Composable
@@ -94,7 +96,7 @@ fun MovieScreen(
 }
 
 @Composable
-fun SuccessContent(
+private fun SuccessContent(
     modifier: Modifier = Modifier,
     popularMovieData: List<PopularMovie>,
     nowPlayingMovieData: List<NowPlayingMovie>,
@@ -245,5 +247,71 @@ fun HorizontalMoviePager(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun MovieScreenPreview() {
+    AppTheme {
+        SuccessContent(
+            modifier = Modifier.fillMaxSize()
+                .background(color = MaterialTheme.colorScheme.primaryContainer),
+            popularMovieData = listOf(
+                PopularMovie(
+                    movieId = 1,
+                    title = "Final Destination",
+                    posterPath = "",
+                    releaseDate = "2025-05-14",
+                    voteAverage = 8.0
+                ),
+                PopularMovie(
+                    movieId = 2,
+                    title = "Final Destination",
+                    posterPath = "",
+                    releaseDate = "2025-05-14",
+                    voteAverage = 8.0
+                ),
+                PopularMovie(
+                    movieId = 3,
+                    title = "Final Destination",
+                    posterPath = "",
+                    releaseDate = "2025-05-14",
+                    voteAverage = 8.0
+                ),
+            ),
+            nowPlayingMovieData = listOf(
+                NowPlayingMovie(
+                    movieId = 1,
+                    title = "Final Destination",
+                    posterPath = "",
+                    releaseDate = "2025-05-14",
+                    voteAverage = 5.0
+                ),
+                NowPlayingMovie(
+                    movieId = 2,
+                    title = "Final Destination",
+                    posterPath = "",
+                    releaseDate = "2025-05-14",
+                    voteAverage = 5.0
+                ),
+                NowPlayingMovie(
+                    movieId = 3,
+                    title = "Final Destination",
+                    posterPath = "",
+                    releaseDate = "2025-05-14",
+                    voteAverage = 5.0
+                ),
+                NowPlayingMovie(
+                    movieId = 4,
+                    title = "Final Destination",
+                    posterPath = "",
+                    releaseDate = "2025-05-14",
+                    voteAverage = 5.0
+                ),
+            ),
+            onDetailClick = {},
+            onMapClick = {}
+        )
     }
 }

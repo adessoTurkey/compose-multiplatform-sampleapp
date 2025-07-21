@@ -1,11 +1,12 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec
 import movee.util.requireStringProperty
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.compose)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.cocoapods)
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.buildKonfig)
 }
@@ -47,157 +48,126 @@ buildkonfig {
     }
 }
 
-@OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    androidTarget()
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
-
-    cocoapods {
-        version = "1.0.0"
-        summary = "Some description for the Shared Module"
-        homepage = "Link to the Shared Module homepage"
-        ios.deploymentTarget = "14.1"
-        podfile = project.file("../iosApp/Podfile")
-        framework {
-            baseName = "shared"
-            isStatic = true
-        }
-    }
-
     androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_11.toString()
-            }
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
         }
     }
+
+    iosArm64 { binaries.framework { baseName = "shared" } }
+    iosSimulatorArm64 { binaries.framework { baseName = "shared" } }
+
+    jvm()
 
     sourceSets {
-        all {
-            languageSettings.optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
+        commonMain.dependencies {
+            // Compose
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
+            implementation(compose.animation)
+            implementation(libs.ui.backhandler)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+
+            implementation(libs.logger)
+
+            // Coroutines
+            api(libs.kotlinx.coroutines.core)
+
+            // KotlinX Serialization Json
+            api(libs.kotlinx.serialization.json)
+
+            // Ktor
+            api(libs.ktor.core)
+            api(libs.ktor.json)
+            api(libs.ktor.contentNegotiation)
+            api(libs.ktor.logging)
+
+            // Koin
+            api(libs.koin.core)
+            api(libs.koin.test)
+            api(libs.koin.compose)
+
+            //Navigation
+            api(libs.voyager.navigator)
+            api(libs.voyager.koin)
+            api(libs.voyager.tabs)
+            api(libs.voyager.transitions)
+
+            //Image loader
+            api(libs.image.loader)
+
+            //Settings
+            implementation(libs.settings)
         }
 
-        val commonMain by getting {
-            dependencies {
-
-                // Compose
-                with(compose) {
-                    api(runtime)
-                    api(foundation)
-                    api(material)
-                    api(material3)
-                    api(materialIconsExtended)
-                    api(animation)
-                    implementation(components.resources)
-                }
-
-                implementation(libs.logger)
-
-                // Coroutines
-                api(libs.kotlinx.coroutines.core)
-
-                // KotlinX Serialization Json
-                api(libs.kotlinx.serialization.json)
-
-                // Ktor
-                with(libs.ktor) {
-                    api(core)
-                    api(json)
-                    api(contentNegotiation)
-                    api(logging)
-                    api(logging.logback)
-                }
-
-                // Koin
-                with(libs.koin) {
-                    api(core)
-                    api(test)
-                    api(compose)
-                }
-
-                //Navigation
-                with(libs.voyager) {
-                    api(navigator)
-                    api(koin)
-                    api(tabs)
-                    api(transitions)
-                }
-
-                //Image loader
-                api(libs.image.loader)
-
-                //KVault
-                api(libs.settings)
-            }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.kotlinx.coroutines.test)
         }
 
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation(libs.kotlinx.coroutines.test)
-            }
+        androidMain.dependencies {
+            implementation(compose.uiTooling)
+            // Ktor
+            api(libs.ktor.client.android)
+
+            // Koin
+            api(libs.koin.android)
+
+            api(libs.androidx.core)
+            api(libs.androidx.appcompat)
+            api(libs.androidx.activity.compose)
+
+            api(libs.maps.compose)
+
+            //Location
+            api(libs.play.services.location)
+
+            implementation(libs.encryptedprefs)
         }
 
-        val androidMain by getting {
-            dependsOn(commonMain)
-
-            dependencies {
-                // Ktor
-                api(libs.ktor.client.android)
-
-                // Koin
-                api(libs.koin.android)
-
-                with(libs.androidx) {
-                    api(core)
-                    api(appcompat)
-                    api(activity.compose)
-                }
-
-                with(libs.androidx.compose.ui) {
-                    api(util)
-                    api(tooling)
-                    api(preview)
-                }
-                api(libs.maps.compose)
-
-                //Location
-                api(libs.play.services.location)
-                api(libs.play.services.maps)
-            }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation(libs.ktor.client.darwin)
-            }
+
+        jvmMain.dependencies {
+            val osSuffix = getOsSuffix()
+            implementation(dependencies.variantOf(libs.javafx.base) { classifier(osSuffix) })
+            implementation(dependencies.variantOf(libs.javafx.graphics) { classifier(osSuffix) })
+            implementation(dependencies.variantOf(libs.javafx.swing) { classifier(osSuffix) })
+            implementation(dependencies.variantOf(libs.javafx.web) { classifier(osSuffix) })
         }
     }
 }
 
 android {
     namespace = "com.example.moveeapp_compose_kmm"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+private fun getOsSuffix(): String {
+    // https://stackoverflow.com/questions/73187027/use-javafx-in-kotlin-multiplatform
+    // As JavaFX have platform-specific dependencies, we need to add them manually
+    val os = org.gradle.internal.os.OperatingSystem.current()
+    val arch = System.getProperty("os.arch")
+
+    return when {
+        os.isWindows -> "win"
+        os.isMacOsX && arch == "aarch64" -> "mac-aarch64"
+        os.isMacOsX -> "mac"
+        os.isLinux && arch == "aarch64" -> "linux-aarch64"
+        os.isLinux -> "linux"
+        else -> throw IllegalStateException("Unknown OS: ${os.name}")
     }
 }

@@ -20,9 +20,9 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.Card
-import androidx.compose.material.Surface
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -38,6 +38,8 @@ import com.example.moveeapp_compose_kmm.ui.components.LoadingScreen
 import com.example.moveeapp_compose_kmm.ui.components.PosterImageItem
 import com.example.moveeapp_compose_kmm.ui.components.RateItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
+import com.example.moveeapp_compose_kmm.ui.theme.AppTheme
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlin.math.absoluteValue
 
 @Composable
@@ -72,7 +74,7 @@ fun TvScreen(
 }
 
 @Composable
-fun SuccessContent(
+private fun SuccessContent(
     modifier: Modifier = Modifier,
     popularTv: List<PopularTv>,
     topRatedTv: List<TopRatedTv>,
@@ -93,7 +95,9 @@ fun TvLazyVerticalGrid(
     popularTv: List<PopularTv>,
     onclick: (Int) -> Unit,
 ) {
-    LazyVerticalGrid(modifier = modifier, columns = GridCells.Fixed(2),
+    LazyVerticalGrid(
+        modifier = modifier,
+        columns = GridCells.Fixed(2),
         content = {
             item(span = { GridItemSpan(2) }) {
                 Box {
@@ -114,7 +118,8 @@ fun TvLazyVerticalGrid(
                     shape = MaterialTheme.shapes.small
                 ) {
                     Column {
-                        PosterImageItem(imagePath = tvShow.posterPath,
+                        PosterImageItem(
+                            imagePath = tvShow.posterPath,
                             modifier = Modifier.clickable {
                                 onclick(tvShow.tvId)
                             }
@@ -133,7 +138,8 @@ fun TvLazyVerticalGrid(
 
                 }
             }
-        })
+        }
+    )
 }
 
 
@@ -168,5 +174,32 @@ fun HorizontalMoviePager(
         ) {
             PosterImageItem(imagePath = popularTv[page].posterPath)
         }
+    }
+}
+
+@Preview
+@Composable
+private fun TvPreview() {
+    AppTheme {
+        SuccessContent(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.primaryContainer),
+            popularTv = listOf(
+                PopularTv(1, "The Office", null),
+                PopularTv(2, "The Office", null),
+                PopularTv(3, "The Office", null),
+                PopularTv(4, "The Office", null),
+                PopularTv(5, "The Office", null),
+            ),
+            topRatedTv = listOf(
+                TopRatedTv(1, 8.5, "The Office", ""),
+                TopRatedTv(2, 8.5, "The Office", ""),
+                TopRatedTv(3, 8.5, "The Office", ""),
+                TopRatedTv(4, 8.5, "The Office", ""),
+                TopRatedTv(5, 8.5, "The Office", ""),
+            ),
+            navigateToDetail = {}
+        )
     }
 }

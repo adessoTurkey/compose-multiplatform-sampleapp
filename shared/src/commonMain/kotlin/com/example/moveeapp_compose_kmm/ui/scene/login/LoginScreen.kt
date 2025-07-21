@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.example.moveeapp_compose_kmm.data.account.LoginState
 import com.example.moveeapp_compose_kmm.ui.components.TextInputItem
 import com.example.moveeapp_compose_kmm.ui.components.TextItem
+import com.example.moveeapp_compose_kmm.ui.theme.AppTheme
 import com.example.moveeapp_compose_kmm.utils.Constants
 import movee.shared.generated.resources.Res
 import movee.shared.generated.resources.ic_login_movee
@@ -42,6 +43,7 @@ import movee.shared.generated.resources.login_title
 import movee.shared.generated.resources.login_username
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LoginScreen(
@@ -49,8 +51,29 @@ fun LoginScreen(
     navigateToWebViewScreen: (String) -> Unit,
     navigateToMainScreen: () -> Unit,
 ) {
-    val isLoggedState by viewModel.isLoggedIn.collectAsState()
+    val loginState by viewModel.isLoggedIn.collectAsState()
 
+    LoginScreen(
+        viewModel.loginUiState,
+        loginState,
+        viewModel::onUserNameChange,
+        viewModel::onPasswordChange,
+        viewModel::login,
+        navigateToWebViewScreen,
+        navigateToMainScreen
+    )
+}
+
+@Composable
+private fun LoginScreen(
+    loginUiState: LoginUiState,
+    loginState: LoginState,
+    onUserNameChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onLogin: () -> Unit,
+    navigateToWebViewScreen: (String) -> Unit,
+    navigateToMainScreen: () -> Unit
+) {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(Res.drawable.login_background),
@@ -73,11 +96,11 @@ fun LoginScreen(
             }
 
             LoginContent(
-                loginUiState = viewModel.loginUiState,
-                onUserNameChange = viewModel::onUserNameChange,
-                onPasswordChange = viewModel::onPasswordChange,
-                onLogin = viewModel::login,
-                isLoggedIn = isLoggedState,
+                loginUiState = loginUiState,
+                onUserNameChange = onUserNameChange,
+                onPasswordChange = onPasswordChange,
+                onLogin = onLogin,
+                isLoggedIn = loginState,
                 navigateToWebViewScreen = navigateToWebViewScreen,
                 navigateToMainScreen = navigateToMainScreen,
             )
@@ -86,7 +109,7 @@ fun LoginScreen(
 }
 
 @Composable
-fun LoginContent(
+private fun LoginContent(
     loginUiState: LoginUiState,
     onUserNameChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
@@ -181,5 +204,21 @@ fun LoginContent(
                 navigateToMainScreen()
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun LoginPreview() {
+    AppTheme {
+        LoginScreen(
+            loginUiState = LoginUiState(),
+            loginState = LoginState.LOGGED_OUT,
+            onUserNameChange = {},
+            onPasswordChange = {},
+            onLogin = {},
+            navigateToWebViewScreen = {},
+            navigateToMainScreen = {}
+        )
     }
 }
